@@ -35,11 +35,8 @@ jobs:
           channelId: live
           projectId: carb-compliance-app  # REPLACE WITH YOUR ACTUAL PROJECT ID
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUD_API }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: carb-compliance-app  # REPLACE WITH YOUR CLOUDFLARE PAGES PROJECT NAME
-          directory: build/web
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
