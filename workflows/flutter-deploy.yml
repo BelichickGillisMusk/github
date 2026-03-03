@@ -38,7 +38,7 @@ jobs:
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          apiToken: ${{ secrets.CLOUD_API }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: carb-compliance-app  # REPLACE WITH YOUR CLOUDFLARE PAGES PROJECT NAME
           directory: build/web
