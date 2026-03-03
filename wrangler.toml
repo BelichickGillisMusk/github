@@ -1,0 +1,6 @@
+name = "carb-compliance-app"
+main = "build/web/index.html"
+compatibility_date = "2026-03-03"
+
+[site]
+bucket = "./build/web"
