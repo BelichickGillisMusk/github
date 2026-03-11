@@ -1,0 +1,46 @@
+# .github/workflows/telegram-webhook.yml
+# Sets up the Telegram bot webhook pointing to Mila Cloud Run
+# Run manually when you first create the bot or change the Cloud Run URL
+name: Telegram Bot Webhook Setup
+
+on:
+  workflow_dispatch:
+    inputs:
+      cloud_run_url:
+        description: 'Mila Cloud Run service URL (e.g. https://mila-cloudrun-xxx-uc.a.run.app)'
+        required: true
+        type: string
+      action:
+        description: 'Set or delete the webhook'
+        required: true
+        default: 'set'
+        type: choice
+        options:
+          - set
+          - delete
+          - info
+
+jobs:
+  webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Telegram webhook
+        if: inputs.action == 'set'
+        run: |
+          RESPONSE=$(curl -s "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/setWebhook" \
+            -d "url=${{ inputs.cloud_run_url }}/telegram/webhook" \
+            -d "allowed_updates=[\"message\",\"callback_query\"]" \
+            -d "max_connections=10")
+          echo "Response: $RESPONSE"
+          echo "$RESPONSE" | python3 -c "import sys,json; r=json.load(sys.stdin); sys.exit(0 if r.get('ok') else 1)"
+
+      - name: Delete Telegram webhook
+        if: inputs.action == 'delete'
+        run: |
+          RESPONSE=$(curl -s "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/deleteWebhook")
+          echo "Response: $RESPONSE"
+
+      - name: Get webhook info
+        if: inputs.action == 'info'
+        run: |
+          curl -s "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/getWebhookInfo" | python3 -m json.tool
