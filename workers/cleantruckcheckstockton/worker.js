@@ -92,12 +92,12 @@ var worker_default = {
         }
 
         .call-btn {
-            background-color: #5B2B82;
-            color: #fff;
+            background-color: #FDB927;
+            color: #1a0a2e;
             padding: 12px 24px;
             border-radius: 4px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 16px;
             transition: all 0.3s ease;
             border: none;
@@ -108,9 +108,9 @@ var worker_default = {
         }
 
         .call-btn:hover {
-            background-color: #4a2268;
+            background-color: #e6a820;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(91, 43, 130, 0.3);
+            box-shadow: 0 4px 12px rgba(253, 185, 39, 0.5);
         }
 
         @media (max-width: 768px) {
@@ -213,24 +213,24 @@ var worker_default = {
         }
 
         .btn-primary {
-            background-color: #5B2B82;
-            color: #fff;
+            background-color: #FDB927;
+            color: #1a0a2e;
         }
 
         .btn-primary:hover {
-            background-color: #4a2268;
+            background-color: #e6a820;
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(91, 43, 130, 0.4);
+            box-shadow: 0 6px 20px rgba(253, 185, 39, 0.5);
         }
 
         .btn-secondary {
             background-color: transparent;
-            color: #5B2B82;
-            border: 2px solid #5B2B82;
+            color: #FDB927;
+            border: 2px solid #FDB927;
         }
 
         .btn-secondary:hover {
-            background-color: rgba(91, 43, 130, 0.1);
+            background-color: rgba(253, 185, 39, 0.15);
             transform: translateY(-3px);
         }
 
@@ -395,15 +395,20 @@ var worker_default = {
 
         .service-cta {
             display: inline-block;
-            color: #5B2B82;
+            background: #FDB927;
+            color: #1a0a2e;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
+            padding: 8px 18px;
+            border-radius: 4px;
             transition: all 0.3s ease;
         }
 
         .service-cta:hover {
-            color: #fff;
+            background: #e6a820;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(253, 185, 39, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -637,7 +642,7 @@ var worker_default = {
         }
 
         .footer-section ul li a:hover {
-            color: #5B2B82;
+            color: #FDB927;
         }
 
         .footer-contact {
@@ -652,7 +657,7 @@ var worker_default = {
         }
 
         .footer-contact a {
-            color: #5B2B82;
+            color: #FDB927;
             text-decoration: none;
             font-size: 18px;
             font-weight: 600;
@@ -802,21 +807,85 @@ var worker_default = {
         .form-submit {
             width: 100%;
             padding: 16px;
-            background: #5B2B82;
-            color: #fff;
+            background: #FDB927;
+            color: #1a0a2e;
             border: none;
             border-radius: 4px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 5px;
         }
 
         .form-submit:hover {
-            background: #4a2268;
+            background: #e6a820;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(91, 43, 130, 0.4);
+            box-shadow: 0 4px 12px rgba(253, 185, 39, 0.5);
+        }
+
+        /* Hero Pricing Q&A */
+        .hero-pricing {
+            margin-top: 50px;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-pricing-label {
+            color: #FDB927;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .hero-price-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: rgba(253,185,39,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(253,185,39,0.35);
+        }
+
+        .hero-price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: rgba(0,0,0,0.3);
+            gap: 10px;
+        }
+
+        .hp-service {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .hp-service small {
+            display: block;
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .hp-price {
+            color: #FDB927;
+            font-size: 22px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 500px) {
+            .hero-price-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .form-submit:disabled {
@@ -898,6 +967,28 @@ var worker_default = {
                     <div class="badge">
                         <div class="badge-icon">&#x1F3C1;</div>
                         <div class="badge-text">Mobile Service<br><span class="badge-highlight">We Come To You</span></div>
+                    </div>
+                </div>
+
+                <div class="hero-pricing">
+                    <p class="hero-pricing-label">What does it cost?</p>
+                    <div class="hero-price-grid">
+                        <div class="hero-price-item">
+                            <span class="hp-service">HD-OBD Inspection<small>2013+ model year trucks</small></span>
+                            <span class="hp-price">$84</span>
+                        </div>
+                        <div class="hero-price-item">
+                            <span class="hp-service">Opacity / Visual Test<small>Pre-2013 model year trucks</small></span>
+                            <span class="hp-price">$199</span>
+                        </div>
+                        <div class="hero-price-item">
+                            <span class="hp-service">RV / Motorhome<small>Diesel Class A &amp; C</small></span>
+                            <span class="hp-price">$250</span>
+                        </div>
+                        <div class="hero-price-item">
+                            <span class="hp-service">Fleet Testing<small>Multiple vehicles, your yard</small></span>
+                            <span class="hp-price">Call</span>
+                        </div>
                     </div>
                 </div>
             </div>
