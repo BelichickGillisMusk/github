@@ -29,8 +29,8 @@ var worker_default = {
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: #e0e0e0;
-            background-color: #1a0a2e;
+            color: #1a1a1a;
+            background-color: #FFFFFF;
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -58,9 +58,9 @@ var worker_default = {
 
         /* Header & Navigation */
         header {
-            background-color: rgba(26, 10, 46, 0.95);
+            background-color: rgba(255, 255, 255, 0.97);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid #5B2B82;
+            border-bottom: 2px solid #FDB927;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -86,7 +86,7 @@ var worker_default = {
         }
 
         .logo span {
-            color: #fff;
+            color: #1a1a1a;
             font-size: 14px;
             font-weight: 500;
         }
@@ -122,8 +122,7 @@ var worker_default = {
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(26, 10, 46, 0.9) 0%, rgba(91, 43, 130, 0.1) 100%),
-                        radial-gradient(circle at top right, rgba(91, 43, 130, 0.15) 0%, transparent 60%);
+            background: linear-gradient(135deg, #5B2B82 0%, #4a2268 60%, #000000 100%);
             padding: 100px 0;
             text-align: center;
             position: relative;
@@ -137,7 +136,7 @@ var worker_default = {
             right: -10%;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(91, 43, 130, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(253, 185, 39, 0.15) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -149,7 +148,7 @@ var worker_default = {
             left: -5%;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(91, 43, 130, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(253, 185, 39, 0.1) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -174,7 +173,7 @@ var worker_default = {
 
         .hero p {
             font-size: 20px;
-            color: #A2AAAD;
+            color: rgba(255,255,255,0.85);
             margin-bottom: 30px;
             max-width: 700px;
             margin-left: auto;
@@ -182,13 +181,13 @@ var worker_default = {
         }
 
         .compliance-alert {
-            background-color: rgba(91, 43, 130, 0.1);
-            border-left: 4px solid #5B2B82;
+            background-color: rgba(253, 185, 39, 0.15);
+            border-left: 4px solid #FDB927;
             padding: 15px 20px;
             margin-bottom: 30px;
             border-radius: 4px;
             font-size: 16px;
-            color: #e8d5f5;
+            color: #fff;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
@@ -301,11 +300,11 @@ var worker_default = {
 
         .badge-text {
             font-size: 14px;
-            color: #A2AAAD;
+            color: rgba(255,255,255,0.85);
         }
 
         .badge-highlight {
-            color: #5B2B82;
+            color: #FDB927;
             font-weight: 600;
         }
 
@@ -321,8 +320,8 @@ var worker_default = {
 
         /* Services Section */
         .services {
-            background-color: #0d0514;
-            border-top: 1px solid rgba(91, 43, 130, 0.2);
+            background-color: #F7F3FC;
+            border-top: 3px solid #FDB927;
         }
 
         .section-title {
@@ -330,12 +329,12 @@ var worker_default = {
             font-weight: 700;
             text-align: center;
             margin-bottom: 15px;
-            color: #fff;
+            color: #5B2B82;
         }
 
         .section-subtitle {
             text-align: center;
-            color: #A2AAAD;
+            color: #555555;
             font-size: 18px;
             margin-bottom: 50px;
             max-width: 600px;
@@ -351,8 +350,9 @@ var worker_default = {
         }
 
         .service-card {
-            background: linear-gradient(135deg, rgba(91, 43, 130, 0.1) 0%, rgba(91, 43, 130, 0.05) 100%);
-            border: 1px solid rgba(91, 43, 130, 0.3);
+            background: #FFFFFF;
+            border: 1px solid rgba(91, 43, 130, 0.25);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-radius: 8px;
             padding: 35px;
             text-align: center;
@@ -362,10 +362,10 @@ var worker_default = {
         }
 
         .service-card:hover {
-            border-color: #5B2B82;
-            background: linear-gradient(135deg, rgba(91, 43, 130, 0.15) 0%, rgba(91, 43, 130, 0.08) 100%);
+            border-color: #FDB927;
+            background: #FFFFFF;
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(91, 43, 130, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
         }
 
         .service-icon {
@@ -377,11 +377,11 @@ var worker_default = {
         .service-card h3 {
             font-size: 22px;
             margin-bottom: 15px;
-            color: #fff;
+            color: #1a0a2e;
         }
 
         .service-card p {
-            color: #A2AAAD;
+            color: #555555;
             margin-bottom: 20px;
             font-size: 14px;
         }
@@ -422,8 +422,8 @@ var worker_default = {
 
         /* Why Mobile Section */
         .why-mobile {
-            background-color: #1a0a2e;
-            border-top: 1px solid rgba(91, 43, 130, 0.2);
+            background-color: #FFFFFF;
+            border-top: 3px solid #000000;
         }
 
         .benefits-grid {
@@ -443,7 +443,7 @@ var worker_default = {
             flex-shrink: 0;
             width: 50px;
             height: 50px;
-            background-color: rgba(91, 43, 130, 0.2);
+            background-color: rgba(253, 185, 39, 0.15);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -453,19 +453,19 @@ var worker_default = {
 
         .benefit-content h4 {
             font-size: 18px;
-            color: #fff;
+            color: #1a0a2e;
             margin-bottom: 8px;
         }
 
         .benefit-content p {
-            color: #A2AAAD;
+            color: #555555;
             font-size: 14px;
         }
 
         /* Local Content */
         .local-content {
-            background-color: #0d0514;
-            border-top: 1px solid rgba(91, 43, 130, 0.2);
+            background-color: #F7F3FC;
+            border-top: 3px solid #FDB927;
         }
 
         .local-coverage {
@@ -484,7 +484,7 @@ var worker_default = {
 
         .coverage-text h3 {
             font-size: 28px;
-            color: #fff;
+            color: #5B2B82;
             margin-bottom: 20px;
         }
 
@@ -494,7 +494,7 @@ var worker_default = {
         }
 
         .coverage-list li {
-            color: #A2AAAD;
+            color: #333333;
             padding: 8px 0;
             border-bottom: 1px solid rgba(91, 43, 130, 0.1);
             font-size: 15px;
@@ -507,19 +507,19 @@ var worker_default = {
         }
 
         .coverage-highlight {
-            background-color: rgba(91, 43, 130, 0.1);
-            border: 1px solid rgba(91, 43, 130, 0.3);
+            background-color: rgba(253, 185, 39, 0.1);
+            border: 1px solid #FDB927;
             border-radius: 6px;
             padding: 20px;
-            color: #e8d5f5;
+            color: #333333;
             font-size: 14px;
             line-height: 1.7;
         }
 
         /* FAQ */
         .faq {
-            background-color: #1a0a2e;
-            border-top: 1px solid rgba(91, 43, 130, 0.2);
+            background-color: #FFFFFF;
+            border-top: 3px solid #000000;
         }
 
         .faq-container {
@@ -549,7 +549,7 @@ var worker_default = {
         }
 
         .faq-question h4 {
-            color: #fff;
+            color: #1a0a2e;
             font-size: 16px;
             font-weight: 600;
         }
@@ -569,7 +569,7 @@ var worker_default = {
         .faq-answer {
             display: none;
             padding: 20px 25px;
-            color: #A2AAAD;
+            color: #333333;
             font-size: 15px;
             line-height: 1.7;
             border-top: 1px solid rgba(91, 43, 130, 0.1);
@@ -587,12 +587,12 @@ var worker_default = {
 
         .cta-section h2 {
             font-size: 42px;
-            color: #fff;
+            color: #5B2B82;
             margin-bottom: 20px;
         }
 
         .cta-section p {
-            color: #A2AAAD;
+            color: #555555;
             font-size: 18px;
             margin-bottom: 35px;
             max-width: 600px;
@@ -602,8 +602,8 @@ var worker_default = {
 
         /* Footer */
         footer {
-            background-color: #060d18;
-            border-top: 2px solid #5B2B82;
+            background-color: #000000;
+            border-top: 4px solid #FDB927;
             padding: 60px 0 30px;
         }
 
@@ -844,7 +844,7 @@ var worker_default = {
             <div class="local-coverage">
                 <div class="coverage-text">
                     <h3>Serving Stockton and Surrounding Areas</h3>
-                    <p style="margin-bottom: 20px; color: #A2AAAD;">
+                    <p style="margin-bottom: 20px; color: #555555;">
                         NorCal CARB Mobile LLC provides professional emissions testing throughout the Central Valley,
                         including Stockton, Lodi, Tracy, and Manteca. With the Port of Stockton and
                         major I-5 logistics hubs in our region, compliance testing is essential for fleet operations.
@@ -869,30 +869,29 @@ var worker_default = {
                 </div>
 
                 <div>
-                    <div style="background: linear-gradient(135deg, rgba(91, 43, 130, 0.15) 0%, rgba(91, 43, 130, 0.05) 100%);
-                                border: 2px solid rgba(91, 43, 130, 0.3); border-radius: 8px; padding: 40px; text-align: center;">
-                        <h3 style="color: #fff; margin-bottom: 20px; font-size: 24px;">Stockton Service Info</h3>
+                    <div style="background: #FFFFFF; border: 2px solid #FDB927; border-radius: 8px; padding: 40px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.08);">
+                        <h3 style="color: #5B2B82; margin-bottom: 20px; font-size: 24px;">Stockton Service Info</h3>
 
                         <div style="margin-bottom: 25px;">
-                            <p style="color: #A2AAAD; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Primary Contact</p>
+                            <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Primary Contact</p>
                             <a href="tel:9168904427" style="font-size: 24px; font-weight: bold; color: #5B2B82; text-decoration: none;">
                                 916-890-4427
                             </a>
                         </div>
 
                         <div style="margin-bottom: 25px;">
-                            <p style="color: #A2AAAD; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">CARB Tester ID</p>
-                            <p style="font-size: 18px; font-weight: bold; color: #fff;">IF530523</p>
+                            <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">CARB Tester ID</p>
+                            <p style="font-size: 18px; font-weight: bold; color: #1a0a2e;">IF530523</p>
                         </div>
 
                         <div style="margin-bottom: 25px;">
-                            <p style="color: #A2AAAD; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Service Hours</p>
-                            <p style="color: #A2AAAD; font-size: 14px;">Monday - Friday: 6am - 5pm<br>Saturday: 8am - 4pm</p>
+                            <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Service Hours</p>
+                            <p style="color: #555555; font-size: 14px;">Monday - Friday: 6am - 5pm<br>Saturday: 8am - 4pm</p>
                         </div>
 
                         <div>
-                            <p style="color: #A2AAAD; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Primary Website</p>
-                            <a href="https://norcalcarbmobile.com" style="color: #5B2B82; text-decoration: none;">
+                            <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Primary Website</p>
+                            <a href="https://norcalcarbmobile.com" style="color: #5B2B82; text-decoration: none; font-weight: 600;">
                                 norcalcarbmobile.com
                             </a>
                         </div>
@@ -1017,8 +1016,9 @@ var worker_default = {
                     <div class="faq-answer">
                         <p>
                             If your truck doesn&#39;t pass, you&#39;ll receive documentation of the failure. You&#39;ll need to address the emissions issue
-                            (often through repairs or maintenance) and then retest. We can discuss options with you and help schedule a retest
-                            after repairs. Many failures are due to maintenance items that are relatively inexpensive to fix.
+                            (often through repairs or maintenance) and then retest. Rather than having someone follow you to a shop, we can
+                            discuss options with you on-site and help schedule a retest once repairs are complete.
+                            Many failures are due to maintenance items that are relatively inexpensive to fix.
                         </p>
                     </div>
                 </div>
@@ -1040,7 +1040,7 @@ var worker_default = {
     </section>
 
     <!-- Final CTA -->
-    <section class="section-padding" style="background-color: #0d0514; border-top: 1px solid rgba(91, 43, 130, 0.2);">
+    <section class="section-padding" style="background-color: #F7F3FC; border-top: 3px solid #FDB927;">
         <div class="container">
             <div class="cta-section">
                 <h2>Ready to Get Compliant?</h2>
