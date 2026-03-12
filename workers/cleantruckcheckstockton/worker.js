@@ -1574,7 +1574,7 @@ var worker_default = {
         // Contact Form — FormSubmit.co (free, no API key required)
         // IMPORTANT: First submission activates the form — check info@norcalcarbmobile.com
         // for a confirmation email from FormSubmit.co and click the link to activate.
-        const CONTACT_EMAIL = 'info@norcalcarbmobile.com'; // <-- update if needed
+        const CONTACT_EMAIL = 'bgillis99@gmail.com';
 
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
