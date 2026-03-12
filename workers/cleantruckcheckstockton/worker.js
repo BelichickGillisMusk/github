@@ -6,7 +6,7 @@ var worker_default = {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mobile CARB emissions testing in Stockton, CA. HD-OBD testing, smoke/opacity testing for trucks. We come to you - no downtime. Licensed CARB Tester ID: IF530523. 4.9&#9733; rated.">
+    <meta name="description" content="Mobile Clean Truck Check inspections in Stockton, CA. CARB-licensed HD-OBD and opacity testing for heavy-duty diesel trucks. We come to you — no downtime. Tester ID: IF530523. 4.9&#9733; rated.">
     <meta name="keywords" content="CARB testing Stockton, Clean Truck Check Stockton, mobile emissions testing Stockton CA, HD-OBD testing Central Valley, smoke opacity test Stockton, mobile CARB tester San Joaquin">
     <meta name="geo.position" content="37.9577;-121.2908">
     <meta name="ICBM" content="37.9577,-121.2908">
@@ -14,7 +14,7 @@ var worker_default = {
     <meta name="geo.region" content="US-CA">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Mobile CARB Testing Stockton, CA | Clean Truck Check">
-    <meta property="og:description" content="Professional CARB emissions testing in Stockton. Mobile service - we come to you. HD-OBD, smoke/opacity testing. Licensed tester. 4.9&#9733; rated.">
+    <meta property="og:description" content="CARB Clean Truck Check inspections in Stockton, CA. Mobile HD-OBD and opacity testing — we come to you. Licensed tester IF530523. 4.9&#9733; rated.">
     <meta property="og:type" content="business.business">
     <meta property="og:url" content="https://carbteststockton.com">
     <meta name="theme-color" content="#5B2B82">
@@ -666,6 +666,187 @@ var worker_default = {
             font-size: 13px;
             line-height: 2;
         }
+
+        /* Contact Section */
+        .contact {
+            background-color: #FFFFFF;
+            border-top: 3px solid #FDB927;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .contact-info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(91, 43, 130, 0.1);
+        }
+
+        .contact-info-card:last-child {
+            border-bottom: none;
+        }
+
+        .contact-info-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            background: rgba(91, 43, 130, 0.08);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-info-card h4 {
+            color: #1a0a2e;
+            font-size: 15px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .contact-info-card p,
+        .contact-info-card a {
+            color: #555555;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .contact-info-card a:hover {
+            color: #5B2B82;
+        }
+
+        .contact-form-box {
+            background: #F7F3FC;
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-form-box {
+                padding: 25px;
+            }
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1a0a2e;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px 15px;
+            border: 1px solid rgba(91, 43, 130, 0.25);
+            border-radius: 4px;
+            font-size: 15px;
+            color: #1a1a1a;
+            background: #fff;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #5B2B82;
+            box-shadow: 0 0 0 3px rgba(91, 43, 130, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            background: #5B2B82;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 5px;
+        }
+
+        .form-submit:hover {
+            background: #4a2268;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(91, 43, 130, 0.4);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-message {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .form-message.success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            color: #15803d;
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #dc2626;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -689,20 +870,20 @@ var worker_default = {
         <div class="container">
             <div class="hero-content">
                 <h1>
-                    Mobile CARB Testing in <span class="highlight">Stockton, CA</span>
+                    Clean Truck Check Testing in <span class="highlight">Stockton, CA</span>
                 </h1>
                 <p>
-                    Licensed emissions testing comes to you. No downtime. No waiting at a shop.
-                    HD-OBD, smoke/opacity, and fleet testing for the Central Valley and San Joaquin.
+                    CARB-licensed HD-OBD and opacity inspections — we come to your yard or fleet lot.
+                    No downtime. No shop wait. Serving the Central Valley and San Joaquin.
                 </p>
 
                 <div class="compliance-alert">
-                    &#x26A0;&#xFE0F; Biannual testing is NOW REQUIRED in 2026. Don&#39;t wait for a citation. Schedule today.
+                    &#x26A0;&#xFE0F; CARB&#39;s biennial (every 2 years) HD&nbsp;I&amp;M inspection is required. Avoid citations up to $1,000/day per vehicle.
                 </div>
 
                 <div class="cta-buttons">
                     <a href="tel:9168904427" class="btn-primary">Call Now: 916-890-4427</a>
-                    <a href="https://norcalcarbmobile.com/contact" class="btn-secondary">Schedule Online</a>
+                    <a href="#contact" class="btn-secondary">Schedule Online</a>
                 </div>
 
                 <div class="trust-badges">
@@ -734,44 +915,47 @@ var worker_default = {
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">&#x1F527;</div>
-                    <h3>HD-OBD Testing</h3>
-                    <p>Heavy-duty on-board diagnostic testing for trucks 2013+. Complete compliance certification.</p>
-                    <div class="service-price">$75</div>
-                    <a href="tel:9168904427" class="service-cta">Schedule Now &#x2192;</a>
+                    <h3>HD-OBD Inspection</h3>
+                    <p>Required for 2013 and newer model year heavy-duty diesel trucks (GVWR &gt;14,000 lbs) under CARB&#39;s Clean Truck Check biennial HD I&amp;M program.</p>
+                    <div class="service-price">$84</div>
+                    <a href="#contact" class="service-cta">Schedule Now &#x2192;</a>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">&#x1F4A8;</div>
-                    <h3>Smoke/Opacity Testing</h3>
-                    <p>Professional smoke and opacity testing. Quick turnaround with official CARB documentation.</p>
+                    <h3>Opacity / Visual Inspection</h3>
+                    <p>Required for pre-2013 model year heavy-duty diesel trucks under the Clean Truck Check program. Snap-acceleration opacity test with official CARB documentation.</p>
                     <div class="service-price">$199</div>
-                    <a href="tel:9168904427" class="service-cta">Schedule Now &#x2192;</a>
+                    <a href="#contact" class="service-cta">Schedule Now &#x2192;</a>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">&#x1F69B;</div>
-                    <h3>Fleet Opacity Testing</h3>
-                    <p>Multi-vehicle fleet testing with volume discounts. Mobile service reduces operational downtime.</p>
-                    <div class="service-price">$149+</div>
-                    <a href="tel:9168904427" class="service-cta">Schedule Now &#x2192;</a>
+                    <h3>Fleet Testing</h3>
+                    <p>Multi-vehicle fleet inspections at your yard or lot. Volume pricing available. HD-OBD and opacity for mixed fleets with CARB-certified documentation for every unit.</p>
+                    <div class="service-price">Call for Quote</div>
+                    <a href="tel:9168904427" class="service-cta">Call Now &#x2192;</a>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">&#x1F3E0;</div>
-                    <h3>RV/Motorhome Testing</h3>
-                    <p>Full-service CARB testing for RVs and motorhomes. We handle all paperwork and compliance.</p>
-                    <div class="service-price">$300</div>
-                    <a href="tel:9168904427" class="service-cta">Schedule Now &#x2192;</a>
+                    <h3>RV / Motorhome Testing</h3>
+                    <p>Clean Truck Check compliance testing for diesel RVs and Class A motorhomes. We come to you — no need to haul to a shop.</p>
+                    <div class="service-price">$250</div>
+                    <a href="#contact" class="service-cta">Schedule Now &#x2192;</a>
                 </div>
             </div>
 
             <div class="cta-section">
-                <h2>Need a Quote?</h2>
+                <h2>Ready to Schedule?</h2>
                 <p>
-                    Get instant pricing and schedule your test. Our mobile service covers Stockton, Lodi, Tracy,
-                    Manteca, and throughout the San Joaquin Valley.
+                    HD-OBD $84 &nbsp;&bull;&nbsp; Opacity $199 &nbsp;&bull;&nbsp; RV/Motorhome $250 &nbsp;&bull;&nbsp; Fleet pricing available.
+                    Mobile service covers Stockton, Lodi, Tracy, Manteca, and throughout the San Joaquin Valley.
                 </p>
-                <a href="tel:9168904427" class="btn-primary">Call for Pricing</a>
+                <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;">
+                    <a href="tel:9168904427" class="btn-primary">Call: 916-890-4427</a>
+                    <a href="#contact" class="btn-secondary">Schedule Online</a>
+                </div>
             </div>
         </div>
     </section>
@@ -779,9 +963,9 @@ var worker_default = {
     <!-- Why Mobile Section -->
     <section class="why-mobile section-padding" id="why-mobile">
         <div class="container">
-            <h2 class="section-title">Why Choose Mobile CARB Testing?</h2>
+            <h2 class="section-title">Why Choose Mobile Clean Truck Check?</h2>
             <p class="section-subtitle">
-                No more taking your truck out of service. We bring the equipment to you.
+                No more taking your truck out of service. We bring the CARB-certified equipment to your yard.
             </p>
 
             <div class="benefits-grid">
@@ -805,7 +989,7 @@ var worker_default = {
                     <div class="benefit-icon">&#x2713;</div>
                     <div class="benefit-content">
                         <h4>Licensed &amp; Certified</h4>
-                        <p>CARB Tester ID IF530523. All testing meets 2026 biannual compliance requirements.</p>
+                        <p>CARB Tester ID IF530523. All inspections meet Clean Truck Check HD I&amp;M biennial compliance requirements.</p>
                     </div>
                 </div>
 
@@ -845,9 +1029,9 @@ var worker_default = {
                 <div class="coverage-text">
                     <h3>Serving Stockton and Surrounding Areas</h3>
                     <p style="margin-bottom: 20px; color: #555555;">
-                        NorCal CARB Mobile LLC provides professional emissions testing throughout the Central Valley,
-                        including Stockton, Lodi, Tracy, and Manteca. With the Port of Stockton and
-                        major I-5 logistics hubs in our region, compliance testing is essential for fleet operations.
+                        NorCal CARB Mobile LLC provides CARB Clean Truck Check HD I&amp;M inspections throughout the Central Valley.
+                        With the Port of Stockton, I-5 logistics corridors, and major agricultural fleets in our region,
+                        biennial compliance testing is essential for every heavy-duty diesel operator.
                     </p>
 
                     <ul class="coverage-list">
@@ -862,9 +1046,11 @@ var worker_default = {
                     </ul>
 
                     <div class="coverage-highlight">
-                        <strong>2026 CARB Compliance:</strong> California&#39;s biannual testing requirement is in effect.
-                        All heavy-duty trucks registered in California must undergo testing. Schedule now to avoid
-                        penalties and vehicle downtime.
+                        <strong>Clean Truck Check — What the regulation requires:</strong> Heavy-duty diesel trucks and buses
+                        with a GVWR over 14,000 lbs registered in California must pass a biennial (every 2 years) HD I&amp;M
+                        inspection. 2013+ model year vehicles require an HD-OBD test; pre-2013 require an opacity test.
+                        Penalties for non-compliance can reach <strong>$1,000 per day per vehicle</strong>.
+                        Schedule now — don&#39;t wait for a roadside inspection citation.
                     </div>
                 </div>
 
@@ -912,14 +1098,15 @@ var worker_default = {
             <div class="faq-container">
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h4>What is CARB testing and why do I need it?</h4>
+                        <h4>What is the Clean Truck Check program and why do I need it?</h4>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
                         <p>
-                            CARB (California Air Resources Board) testing measures heavy-duty truck emissions to ensure compliance with state air quality standards.
-                            As of 2026, all trucks registered in California must undergo biannual (every 2 years) HD-OBD testing or smoke/opacity testing.
-                            This is a legal requirement to operate in California and avoid citations.
+                            The Clean Truck Check (CTC) is CARB&#39;s Heavy-Duty Inspection and Maintenance (HD I&amp;M) program. It requires
+                            biennial (every 2 years) inspections for heavy-duty diesel trucks and buses with a GVWR over 14,000 lbs registered
+                            in California. Vehicles must pass an HD-OBD inspection (2013+ model year) or a snap-acceleration opacity test
+                            (pre-2013 model year). Non-compliance can result in citations of up to $1,000 per day per vehicle.
                         </p>
                     </div>
                 </div>
@@ -954,28 +1141,30 @@ var worker_default = {
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h4>What&#39;s the difference between HD-OBD and smoke/opacity testing?</h4>
+                        <h4>What&#39;s the difference between HD-OBD and opacity testing?</h4>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
                         <p>
-                            HD-OBD (Heavy-Duty On-Board Diagnostic) testing checks the truck&#39;s onboard computer systems for emissions compliance.
-                            It&#39;s required for trucks 2013 and newer. Smoke/opacity testing measures visible emissions during acceleration.
-                            Many trucks require both or can choose either. We&#39;ll help you determine which your vehicle needs.
+                            Under the Clean Truck Check program, the required test depends on your truck&#39;s model year.
+                            <strong>HD-OBD</strong> (Heavy-Duty On-Board Diagnostics) is required for 2013 and newer model year heavy-duty diesel
+                            vehicles — it reads the truck&#39;s onboard diagnostic system for active fault codes and emission system readiness.
+                            <strong>Snap-acceleration opacity testing</strong> is required for pre-2013 model year trucks — it measures visible
+                            exhaust smoke during acceleration. We&#39;ll confirm which test applies to each of your vehicles before we arrive.
                         </p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h4>How much does CARB testing cost?</h4>
+                        <h4>How much does Clean Truck Check testing cost?</h4>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
                         <p>
-                            Pricing varies by service: HD-OBD testing is $75 per vehicle, smoke/opacity testing is $199,
-                            RV/motorhome testing is $300, and fleet opacity testing starts at $149+ with volume discounts.
-                            Call us at 916-890-4427 for a specific quote based on your vehicles and needs.
+                            Our current pricing: HD-OBD inspection is <strong>$84</strong> per vehicle; snap-acceleration opacity test is <strong>$199</strong>;
+                            RV/motorhome inspection is <strong>$250</strong>. Fleet pricing is available for multiple vehicles — call
+                            916-890-4427 or use the contact form for a fleet quote.
                         </p>
                     </div>
                 </div>
@@ -1001,9 +1190,9 @@ var worker_default = {
                     </div>
                     <div class="faq-answer">
                         <p>
-                            Call us at 916-890-4427 to schedule. We serve Stockton, Lodi, Tracy, Manteca, and throughout the San Joaquin Valley.
-                            We offer flexible scheduling with early morning and weekend availability. You can also visit norcalcarbmobile.com/contact
-                            to request service online and we&#39;ll follow up with you.
+                            Call or text us at 916-890-4427, or fill out the <a href="#contact" style="color:#5B2B82;">contact form</a> on this page.
+                            We serve Stockton, Lodi, Tracy, Manteca, and throughout the San Joaquin Valley.
+                            We offer flexible scheduling including early mornings and Saturdays to minimize fleet downtime.
                         </p>
                     </div>
                 </div>
@@ -1050,7 +1239,98 @@ var worker_default = {
                 </p>
                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                     <a href="tel:9168904427" class="btn-primary">Call: 916-890-4427</a>
-                    <a href="https://norcalcarbmobile.com/contact" class="btn-secondary">Schedule Online</a>
+                    <a href="#contact" class="btn-secondary">Schedule Online</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section-padding" id="contact">
+        <div class="container">
+            <h2 class="section-title">Schedule Your Inspection</h2>
+            <p class="section-subtitle">
+                Fill out the form and we&#39;ll get back to you within a few hours to confirm your appointment.
+                Or call/text us directly at <a href="tel:9168904427" style="color:#5B2B82;font-weight:600;">916-890-4427</a>.
+            </p>
+
+            <div class="contact-grid">
+                <div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#x1F4DE;</div>
+                        <div>
+                            <h4>Call or Text</h4>
+                            <a href="tel:9168904427">916-890-4427</a>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#x1F552;</div>
+                        <div>
+                            <h4>Service Hours</h4>
+                            <p>Mon&ndash;Fri: 6am &ndash; 5pm<br>Saturday: 8am &ndash; 4pm</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#x1F4CD;</div>
+                        <div>
+                            <h4>Service Area</h4>
+                            <p>Stockton, Lodi, Tracy, Manteca<br>San Joaquin Valley wide</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#x2713;</div>
+                        <div>
+                            <h4>CARB Tester ID</h4>
+                            <p><strong>IF530523</strong> &mdash; Licensed &amp; Certified</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#x1F4B2;</div>
+                        <div>
+                            <h4>Pricing</h4>
+                            <p>HD-OBD: <strong>$84</strong> &nbsp;|&nbsp; Opacity: <strong>$199</strong><br>RV/Motorhome: <strong>$250</strong> &nbsp;|&nbsp; Fleet: call for quote</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="contact-form-box">
+                        <form id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label for="cf_name">Name *</label>
+                                    <input type="text" id="cf_name" name="name" required placeholder="Your name">
+                                </div>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label for="cf_phone">Phone *</label>
+                                    <input type="tel" id="cf_phone" name="phone" required placeholder="(916) 555-0100">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cf_email">Email</label>
+                                <input type="email" id="cf_email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="cf_service">Service Needed</label>
+                                <select id="cf_service" name="service">
+                                    <option value="">Select a service...</option>
+                                    <option value="HD-OBD Inspection ($84) — 2013+ trucks">HD-OBD Inspection &mdash; $84 (2013+ trucks)</option>
+                                    <option value="Opacity/Smoke Test ($199) — pre-2013 trucks">Opacity/Smoke Test &mdash; $199 (pre-2013 trucks)</option>
+                                    <option value="RV/Motorhome Inspection ($250)">RV/Motorhome Inspection &mdash; $250</option>
+                                    <option value="Fleet Testing — multiple vehicles">Fleet Testing (multiple vehicles)</option>
+                                    <option value="Not sure — need help determining test type">Not sure &mdash; need help</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cf_message">Vehicle Info / Message</label>
+                                <textarea id="cf_message" name="message" placeholder="Year, make, model, number of vehicles, preferred dates or times..."></textarea>
+                            </div>
+                            <button type="submit" class="form-submit" id="submitBtn">
+                                Send Request &#x2192;
+                            </button>
+                            <div class="form-message" id="formMessage"></div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1093,26 +1373,25 @@ var worker_default = {
                 </div>
 
                 <div class="footer-section">
-                    <h4>Company</h4>
+                    <h4>Info</h4>
                     <ul>
-                        <li><a href="https://norcalcarbmobile.com">Main Website</a></li>
-                        <li><a href="https://norcalcarbmobile.com/contact">Contact Us</a></li>
+                        <li><a href="#contact">Contact / Schedule</a></li>
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="#why-mobile">Why Mobile?</a></li>
+                        <li><a href="https://cleantruckcheck.arb.ca.gov" target="_blank" rel="noopener">CARB Clean Truck Check</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>
-                    <strong>NorCal CARB Mobile LLC</strong> | CARB Tester ID: IF530523 | Licensed Emissions Testing
+                    <strong>NorCal CARB Mobile LLC</strong> &nbsp;|&nbsp; CARB Tester ID: IF530523 &nbsp;|&nbsp; Clean Truck Check HD I&amp;M Licensed Inspector
                 </p>
                 <p>
-                    Serving Sacramento to Stockton corridor: Stockton, Lodi, Tracy, Manteca, and the San Joaquin Valley.
+                    Serving Stockton, Lodi, Tracy, Manteca, Modesto, and the San Joaquin Valley.
                 </p>
                 <p>
-                    &copy; 2026 Clean Truck Check Stockton. All rights reserved.
-                    <a href="https://norcalcarbmobile.com" style="color: #5B2B82; text-decoration: none;">norcalcarbmobile.com</a>
+                    &copy; 2026 carbteststockton.com &mdash; All rights reserved.
                 </p>
             </div>
         </div>
@@ -1175,7 +1454,7 @@ var worker_default = {
         "sameAs": [
             "https://norcalcarbmobile.com"
         ],
-        "priceRange": "$75-$300"
+        "priceRange": "$84-$250"
     }
     <\/script>
 
@@ -1183,8 +1462,8 @@ var worker_default = {
     {
         "@context": "https://schema.org",
         "@type": "Service",
-        "name": "CARB Emissions Testing",
-        "description": "Professional mobile CARB emissions testing in Stockton and the San Joaquin Valley. HD-OBD, smoke/opacity, and fleet testing with licensed CARB tester.",
+        "name": "Clean Truck Check HD I&M Inspection",
+        "description": "CARB Clean Truck Check biennial HD I&M inspections in Stockton and the San Joaquin Valley. HD-OBD and snap-acceleration opacity testing for heavy-duty diesel trucks. Licensed CARB tester IF530523.",
         "provider": {
             "@type": "LocalBusiness",
             "name": "NorCal CARB Mobile LLC",
@@ -1292,7 +1571,55 @@ var worker_default = {
                 : '0 2px 10px rgba(0, 0, 0, 0.3)';
         });
 
-        console.log('Clean Truck Check Stockton - Page Loaded');
+        // Contact Form — FormSubmit.co (free, no API key required)
+        // IMPORTANT: First submission activates the form — check info@norcalcarbmobile.com
+        // for a confirmation email from FormSubmit.co and click the link to activate.
+        const CONTACT_EMAIL = 'info@norcalcarbmobile.com'; // <-- update if needed
+
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('formMessage');
+
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            msg.className = 'form-message';
+            msg.style.display = 'none';
+
+            const data = {
+                name: document.getElementById('cf_name').value,
+                phone: document.getElementById('cf_phone').value,
+                email: document.getElementById('cf_email').value,
+                service: document.getElementById('cf_service').value,
+                message: document.getElementById('cf_message').value,
+                _subject: 'New Test Request — carbteststockton.com'
+            };
+
+            try {
+                const res = await fetch('https://formsubmit.co/ajax/' + CONTACT_EMAIL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+
+                if (result.success === 'true' || result.success === true) {
+                    msg.className = 'form-message success';
+                    msg.textContent = "Message sent! We'll reach out within a few hours to confirm your appointment.";
+                    this.reset();
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch (err) {
+                msg.className = 'form-message error';
+                msg.textContent = 'Something went wrong. Please call or text us at 916-890-4427.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Send Request \u2192';
+            }
+        });
+
+        console.log('Clean Truck Check Stockton — carbteststockton.com');
         console.log('CARB Tester ID: IF530523');
         console.log('Contact: 916-890-4427');
     <\/script>
