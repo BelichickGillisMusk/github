@@ -1151,7 +1151,7 @@ var worker_default = {
 
                         <div style="margin-bottom: 25px;">
                             <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Primary Contact</p>
-                            <a href="tel:9168904427" style="font-size: 24px; font-weight: bold; color: #5B2B82; text-decoration: none;">
+                            <a href="tel:9168904427" style="font-size: 24px; font-weight: bold; color: #FDB927; text-decoration: none;">
                                 916-890-4427
                             </a>
                         </div>
@@ -1167,9 +1167,9 @@ var worker_default = {
                         </div>
 
                         <div>
-                            <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Primary Website</p>
-                            <a href="https://norcalcarbmobile.com" style="color: #5B2B82; text-decoration: none; font-weight: 600;">
-                                norcalcarbmobile.com
+                            <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Schedule Online</p>
+                            <a href="#contact" style="color: #FDB927; text-decoration: none; font-weight: 600;">
+                                Book Your Inspection &#x2192;
                             </a>
                         </div>
                     </div>
@@ -1281,7 +1281,7 @@ var worker_default = {
                     </div>
                     <div class="faq-answer">
                         <p>
-                            Call or text us at 916-890-4427, or fill out the <a href="#contact" style="color:#5B2B82;">contact form</a> on this page.
+                            Call or text us at 916-890-4427, or fill out the <a href="#contact" style="color:#c07d00;font-weight:600;">contact form</a> on this page.
                             We serve Stockton, Lodi, Tracy, Manteca, and throughout the San Joaquin Valley.
                             We offer flexible scheduling including early mornings and Saturdays to minimize fleet downtime.
                         </p>
@@ -1342,7 +1342,7 @@ var worker_default = {
             <h2 class="section-title">Schedule Your Inspection</h2>
             <p class="section-subtitle">
                 Fill out the form and we&#39;ll get back to you within a few hours to confirm your appointment.
-                Or call/text us directly at <a href="tel:9168904427" style="color:#5B2B82;font-weight:600;">916-890-4427</a>.
+                Or call/text us directly at <a href="tel:9168904427" style="color:#c07d00;font-weight:600;">916-890-4427</a>.
             </p>
 
             <div class="contact-grid">
@@ -1543,7 +1543,7 @@ var worker_default = {
             "reviewCount": "47"
         },
         "sameAs": [
-            "https://norcalcarbmobile.com"
+            "https://carbteststockton.com"
         ],
         "priceRange": "$84-$250"
     }
