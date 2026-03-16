@@ -927,7 +927,7 @@ var worker_default = {
                     &#x1F69A; Clean Truck Check
                     <span>Stockton</span>
                 </a>
-                <a href="tel:9168904427" class="call-btn">
+                <a href="tel:2098181371" class="call-btn">
                     &#x1F4DE; Call Now
                 </a>
             </div>
@@ -951,7 +951,7 @@ var worker_default = {
                 </div>
 
                 <div class="cta-buttons">
-                    <a href="tel:9168904427" class="btn-primary">Call Now: 916-890-4427</a>
+                    <a href="tel:2098181371" class="btn-primary">Call Now: (209) 818-1371</a>
                     <a href="#contact" class="btn-secondary">Schedule Online</a>
                 </div>
 
@@ -1025,7 +1025,7 @@ var worker_default = {
                     <h3>Fleet Testing</h3>
                     <p>Multi-vehicle fleet inspections at your yard or lot. Volume pricing available. HD-OBD and opacity for mixed fleets with CARB-certified documentation for every unit.</p>
                     <div class="service-price">Call for Quote</div>
-                    <a href="tel:9168904427" class="service-cta">Call Now &#x2192;</a>
+                    <a href="tel:2098181371" class="service-cta">Call Now &#x2192;</a>
                 </div>
 
                 <div class="service-card">
@@ -1044,7 +1044,7 @@ var worker_default = {
                     Mobile service covers Stockton, Lodi, Tracy, Manteca, and throughout the San Joaquin Valley.
                 </p>
                 <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;">
-                    <a href="tel:9168904427" class="btn-primary">Call: 916-890-4427</a>
+                    <a href="tel:2098181371" class="btn-primary">Call: (209) 818-1371</a>
                     <a href="#contact" class="btn-secondary">Schedule Online</a>
                 </div>
             </div>
@@ -1151,8 +1151,8 @@ var worker_default = {
 
                         <div style="margin-bottom: 25px;">
                             <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Primary Contact</p>
-                            <a href="tel:9168904427" style="font-size: 24px; font-weight: bold; color: #FDB927; text-decoration: none;">
-                                916-890-4427
+                            <a href="tel:2098181371" style="font-size: 24px; font-weight: bold; color: #FDB927; text-decoration: none;">
+                                (209) 818-1371
                             </a>
                         </div>
 
@@ -1255,7 +1255,7 @@ var worker_default = {
                         <p>
                             Our current pricing: HD-OBD inspection is <strong>$84</strong> per vehicle; snap-acceleration opacity test is <strong>$199</strong>;
                             RV/motorhome inspection is <strong>$250</strong>. Fleet pricing is available for multiple vehicles — call
-                            916-890-4427 or use the contact form for a fleet quote.
+                            (209) 818-1371 or use the contact form for a fleet quote.
                         </p>
                     </div>
                 </div>
@@ -1281,7 +1281,7 @@ var worker_default = {
                     </div>
                     <div class="faq-answer">
                         <p>
-                            Call or text us at 916-890-4427, or fill out the <a href="#contact" style="color:#c07d00;font-weight:600;">contact form</a> on this page.
+                            Call or text us at (209) 818-1371, or fill out the <a href="#contact" style="color:#c07d00;font-weight:600;">contact form</a> on this page.
                             We serve Stockton, Lodi, Tracy, Manteca, and throughout the San Joaquin Valley.
                             We offer flexible scheduling including early mornings and Saturdays to minimize fleet downtime.
                         </p>
@@ -1311,7 +1311,7 @@ var worker_default = {
                     <div class="faq-answer">
                         <p>
                             Yes, we offer Saturday testing. Service hours are Monday-Friday 6am-5pm and Saturday 8am-4pm.
-                            Call 916-890-4427 to check availability and schedule a weekend test time that works for your fleet.
+                            Call (209) 818-1371 to check availability and schedule a weekend test time that works for your fleet.
                         </p>
                     </div>
                 </div>
@@ -1329,7 +1329,7 @@ var worker_default = {
                     Quick, professional, licensed testing.
                 </p>
                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <a href="tel:9168904427" class="btn-primary">Call: 916-890-4427</a>
+                    <a href="tel:2098181371" class="btn-primary">Call: (209) 818-1371</a>
                     <a href="#contact" class="btn-secondary">Schedule Online</a>
                 </div>
             </div>
@@ -1342,7 +1342,7 @@ var worker_default = {
             <h2 class="section-title">Schedule Your Inspection</h2>
             <p class="section-subtitle">
                 Fill out the form and we&#39;ll get back to you within a few hours to confirm your appointment.
-                Or call/text us directly at <a href="tel:9168904427" style="color:#c07d00;font-weight:600;">916-890-4427</a>.
+                Or call/text us directly at <a href="tel:2098181371" style="color:#c07d00;font-weight:600;">(209) 818-1371</a>.
             </p>
 
             <div class="contact-grid">
@@ -1351,7 +1351,7 @@ var worker_default = {
                         <div class="contact-info-icon">&#x1F4DE;</div>
                         <div>
                             <h4>Call or Text</h4>
-                            <a href="tel:9168904427">916-890-4427</a>
+                            <a href="tel:2098181371">(209) 818-1371</a>
                         </div>
                     </div>
                     <div class="contact-info-card">
@@ -1438,7 +1438,7 @@ var worker_default = {
                     </p>
                     <div class="footer-contact">
                         <span class="footer-contact-icon">&#x1F4DE;</span>
-                        <a href="tel:9168904427">916-890-4427</a>
+                        <a href="tel:2098181371">(209) 818-1371</a>
                     </div>
                 </div>
 
@@ -1496,7 +1496,7 @@ var worker_default = {
         "name": "Clean Truck Check Stockton",
         "image": "https://norcalcarbmobile.com/logo.png",
         "description": "Mobile CARB emissions testing in Stockton, CA. HD-OBD and smoke/opacity testing for trucks and fleets. Licensed CARB tester. We come to you.",
-        "telephone": "916-890-4427",
+        "telephone": "(209) 818-1371",
         "url": "https://carbteststockton.com",
         "address": {
             "@type": "PostalAddress",
@@ -1558,7 +1558,7 @@ var worker_default = {
         "provider": {
             "@type": "LocalBusiness",
             "name": "NorCal CARB Mobile LLC",
-            "telephone": "916-890-4427"
+            "telephone": "(209) 818-1371"
         },
         "areaServed": "San Joaquin Valley, CA",
         "serviceType": ["HD-OBD Testing", "Smoke Opacity Testing", "Fleet Testing", "RV Testing"]
@@ -1703,7 +1703,7 @@ var worker_default = {
                 }
             } catch (err) {
                 msg.className = 'form-message error';
-                msg.textContent = 'Something went wrong. Please call or text us at 916-890-4427.';
+                msg.textContent = 'Something went wrong. Please call or text us at (209) 818-1371.';
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Send Request \u2192';
@@ -1712,7 +1712,7 @@ var worker_default = {
 
         console.log('Clean Truck Check Stockton — carbteststockton.com');
         console.log('CARB Tester ID: IF530523');
-        console.log('Contact: 916-890-4427');
+        console.log('Contact: (209) 818-1371');
     <\/script>
 </body>
 </html>`;

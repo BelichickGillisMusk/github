@@ -1,0 +1,24 @@
+# .github/workflows/deploy-lodi-worker.yml
+name: Deploy Lodi Worker to Cloudflare
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'workers/cleantruckchecklodi/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy cleantruckcheckhaywardlodi
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUD_API }}
+          accountId: bafa242dd95d3fdce72540d20accd0a2
+          workingDirectory: workers/cleantruckchecklodi
+          command: deploy
