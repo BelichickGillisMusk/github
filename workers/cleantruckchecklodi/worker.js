@@ -33,7 +33,7 @@ var worker_default = {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({
-            personalizations: [{ to: [{ email: 'bryan@norcalcarbmobile.com', name: 'Bryan' }] }],
+            personalizations: [{ to: [{ email: 'admin@mobilecarbsmoketest.com', name: 'Admin' }] }],
             from: { email: 'noreply@cleantruckcheckhayward.com', name: 'Clean Truck Check Lodi' },
             reply_to: email ? { email, name } : undefined,
             subject: `New Test Request: ${name} — ${service || 'Lodi'}`,
