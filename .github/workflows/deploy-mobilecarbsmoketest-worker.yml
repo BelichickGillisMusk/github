@@ -1,0 +1,24 @@
+# .github/workflows/deploy-mobilecarbsmoketest-worker.yml
+name: Deploy Mobile Carb Smoke Test Worker to Cloudflare
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'workers/mobilecarbsmoketest/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy mobilecarbsmoketest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUD_API }}
+          accountId: bafa242dd95d3fdce72540d20accd0a2
+          workingDirectory: workers/mobilecarbsmoketest
+          command: deploy

@@ -1,7 +1,4 @@
-// worker.js - Clean Truck Check Stockton
-var worker_default = {
-  async fetch(request) {
-    const html = `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1715,15 +1712,4 @@ var worker_default = {
         console.log('Contact: (209) 818-1371');
     <\/script>
 </body>
-</html>`;
-    return new Response(html, {
-      headers: {
-        "Content-Type": "text/html; charset=utf-8",
-        "Cache-Control": "public, max-age=3600"
-      }
-    });
-  }
-};
-export {
-  worker_default as default
-};
+</html>
