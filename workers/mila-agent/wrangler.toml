@@ -1,0 +1,7 @@
+name = "mila-agent"
+main = "worker.js"
+compatibility_date = "2026-03-01"
+account_id = "bafa242dd95d3fdce72540d20accd0a2"
+
+[env.production]
+name = "mila-agent"
