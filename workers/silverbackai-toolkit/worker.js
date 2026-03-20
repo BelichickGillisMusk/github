@@ -490,10 +490,17 @@ var worker_default = {
                     <div class="logo-mark">
                         <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="40" height="40" rx="10" fill="#16161f"/>
-                            <path d="M12 28V16c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v12" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
-                            <circle cx="17" cy="18" r="2" fill="#8b5cf6"/>
-                            <circle cx="23" cy="18" r="2" fill="#8b5cf6"/>
-                            <path d="M15 24c0 0 2 3 5 3s5-3 5-3" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M6 40 C6 31 11 28 15 27 L20 26.5 L25 27 C29 28 34 31 34 40" fill="#ccff00"/>
+                            <path d="M14 33 Q20 31 26 33" stroke="#e6ff66" stroke-width="0.8" fill="none" opacity="0.5"/>
+                            <ellipse cx="20" cy="16" rx="10" ry="9" fill="#6b6b78"/>
+                            <path d="M11 16 C13 12 17 11 20 11.5 C23 11 27 12 29 16" fill="#5a5a68"/>
+                            <ellipse cx="16" cy="16.5" rx="2" ry="1.8" fill="#1a1a24"/>
+                            <ellipse cx="24" cy="16.5" rx="2" ry="1.8" fill="#1a1a24"/>
+                            <circle cx="16.8" cy="16" r="0.6" fill="#8b5cf6"/>
+                            <circle cx="24.8" cy="16" r="0.6" fill="#8b5cf6"/>
+                            <ellipse cx="20" cy="21" rx="4" ry="3" fill="#5a5a68"/>
+                            <ellipse cx="18.5" cy="20.5" rx="0.8" ry="0.6" fill="#333"/>
+                            <ellipse cx="21.5" cy="20.5" rx="0.8" ry="0.6" fill="#333"/>
                         </svg>
                     </div>
                     <div class="logo-text">Silverback<span>AI</span> <span class="toolkit-label">/ Toolkit</span></div>
