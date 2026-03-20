@@ -16,6 +16,7 @@ import argparse
 import csv
 import json
 import os
+import re
 import sys
 import time
 from datetime import datetime
@@ -80,6 +81,29 @@ def get_place_details(place_id, api_key):
     resp = requests.get(PLACES_DETAIL_URL, params=params, timeout=15)
     resp.raise_for_status()
     return resp.json().get("result", {})
+
+
+def scrape_email_from_website(url):
+    """Try to find a contact email address on the business website."""
+    if not url:
+        return ""
+    try:
+        resp = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        resp.raise_for_status()
+        # Find email addresses in page content
+        emails = re.findall(
+            r'[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}',
+            resp.text,
+        )
+        # Filter out common non-contact emails
+        ignore = {"noreply", "no-reply", "support@example", "email@example", "test@"}
+        for email in emails:
+            lower = email.lower()
+            if not any(ig in lower for ig in ignore):
+                return email
+    except Exception:
+        pass
+    return ""
 
 
 def score_lead(place, details):
@@ -173,7 +197,10 @@ def scrape_leads(areas=None, queries=None, api_key=None):
                 all_results = results
                 if next_token:
                     time.sleep(2)  # Google requires delay before next_page_token
-                    page2, _ = search_places(None, None, None, None, api_key, next_token)
+                    page2, _ = search_places(
+                        search_term, coords["lat"], coords["lng"],
+                        DEFAULT_SEARCH_RADIUS_METERS, api_key, next_token,
+                    )
                     all_results += page2
 
                 for place in all_results:
@@ -189,12 +216,16 @@ def scrape_leads(areas=None, queries=None, api_key=None):
                     score = score_lead(place, details)
                     tier = tier_label(score)
 
+                    website = details.get("website", "")
+                    email = scrape_email_from_website(website)
+
                     lead = {
                         "place_id": pid,
                         "business_name": place.get("name", ""),
                         "address": place.get("formatted_address", ""),
                         "phone": details.get("formatted_phone_number", ""),
-                        "website": details.get("website", ""),
+                        "email": email,
+                        "website": website,
                         "rating": place.get("rating", ""),
                         "review_count": place.get("user_ratings_total", 0),
                         "category": query,
@@ -224,6 +255,7 @@ def _demo_leads():
             "business_name": "Valley Fleet Services",
             "address": "4521 Stockton Blvd, Sacramento, CA 95820",
             "phone": "(916) 555-0101",
+            "email": "info@valleyfleet.example.com",
             "website": "https://valleyfleet.example.com",
             "rating": 4.2,
             "review_count": 47,
@@ -240,6 +272,7 @@ def _demo_leads():
             "business_name": "Delta Trucking Inc",
             "address": "890 Navy Dr, Stockton, CA 95206",
             "phone": "(209) 555-0202",
+            "email": "dispatch@deltatrucking.example.com",
             "website": "https://deltatrucking.example.com",
             "rating": 3.8,
             "review_count": 23,
@@ -256,6 +289,7 @@ def _demo_leads():
             "business_name": "Roseville Auto Group",
             "address": "300 Automall Dr, Roseville, CA 95661",
             "phone": "(916) 555-0303",
+            "email": "sales@rosevilleauto.example.com",
             "website": "https://rosevilleauto.example.com",
             "rating": 4.5,
             "review_count": 156,
@@ -272,6 +306,7 @@ def _demo_leads():
             "business_name": "Mike's Tow & Recovery",
             "address": "1100 E Main St, Stockton, CA 95205",
             "phone": "(209) 555-0404",
+            "email": "",
             "website": "",
             "rating": 3.2,
             "review_count": 8,
@@ -288,6 +323,7 @@ def _demo_leads():
             "business_name": "Garcia Landscaping & Tree Service",
             "address": "2200 Fruitridge Rd, Sacramento, CA 95822",
             "phone": "(916) 555-0505",
+            "email": "",
             "website": "",
             "rating": 4.7,
             "review_count": 31,
@@ -322,15 +358,16 @@ def export_csv(leads, filepath, fmt="standard"):
             })
     else:
         fieldnames = [
-            "place_id", "business_name", "address", "phone", "website",
-            "rating", "review_count", "category", "area", "score", "tier",
-            "status", "scraped_date", "notes",
+            "place_id", "business_name", "address", "phone", "email",
+            "website", "rating", "review_count", "category", "area",
+            "score", "tier", "status", "scraped_date", "notes",
         ]
         rows = leads
 
-    with open(filepath, "a" if os.path.exists(filepath) else "w", newline="") as f:
+    file_exists = os.path.exists(filepath) and os.path.getsize(filepath) > 0
+    with open(filepath, "a" if file_exists else "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
-        if f.tell() == 0:
+        if not file_exists:
             writer.writeheader()
         writer.writerows(rows)
 
