@@ -5,6 +5,7 @@ This is the **BelichickGillisMusk/github** monorepo containing Cloudflare Worker
 
 ## Repository Structure
 ```
+├── Claude-Gillis-Musk/         # Primary workspace (Claude-managed)
 ├── workers/                    # Cloudflare Workers
 │   └── cleantruckcheckstockton/  # Stockton clean truck check worker
 │       ├── worker.js
