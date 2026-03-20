@@ -4,8 +4,31 @@
       "Bash(npx wrangler *)",
       "Bash(npm *)",
       "Bash(git *)",
-      "Bash(gh *)"
+      "Bash(gh *)",
+      "Bash(curl *)",
+      "Bash(node *)",
+      "Read",
+      "Glob",
+      "Grep"
     ],
-    "deny": []
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf ~)"
+    ]
+  },
+  "env": {
+    "CLOUDFLARE_ACCOUNT_ID": "bafa242dd95d3fdce72540d20accd0a2"
+  },
+  "hooks": {
+    "PostCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"systemMessage\": \"Context was compacted. Re-read CLAUDE.md and Claude-Gillis-Musk/CAPABILITIES.md for full context refresh.\"}'"
+          }
+        ]
+      }
+    ]
   }
 }
