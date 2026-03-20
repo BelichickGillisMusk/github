@@ -32,6 +32,7 @@ var worker_default = {
             --accent-glow: rgba(139, 92, 246, 0.15);
             --accent-hover: #a78bfa;
             --silver: #c0c0c8;
+            --vest: #ccff00;
             --text-primary: #e8e8ed;
             --text-secondary: #9898a4;
             --border: rgba(139, 92, 246, 0.2);
@@ -265,6 +266,19 @@ var worker_default = {
             transform: translateY(-2px);
         }
 
+        .hero-illustration {
+            max-width: 420px;
+            margin: 0 auto 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-illustration svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.08));
+        }
+
         @media (max-width: 768px) {
             .hero {
                 padding: 80px 0 60px;
@@ -284,6 +298,9 @@ var worker_default = {
                 width: 100%;
                 max-width: 320px;
                 text-align: center;
+            }
+            .hero-illustration {
+                max-width: 300px;
             }
         }
 
@@ -670,11 +687,17 @@ var worker_default = {
                     <div class="logo-mark">
                         <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="40" height="40" rx="10" fill="#16161f"/>
-                            <path d="M12 28V16c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v12" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
-                            <circle cx="17" cy="18" r="2" fill="#8b5cf6"/>
-                            <circle cx="23" cy="18" r="2" fill="#8b5cf6"/>
-                            <path d="M15 24c0 0 2 3 5 3s5-3 5-3" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M10 20h-2M32 20h-2" stroke="#c0c0c8" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                            <path d="M6 40 C6 31 11 28 15 27 L20 26.5 L25 27 C29 28 34 31 34 40" fill="#ccff00"/>
+                            <path d="M14 33 Q20 31 26 33" stroke="#e6ff66" stroke-width="0.8" fill="none" opacity="0.5"/>
+                            <ellipse cx="20" cy="16" rx="10" ry="9" fill="#6b6b78"/>
+                            <path d="M11 16 C13 12 17 11 20 11.5 C23 11 27 12 29 16" fill="#5a5a68"/>
+                            <ellipse cx="16" cy="16.5" rx="2" ry="1.8" fill="#1a1a24"/>
+                            <ellipse cx="24" cy="16.5" rx="2" ry="1.8" fill="#1a1a24"/>
+                            <circle cx="16.8" cy="16" r="0.6" fill="#8b5cf6"/>
+                            <circle cx="24.8" cy="16" r="0.6" fill="#8b5cf6"/>
+                            <ellipse cx="20" cy="21" rx="4" ry="3" fill="#5a5a68"/>
+                            <ellipse cx="18.5" cy="20.5" rx="0.8" ry="0.6" fill="#333"/>
+                            <ellipse cx="21.5" cy="20.5" rx="0.8" ry="0.6" fill="#333"/>
                         </svg>
                     </div>
                     <div class="logo-text">Silverback<span>AI</span></div>
@@ -695,6 +718,89 @@ var worker_default = {
             <div class="hero-badge">
                 <span class="hero-badge-dot"></span>
                 AI Solutions &amp; Consulting
+            </div>
+            <div class="hero-illustration">
+                <svg viewBox="0 0 480 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Moon glow -->
+                    <circle cx="380" cy="75" r="55" fill="#fdf4c1" opacity="0.06"/>
+                    <circle cx="380" cy="75" r="38" fill="#fdf4c1" opacity="0.1"/>
+                    <circle cx="380" cy="75" r="25" fill="#fdf4c1" opacity="0.15"/>
+                    <!-- Stars -->
+                    <circle cx="50" cy="35" r="1.5" fill="#fff" opacity="0.25"/>
+                    <circle cx="125" cy="65" r="1" fill="#fff" opacity="0.15"/>
+                    <circle cx="200" cy="25" r="1.5" fill="#fff" opacity="0.2"/>
+                    <circle cx="310" cy="45" r="1" fill="#fff" opacity="0.18"/>
+                    <circle cx="440" cy="110" r="1.2" fill="#fff" opacity="0.12"/>
+                    <circle cx="425" cy="35" r="1" fill="#fff" opacity="0.25"/>
+                    <circle cx="75" cy="95" r="1" fill="#fff" opacity="0.12"/>
+                    <circle cx="270" cy="60" r="0.8" fill="#fff" opacity="0.15"/>
+                    <!-- Ground surface -->
+                    <path d="M0 310 Q120 302 240 306 Q360 310 480 300 L480 340 L0 340 Z" fill="#111118"/>
+                    <path d="M0 315 Q100 308 200 312 Q340 316 480 306" stroke="#2a2a35" stroke-width="0.5" fill="none"/>
+                    <!-- Purple ground glow under gorilla -->
+                    <ellipse cx="225" cy="310" rx="90" ry="12" fill="#8b5cf6" opacity="0.06"/>
+                    <!-- Shadow on ground -->
+                    <ellipse cx="225" cy="312" rx="55" ry="5" fill="#000" opacity="0.3"/>
+
+                    <!-- LEFT LEG (back, stepping) -->
+                    <path d="M205 272 L198 300 L194 312 Q194 316 202 316 L207 314 L212 295 L215 272" fill="#5a5a68"/>
+                    <!-- LEFT FOOT -->
+                    <ellipse cx="199" cy="315" rx="9" ry="3.5" fill="#4a4a58"/>
+
+                    <!-- RIGHT LEG (forward stride) -->
+                    <path d="M242 268 L252 298 L256 310 Q256 314 248 316 L243 314 L240 296 L238 268" fill="#666674"/>
+                    <!-- RIGHT FOOT -->
+                    <ellipse cx="250" cy="315" rx="9" ry="3.5" fill="#555563"/>
+
+                    <!-- TORSO - massive broad back -->
+                    <path d="M188 168 C183 190 186 235 198 270 L218 275 L240 275 L252 270 C260 235 262 190 255 168 Z" fill="#666674"/>
+
+                    <!-- HIGH-VIS VEST -->
+                    <path d="M192 178 C188 198 191 245 200 272 L218 275 L240 275 L250 272 C257 245 259 198 254 178 Z" fill="#ccff00"/>
+                    <!-- Armhole cutouts showing fur -->
+                    <path d="M192 178 C196 172 205 168 222 168 C239 168 248 172 254 178" fill="#666674"/>
+                    <!-- Reflective stripes -->
+                    <path d="M196 218 Q222 213 250 218" stroke="#e6ff66" stroke-width="3.5" fill="none" opacity="0.6"/>
+                    <path d="M198 245 Q222 240 248 245" stroke="#e6ff66" stroke-width="3.5" fill="none" opacity="0.6"/>
+                    <!-- SILVERBACK text on vest -->
+                    <text x="222" y="202" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="800" fill="#1a1a24" letter-spacing="1.5">SILVERBACK</text>
+                    <!-- AI text on vest (purple) -->
+                    <text x="222" y="216" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#6d28d9" letter-spacing="3">AI</text>
+
+                    <!-- LEFT ARM (carrying lunch pail) -->
+                    <path d="M188 178 C176 190 170 220 168 248 C166 265 167 275 172 280" fill="#5a5a68"/>
+                    <ellipse cx="173" cy="282" rx="6" ry="5.5" fill="#5a5a68"/>
+
+                    <!-- LUNCH PAIL -->
+                    <rect x="160" y="282" rx="3" width="26" height="20" fill="#8a8a9a"/>
+                    <rect x="160" y="282" rx="3" width="26" height="4" fill="#9a9aaa"/>
+                    <!-- Lunch pail handle -->
+                    <path d="M164 282 C164 272 182 272 182 282" stroke="#aaa" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <!-- AI sticker on lunch pail -->
+                    <rect x="165" y="289" rx="2" width="16" height="10" fill="#8b5cf6"/>
+                    <text x="173" y="297" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="800" fill="#fff">AI</text>
+
+                    <!-- RIGHT ARM (swinging) -->
+                    <path d="M255 178 C265 190 270 220 267 248 C265 265 260 275 256 278" fill="#666674"/>
+                    <ellipse cx="256" cy="280" rx="5.5" ry="5" fill="#666674"/>
+
+                    <!-- HEAD - rear/3-quarter view, walking toward moon -->
+                    <ellipse cx="222" cy="150" rx="24" ry="22" fill="#666674"/>
+                    <!-- Sagittal crest -->
+                    <path d="M206 132 Q222 122 238 132" fill="#5a5a68"/>
+                    <!-- Ears -->
+                    <ellipse cx="198" cy="152" rx="5" ry="6" fill="#555563"/>
+                    <ellipse cx="246" cy="150" rx="5" ry="6" fill="#5a5a68"/>
+                    <!-- Inner ear -->
+                    <ellipse cx="198" cy="152" rx="3" ry="4" fill="#4a4a58"/>
+                    <ellipse cx="246" cy="150" rx="3" ry="4" fill="#4a4a58"/>
+                    <!-- Neck/trap muscles -->
+                    <path d="M208 166 Q222 172 236 166 L242 175 L204 175 Z" fill="#5a5a68"/>
+                    <!-- Slight head turn - hint of right eye/brow visible -->
+                    <path d="M240 145 C242 142 245 143 244 146" fill="#4a4a58"/>
+                    <circle cx="243" cy="145" r="1.2" fill="#1a1a24"/>
+                    <circle cx="243.4" cy="144.6" r="0.4" fill="#8b5cf6"/>
+                </svg>
             </div>
             <h1>
                 Intelligent Solutions,<br>
@@ -901,10 +1007,17 @@ var worker_default = {
                         <div class="logo-mark">
                             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="40" height="40" rx="10" fill="#16161f"/>
-                                <path d="M12 28V16c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v12" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
-                                <circle cx="17" cy="18" r="2" fill="#8b5cf6"/>
-                                <circle cx="23" cy="18" r="2" fill="#8b5cf6"/>
-                                <path d="M15 24c0 0 2 3 5 3s5-3 5-3" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M6 40 C6 31 11 28 15 27 L20 26.5 L25 27 C29 28 34 31 34 40" fill="#ccff00"/>
+                                <path d="M14 33 Q20 31 26 33" stroke="#e6ff66" stroke-width="0.8" fill="none" opacity="0.5"/>
+                                <ellipse cx="20" cy="16" rx="10" ry="9" fill="#6b6b78"/>
+                                <path d="M11 16 C13 12 17 11 20 11.5 C23 11 27 12 29 16" fill="#5a5a68"/>
+                                <ellipse cx="16" cy="16.5" rx="2" ry="1.8" fill="#1a1a24"/>
+                                <ellipse cx="24" cy="16.5" rx="2" ry="1.8" fill="#1a1a24"/>
+                                <circle cx="16.8" cy="16" r="0.6" fill="#8b5cf6"/>
+                                <circle cx="24.8" cy="16" r="0.6" fill="#8b5cf6"/>
+                                <ellipse cx="20" cy="21" rx="4" ry="3" fill="#5a5a68"/>
+                                <ellipse cx="18.5" cy="20.5" rx="0.8" ry="0.6" fill="#333"/>
+                                <ellipse cx="21.5" cy="20.5" rx="0.8" ry="0.6" fill="#333"/>
                             </svg>
                         </div>
                         <div class="logo-text">Silverback<span>AI</span></div>
