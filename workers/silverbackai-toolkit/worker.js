@@ -14,6 +14,7 @@ var worker_default = {
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Silverback AI Toolkit — AI Tools Ready to Deploy">
     <meta property="og:description" content="Pre-built AI tools for legal, property management, web, and custom business workflows.">
+    <meta property="og:url" content="https://silverbackai.agency/toolkit">
     <meta name="theme-color" content="#0a0a0f">
     <title>Silverback AI Toolkit — AI Tools Ready to Deploy</title>
 
@@ -743,7 +744,7 @@ var worker_default = {
                     Don&#39;t see what you need? We build custom AI tools for your
                     exact workflow. Tell us what you&#39;re trying to solve.
                 </p>
-                <a href="mailto:hello@silverbackai.com" class="btn-primary">Request a Custom Tool</a>
+                <a href="mailto:hello@silverbackai.agency" class="btn-primary">Request a Custom Tool</a>
             </div>
         </div>
     </section>
@@ -752,7 +753,7 @@ var worker_default = {
         <div class="container">
             <div class="footer-content">
                 <p>&copy; 2026 Silverback AI. All rights reserved.</p>
-                <p><a href="/">Back to SilverbackAI.com</a></p>
+                <p><a href="https://silverbackai.agency">Back to SilverbackAI.agency</a></p>
             </div>
         </div>
     </footer>

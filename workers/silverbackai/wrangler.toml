@@ -5,3 +5,7 @@ account_id = "bafa242dd95d3fdce72540d20accd0a2"
 
 [env.production]
 name = "silverbackai"
+routes = [
+  { pattern = "silverbackai.agency", custom_domain = true },
+  { pattern = "www.silverbackai.agency", custom_domain = true }
+]

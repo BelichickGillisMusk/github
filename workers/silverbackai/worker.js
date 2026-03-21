@@ -12,6 +12,8 @@ var worker_default = {
     <meta property="og:title" content="Silverback AI — Intelligent Solutions, Built to Last">
     <meta property="og:description" content="AI consulting and pre-built solutions for businesses. Legal, property management, web, and custom AI integration.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://silverbackai.agency">
+    <link rel="canonical" href="https://silverbackai.agency">
     <meta name="theme-color" content="#0a0a0f">
     <title>Silverback AI — Intelligent Solutions, Built to Last</title>
 
@@ -995,7 +997,7 @@ var worker_default = {
                 Book a free discovery call. No pressure, no jargon &mdash; just a
                 conversation about what&#39;s possible.
             </p>
-            <a href="mailto:hello@silverbackai.com" class="btn-primary">Get In Touch</a>
+            <a href="mailto:hello@silverbackai.agency" class="btn-primary">Get In Touch</a>
         </div>
     </section>
 
@@ -1108,11 +1110,11 @@ var worker_default = {
         "@type": "Organization",
         "name": "Silverback AI",
         "description": "AI consulting and pre-built solutions for businesses. Legal AI, property management tools, web builders, and custom AI integration.",
-        "url": "https://silverbackai.com",
+        "url": "https://silverbackai.agency",
         "sameAs": [],
         "contactPoint": {
             "@type": "ContactPoint",
-            "email": "hello@silverbackai.com",
+            "email": "hello@silverbackai.agency",
             "contactType": "sales"
         },
         "knowsAbout": ["Artificial Intelligence", "AI Consulting", "AI Integration", "Legal Technology", "Property Management Software", "Agentic AI Systems"]

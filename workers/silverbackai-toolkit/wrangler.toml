@@ -5,3 +5,6 @@ account_id = "bafa242dd95d3fdce72540d20accd0a2"
 
 [env.production]
 name = "silverbackai-toolkit"
+routes = [
+  { pattern = "toolkit.silverbackai.agency", custom_domain = true }
+]
