@@ -1,17 +1,16 @@
-# .github/workflows/deploy-stockton-worker.yml
-name: Deploy Stockton Worker to Cloudflare
+name: Deploy Silverback AI Toolkit to Cloudflare
 
 on:
   push:
     branches: [main, master]
     paths:
-      - 'workers/cleantruckcheckstockton/**'
+      - 'workers/silverbackai-toolkit/**'
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy carbteststockton
+    name: Deploy silverbackai-toolkit
     steps:
       - uses: actions/checkout@v4
 
@@ -20,5 +19,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: bafa242dd95d3fdce72540d20accd0a2
-          workingDirectory: workers/cleantruckcheckstockton
+          workingDirectory: workers/silverbackai-toolkit
           command: deploy
