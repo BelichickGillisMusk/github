@@ -1,24 +1,24 @@
-# .github/workflows/deploy-stockton-worker.yml
-name: Deploy Stockton Worker to Cloudflare
+# .github/workflows/deploy-mobilecarbsmoketest-worker.yml
+name: Deploy Mobile Carb Smoke Test Worker to Cloudflare
 
 on:
   push:
     branches: [main, master]
     paths:
-      - 'workers/cleantruckcheckstockton/**'
+      - 'workers/mobilecarbsmoketest/**'
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy carbteststockton
+    name: Deploy mobilecarbsmoketest
     steps:
       - uses: actions/checkout@v4
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          apiToken: ${{ secrets.CLOUD_API }}
           accountId: bafa242dd95d3fdce72540d20accd0a2
-          workingDirectory: workers/cleantruckcheckstockton
+          workingDirectory: workers/mobilecarbsmoketest
           command: deploy

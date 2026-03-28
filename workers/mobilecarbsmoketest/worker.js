@@ -1,4 +1,4 @@
-// worker.js - Clean Truck Check Stockton
+// worker.js - Mobile Carb Smoke Test San Diego
 var worker_default = {
   async fetch(request) {
     const html = `<!DOCTYPE html>
@@ -6,19 +6,19 @@ var worker_default = {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mobile Clean Truck Check inspections in Stockton, CA. CARB-licensed HD-OBD and opacity testing for heavy-duty diesel trucks. We come to you — no downtime. Tester ID: IF530523. 4.9&#9733; rated.">
-    <meta name="keywords" content="CARB testing Stockton, Clean Truck Check Stockton, mobile emissions testing Stockton CA, HD-OBD testing Central Valley, smoke opacity test Stockton, mobile CARB tester San Joaquin">
-    <meta name="geo.position" content="37.9577;-121.2908">
-    <meta name="ICBM" content="37.9577,-121.2908">
-    <meta name="geo.placename" content="Stockton, California">
+    <meta name="description" content="Mobile CARB smoke &amp; OBD testing in San Diego, CA. CARB-licensed HD-OBD and opacity testing for heavy-duty diesel trucks. We come to you — no downtime. Tester ID: IF530523. 4.9&#9733; rated.">
+    <meta name="keywords" content="CARB testing San Diego, mobile smoke test San Diego, Clean Truck Check San Diego, HD-OBD testing San Diego CA, opacity test San Diego, mobile CARB tester Southern California, smoke opacity test Chula Vista, diesel emissions test San Diego">
+    <meta name="geo.position" content="32.7157;-117.1611">
+    <meta name="ICBM" content="32.7157,-117.1611">
+    <meta name="geo.placename" content="San Diego, California">
     <meta name="geo.region" content="US-CA">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Mobile CARB Testing Stockton, CA | Clean Truck Check">
-    <meta property="og:description" content="CARB Clean Truck Check inspections in Stockton, CA. Mobile HD-OBD and opacity testing — we come to you. Licensed tester IF530523. 4.9&#9733; rated.">
+    <meta property="og:title" content="Mobile CARB Smoke Test San Diego, CA | Clean Truck Check">
+    <meta property="og:description" content="CARB Clean Truck Check inspections in San Diego, CA. Mobile HD-OBD and opacity testing — we come to you. Licensed tester IF530523. 4.9&#9733; rated.">
     <meta property="og:type" content="business.business">
-    <meta property="og:url" content="https://carbteststockton.com">
-    <meta name="theme-color" content="#5B2B82">
-    <title>Mobile CARB Testing Stockton CA | Clean Truck Check - HD-OBD &amp; Opacity</title>
+    <meta property="og:url" content="https://mobilecarbsmoketest.com">
+    <meta name="theme-color" content="#4A3728">
+    <title>Mobile CARB Smoke Test San Diego CA | Clean Truck Check - HD-OBD &amp; Opacity</title>
 
     <style>
         * {
@@ -60,7 +60,7 @@ var worker_default = {
         header {
             background-color: rgba(255, 255, 255, 0.97);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid #FDB927;
+            border-bottom: 2px solid #C4A962;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -77,7 +77,7 @@ var worker_default = {
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #5B2B82;
+            color: #4A3728;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -92,8 +92,8 @@ var worker_default = {
         }
 
         .call-btn {
-            background-color: #FDB927;
-            color: #1a0a2e;
+            background-color: #C4A962;
+            color: #2F241D;
             padding: 12px 24px;
             border-radius: 4px;
             text-decoration: none;
@@ -108,9 +108,9 @@ var worker_default = {
         }
 
         .call-btn:hover {
-            background-color: #e6a820;
+            background-color: #a8905a;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(253, 185, 39, 0.5);
+            box-shadow: 0 4px 12px rgba(196, 169, 98, 0.5);
         }
 
         @media (max-width: 768px) {
@@ -122,7 +122,7 @@ var worker_default = {
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #5B2B82 0%, #4a2268 60%, #1a0a2e 100%);
+            background: linear-gradient(135deg, #4A3728 0%, #2F241D 60%, #002D62 100%);
             padding: 100px 0;
             text-align: center;
             position: relative;
@@ -136,7 +136,7 @@ var worker_default = {
             right: -10%;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(253, 185, 39, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(196, 169, 98, 0.15) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -148,7 +148,7 @@ var worker_default = {
             left: -5%;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(253, 185, 39, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(196, 169, 98, 0.1) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -168,7 +168,7 @@ var worker_default = {
         }
 
         .hero .highlight {
-            color: #FDB927;
+            color: #C4A962;
         }
 
         .hero p {
@@ -181,8 +181,8 @@ var worker_default = {
         }
 
         .compliance-alert {
-            background-color: rgba(253, 185, 39, 0.15);
-            border-left: 4px solid #FDB927;
+            background-color: rgba(196, 169, 98, 0.15);
+            border-left: 4px solid #C4A962;
             padding: 15px 20px;
             margin-bottom: 30px;
             border-radius: 4px;
@@ -213,24 +213,24 @@ var worker_default = {
         }
 
         .btn-primary {
-            background-color: #FDB927;
-            color: #1a0a2e;
+            background-color: #C4A962;
+            color: #2F241D;
         }
 
         .btn-primary:hover {
-            background-color: #e6a820;
+            background-color: #a8905a;
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(253, 185, 39, 0.5);
+            box-shadow: 0 6px 20px rgba(196, 169, 98, 0.5);
         }
 
         .btn-secondary {
             background-color: transparent;
-            color: #FDB927;
-            border: 2px solid #FDB927;
+            color: #C4A962;
+            border: 2px solid #C4A962;
         }
 
         .btn-secondary:hover {
-            background-color: rgba(253, 185, 39, 0.15);
+            background-color: rgba(196, 169, 98, 0.15);
             transform: translateY(-3px);
         }
 
@@ -304,7 +304,7 @@ var worker_default = {
         }
 
         .badge-highlight {
-            color: #FDB927;
+            color: #C4A962;
             font-weight: 600;
         }
 
@@ -320,8 +320,8 @@ var worker_default = {
 
         /* Services Section */
         .services {
-            background-color: #F7F3FC;
-            border-top: 3px solid #FDB927;
+            background-color: #FBF8F5;
+            border-top: 3px solid #C4A962;
         }
 
         .section-title {
@@ -329,7 +329,7 @@ var worker_default = {
             font-weight: 700;
             text-align: center;
             margin-bottom: 15px;
-            color: #5B2B82;
+            color: #4A3728;
         }
 
         .section-subtitle {
@@ -351,7 +351,7 @@ var worker_default = {
 
         .service-card {
             background: #FFFFFF;
-            border: 1px solid rgba(91, 43, 130, 0.25);
+            border: 1px solid rgba(74, 55, 40, 0.25);
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border-radius: 8px;
             padding: 35px;
@@ -362,7 +362,7 @@ var worker_default = {
         }
 
         .service-card:hover {
-            border-color: #FDB927;
+            border-color: #C4A962;
             background: #FFFFFF;
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
@@ -371,13 +371,13 @@ var worker_default = {
         .service-icon {
             font-size: 48px;
             margin-bottom: 20px;
-            color: #5B2B82;
+            color: #4A3728;
         }
 
         .service-card h3 {
             font-size: 22px;
             margin-bottom: 15px;
-            color: #1a0a2e;
+            color: #2F241D;
         }
 
         .service-card p {
@@ -388,15 +388,15 @@ var worker_default = {
 
         .service-price {
             font-size: 28px;
-            color: #5B2B82;
+            color: #4A3728;
             font-weight: 700;
             margin-bottom: 15px;
         }
 
         .service-cta {
             display: inline-block;
-            background: #FDB927;
-            color: #1a0a2e;
+            background: #C4A962;
+            color: #2F241D;
             text-decoration: none;
             font-weight: 700;
             font-size: 14px;
@@ -406,9 +406,9 @@ var worker_default = {
         }
 
         .service-cta:hover {
-            background: #e6a820;
+            background: #a8905a;
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(253, 185, 39, 0.4);
+            box-shadow: 0 4px 10px rgba(196, 169, 98, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -428,7 +428,7 @@ var worker_default = {
         /* Why Mobile Section */
         .why-mobile {
             background-color: #FFFFFF;
-            border-top: 3px solid #000000;
+            border-top: 3px solid #2F241D;
         }
 
         .benefits-grid {
@@ -448,7 +448,7 @@ var worker_default = {
             flex-shrink: 0;
             width: 50px;
             height: 50px;
-            background-color: rgba(253, 185, 39, 0.15);
+            background-color: rgba(196, 169, 98, 0.15);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -458,7 +458,7 @@ var worker_default = {
 
         .benefit-content h4 {
             font-size: 18px;
-            color: #1a0a2e;
+            color: #2F241D;
             margin-bottom: 8px;
         }
 
@@ -469,8 +469,8 @@ var worker_default = {
 
         /* Local Content */
         .local-content {
-            background-color: #F7F3FC;
-            border-top: 3px solid #FDB927;
+            background-color: #FBF8F5;
+            border-top: 3px solid #C4A962;
         }
 
         .local-coverage {
@@ -489,7 +489,7 @@ var worker_default = {
 
         .coverage-text h3 {
             font-size: 28px;
-            color: #5B2B82;
+            color: #4A3728;
             margin-bottom: 20px;
         }
 
@@ -501,19 +501,19 @@ var worker_default = {
         .coverage-list li {
             color: #333333;
             padding: 8px 0;
-            border-bottom: 1px solid rgba(91, 43, 130, 0.1);
+            border-bottom: 1px solid rgba(74, 55, 40, 0.1);
             font-size: 15px;
         }
 
         .coverage-list li::before {
             content: '&#10003; ';
-            color: #5B2B82;
+            color: #4A3728;
             font-weight: bold;
         }
 
         .coverage-highlight {
-            background-color: rgba(253, 185, 39, 0.1);
-            border: 1px solid #FDB927;
+            background-color: rgba(196, 169, 98, 0.1);
+            border: 1px solid #C4A962;
             border-radius: 6px;
             padding: 20px;
             color: #333333;
@@ -524,7 +524,7 @@ var worker_default = {
         /* FAQ */
         .faq {
             background-color: #FFFFFF;
-            border-top: 3px solid #000000;
+            border-top: 3px solid #2F241D;
         }
 
         .faq-container {
@@ -533,7 +533,7 @@ var worker_default = {
         }
 
         .faq-item {
-            border: 1px solid rgba(91, 43, 130, 0.2);
+            border: 1px solid rgba(74, 55, 40, 0.2);
             border-radius: 6px;
             margin-bottom: 15px;
             overflow: hidden;
@@ -545,22 +545,22 @@ var worker_default = {
             align-items: center;
             padding: 20px 25px;
             cursor: pointer;
-            background-color: rgba(91, 43, 130, 0.05);
+            background-color: rgba(74, 55, 40, 0.05);
             transition: background-color 0.3s ease;
         }
 
         .faq-question:hover {
-            background-color: rgba(91, 43, 130, 0.1);
+            background-color: rgba(74, 55, 40, 0.1);
         }
 
         .faq-question h4 {
-            color: #1a0a2e;
+            color: #2F241D;
             font-size: 16px;
             font-weight: 600;
         }
 
         .faq-toggle {
-            color: #5B2B82;
+            color: #4A3728;
             font-size: 24px;
             font-weight: 300;
             flex-shrink: 0;
@@ -577,7 +577,7 @@ var worker_default = {
             color: #333333;
             font-size: 15px;
             line-height: 1.7;
-            border-top: 1px solid rgba(91, 43, 130, 0.1);
+            border-top: 1px solid rgba(74, 55, 40, 0.1);
         }
 
         .faq-item.active .faq-answer {
@@ -592,7 +592,7 @@ var worker_default = {
 
         .cta-section h2 {
             font-size: 42px;
-            color: #5B2B82;
+            color: #4A3728;
             margin-bottom: 20px;
         }
 
@@ -607,8 +607,8 @@ var worker_default = {
 
         /* Footer */
         footer {
-            background-color: #0d0820;
-            border-top: 4px solid #FDB927;
+            background-color: #2F241D;
+            border-top: 4px solid #C4A962;
             padding: 60px 0 30px;
         }
 
@@ -642,7 +642,7 @@ var worker_default = {
         }
 
         .footer-section ul li a:hover {
-            color: #FDB927;
+            color: #C4A962;
         }
 
         .footer-contact {
@@ -657,14 +657,14 @@ var worker_default = {
         }
 
         .footer-contact a {
-            color: #FDB927;
+            color: #C4A962;
             text-decoration: none;
             font-size: 18px;
             font-weight: 600;
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(253, 185, 39, 0.25);
+            border-top: 1px solid rgba(196, 169, 98, 0.25);
             padding-top: 30px;
             text-align: center;
             color: #A2AAAD;
@@ -675,7 +675,7 @@ var worker_default = {
         /* Contact Section */
         .contact {
             background-color: #FFFFFF;
-            border-top: 3px solid #FDB927;
+            border-top: 3px solid #C4A962;
         }
 
         .contact-grid {
@@ -697,7 +697,7 @@ var worker_default = {
             align-items: flex-start;
             gap: 15px;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(91, 43, 130, 0.1);
+            border-bottom: 1px solid rgba(74, 55, 40, 0.1);
         }
 
         .contact-info-card:last-child {
@@ -709,7 +709,7 @@ var worker_default = {
             flex-shrink: 0;
             width: 44px;
             height: 44px;
-            background: rgba(91, 43, 130, 0.08);
+            background: rgba(74, 55, 40, 0.08);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -717,7 +717,7 @@ var worker_default = {
         }
 
         .contact-info-card h4 {
-            color: #1a0a2e;
+            color: #2F241D;
             font-size: 15px;
             margin-bottom: 4px;
             font-weight: 600;
@@ -731,11 +731,11 @@ var worker_default = {
         }
 
         .contact-info-card a:hover {
-            color: #5B2B82;
+            color: #4A3728;
         }
 
         .contact-form-box {
-            background: #F7F3FC;
+            background: #FBF8F5;
             border-radius: 8px;
             padding: 40px;
         }
@@ -772,7 +772,7 @@ var worker_default = {
         .form-group label {
             font-size: 12px;
             font-weight: 700;
-            color: #1a0a2e;
+            color: #2F241D;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -782,7 +782,7 @@ var worker_default = {
         .form-group select,
         .form-group textarea {
             padding: 12px 15px;
-            border: 1px solid rgba(91, 43, 130, 0.25);
+            border: 1px solid rgba(74, 55, 40, 0.25);
             border-radius: 4px;
             font-size: 15px;
             color: #1a1a1a;
@@ -795,8 +795,8 @@ var worker_default = {
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #5B2B82;
-            box-shadow: 0 0 0 3px rgba(91, 43, 130, 0.1);
+            border-color: #4A3728;
+            box-shadow: 0 0 0 3px rgba(74, 55, 40, 0.1);
         }
 
         .form-group textarea {
@@ -807,8 +807,8 @@ var worker_default = {
         .form-submit {
             width: 100%;
             padding: 16px;
-            background: #FDB927;
-            color: #1a0a2e;
+            background: #C4A962;
+            color: #2F241D;
             border: none;
             border-radius: 4px;
             font-size: 16px;
@@ -819,12 +819,12 @@ var worker_default = {
         }
 
         .form-submit:hover {
-            background: #e6a820;
+            background: #a8905a;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(253, 185, 39, 0.5);
+            box-shadow: 0 4px 12px rgba(196, 169, 98, 0.5);
         }
 
-        /* Hero Pricing Q&A */
+        /* Hero Pricing Grid */
         .hero-pricing {
             margin-top: 50px;
             max-width: 640px;
@@ -833,7 +833,7 @@ var worker_default = {
         }
 
         .hero-pricing-label {
-            color: #FDB927;
+            color: #C4A962;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
@@ -845,10 +845,10 @@ var worker_default = {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1px;
-            background: rgba(253,185,39,0.2);
+            background: rgba(196,169,98,0.2);
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid rgba(253,185,39,0.35);
+            border: 1px solid rgba(196,169,98,0.35);
         }
 
         .hero-price-item {
@@ -876,7 +876,7 @@ var worker_default = {
         }
 
         .hp-price {
-            color: #FDB927;
+            color: #C4A962;
             font-size: 22px;
             font-weight: 700;
             flex-shrink: 0;
@@ -924,10 +924,10 @@ var worker_default = {
         <div class="container">
             <div class="header-content">
                 <a href="#hero" class="logo">
-                    &#x1F69A; Clean Truck Check
-                    <span>Stockton</span>
+                    &#x1F69A; Mobile Carb Smoke Test
+                    <span>San Diego</span>
                 </a>
-                <a href="tel:2098181371" class="call-btn">
+                <a href="tel:6197864328" class="call-btn">
                     &#x1F4DE; Call Now
                 </a>
             </div>
@@ -939,11 +939,11 @@ var worker_default = {
         <div class="container">
             <div class="hero-content">
                 <h1>
-                    Clean Truck Check Testing in <span class="highlight">Stockton, CA</span>
+                    Mobile CARB Smoke &amp; OBD Testing in <span class="highlight">San Diego, CA</span>
                 </h1>
                 <p>
                     CARB-licensed HD-OBD and opacity inspections — we come to your yard or fleet lot.
-                    No downtime. No shop wait. Serving the Central Valley and San Joaquin.
+                    No downtime. No shop wait. Serving San Diego and Southern California.
                 </p>
 
                 <div class="compliance-alert">
@@ -951,7 +951,7 @@ var worker_default = {
                 </div>
 
                 <div class="cta-buttons">
-                    <a href="tel:2098181371" class="btn-primary">Call Now: (209) 818-1371</a>
+                    <a href="tel:6197864328" class="btn-primary">Call Now: (619) 786-4328</a>
                     <a href="#contact" class="btn-secondary">Schedule Online</a>
                 </div>
 
@@ -1000,7 +1000,7 @@ var worker_default = {
         <div class="container">
             <h2 class="section-title">Our Services</h2>
             <p class="section-subtitle">
-                Professional CARB emissions testing for trucks and fleets. Licensed and certified for Central Valley operations.
+                Professional CARB emissions testing for trucks and fleets. Licensed and certified for San Diego and Southern California operations.
             </p>
 
             <div class="services-grid">
@@ -1025,7 +1025,7 @@ var worker_default = {
                     <h3>Fleet Testing</h3>
                     <p>Multi-vehicle fleet inspections at your yard or lot. Volume pricing available. HD-OBD and opacity for mixed fleets with CARB-certified documentation for every unit.</p>
                     <div class="service-price">Call for Quote</div>
-                    <a href="tel:2098181371" class="service-cta">Call Now &#x2192;</a>
+                    <a href="tel:6197864328" class="service-cta">Call Now &#x2192;</a>
                 </div>
 
                 <div class="service-card">
@@ -1041,10 +1041,10 @@ var worker_default = {
                 <h2>Ready to Schedule?</h2>
                 <p>
                     HD-OBD $84 &nbsp;&bull;&nbsp; Opacity $199 &nbsp;&bull;&nbsp; RV/Motorhome $250 &nbsp;&bull;&nbsp; Fleet pricing available.
-                    Mobile service covers Stockton, Lodi, Tracy, Manteca, and throughout the San Joaquin Valley.
+                    Mobile service covers San Diego, Chula Vista, El Cajon, Escondido, and throughout Southern California.
                 </p>
                 <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;">
-                    <a href="tel:2098181371" class="btn-primary">Call: (209) 818-1371</a>
+                    <a href="tel:6197864328" class="btn-primary">Call: (619) 786-4328</a>
                     <a href="#contact" class="btn-secondary">Schedule Online</a>
                 </div>
             </div>
@@ -1095,8 +1095,8 @@ var worker_default = {
                 <div class="benefit-item">
                     <div class="benefit-icon">&#x1F5FA;&#xFE0F;</div>
                     <div class="benefit-content">
-                        <h4>Central Valley Wide Coverage</h4>
-                        <p>Stockton, Lodi, Tracy, Manteca, Modesto, and throughout the San Joaquin Valley corridor.</p>
+                        <h4>San Diego &amp; Southern California</h4>
+                        <p>San Diego, Chula Vista, El Cajon, Escondido, National City, La Mesa, Santee, and Port of San Diego.</p>
                     </div>
                 </div>
 
@@ -1104,7 +1104,7 @@ var worker_default = {
                     <div class="benefit-icon">&#x2B50;</div>
                     <div class="benefit-content">
                         <h4>Expert Service</h4>
-                        <p>Years of experience. Fast, professional, and reliable. 4.9&#9733; rated by Central Valley customers.</p>
+                        <p>Years of experience. Fast, professional, and reliable. 4.9&#9733; rated by San Diego customers.</p>
                     </div>
                 </div>
             </div>
@@ -1114,26 +1114,26 @@ var worker_default = {
     <!-- Local Content Section -->
     <section class="local-content section-padding" id="service-area">
         <div class="container">
-            <h2 class="section-title">CARB Testing for Stockton &amp; the San Joaquin Valley</h2>
+            <h2 class="section-title">CARB Testing for San Diego &amp; Southern California</h2>
 
             <div class="local-coverage">
                 <div class="coverage-text">
-                    <h3>Serving Stockton and Surrounding Areas</h3>
+                    <h3>Serving San Diego and Surrounding Areas</h3>
                     <p style="margin-bottom: 20px; color: #555555;">
-                        NorCal CARB Mobile LLC provides CARB Clean Truck Check HD I&amp;M inspections throughout the Central Valley.
-                        With the Port of Stockton, I-5 logistics corridors, and major agricultural fleets in our region,
+                        Mobile CARB Smoke Test provides CARB Clean Truck Check HD I&amp;M inspections throughout San Diego County and Southern California.
+                        With the Port of San Diego, I-5 and I-8 logistics corridors, and major distribution fleets in the region,
                         biennial compliance testing is essential for every heavy-duty diesel operator.
                     </p>
 
                     <ul class="coverage-list">
-                        <li>Stockton (Central Service Hub)</li>
-                        <li>Lodi &amp; Galt</li>
-                        <li>Tracy &amp; Manteca</li>
-                        <li>I-5 Corridor Coverage</li>
-                        <li>Port of Stockton Area</li>
-                        <li>San Joaquin Industrial Districts</li>
-                        <li>Modesto &amp; Turlock</li>
-                        <li>Ripon &amp; Escalon</li>
+                        <li>San Diego (Central Service Hub)</li>
+                        <li>Chula Vista &amp; National City</li>
+                        <li>El Cajon &amp; La Mesa</li>
+                        <li>Escondido &amp; San Marcos</li>
+                        <li>Santee &amp; Lakeside</li>
+                        <li>Port of San Diego Area</li>
+                        <li>I-5 &amp; I-8 Corridor Coverage</li>
+                        <li>Otay Mesa Industrial District</li>
                     </ul>
 
                     <div class="coverage-highlight">
@@ -1146,19 +1146,19 @@ var worker_default = {
                 </div>
 
                 <div>
-                    <div style="background: #FFFFFF; border: 2px solid #FDB927; border-radius: 8px; padding: 40px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.08);">
-                        <h3 style="color: #5B2B82; margin-bottom: 20px; font-size: 24px;">Stockton Service Info</h3>
+                    <div style="background: #FFFFFF; border: 2px solid #C4A962; border-radius: 8px; padding: 40px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.08);">
+                        <h3 style="color: #4A3728; margin-bottom: 20px; font-size: 24px;">San Diego Service Info</h3>
 
                         <div style="margin-bottom: 25px;">
                             <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Primary Contact</p>
-                            <a href="tel:2098181371" style="font-size: 24px; font-weight: bold; color: #FDB927; text-decoration: none;">
-                                (209) 818-1371
+                            <a href="tel:6197864328" style="font-size: 24px; font-weight: bold; color: #C4A962; text-decoration: none;">
+                                (619) 786-4328
                             </a>
                         </div>
 
                         <div style="margin-bottom: 25px;">
                             <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">CARB Tester ID</p>
-                            <p style="font-size: 18px; font-weight: bold; color: #1a0a2e;">IF530523</p>
+                            <p style="font-size: 18px; font-weight: bold; color: #2F241D;">IF530523</p>
                         </div>
 
                         <div style="margin-bottom: 25px;">
@@ -1168,7 +1168,7 @@ var worker_default = {
 
                         <div>
                             <p style="color: #888888; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Schedule Online</p>
-                            <a href="#contact" style="color: #FDB927; text-decoration: none; font-weight: 600;">
+                            <a href="#contact" style="color: #C4A962; text-decoration: none; font-weight: 600;">
                                 Book Your Inspection &#x2192;
                             </a>
                         </div>
@@ -1183,7 +1183,7 @@ var worker_default = {
         <div class="container">
             <h2 class="section-title">Frequently Asked Questions</h2>
             <p class="section-subtitle">
-                Everything you need to know about CARB testing in Stockton.
+                Everything you need to know about CARB testing in San Diego.
             </p>
 
             <div class="faq-container">
@@ -1223,9 +1223,9 @@ var worker_default = {
                     </div>
                     <div class="faq-answer">
                         <p>
-                            We come to you. Our mobile testing service means we bring all equipment to your location in Stockton,
-                            your fleet yard, or anywhere else in the San Joaquin Valley. There&#39;s no need to take your truck out of service
-                            or drive to a testing center. This is one of our biggest advantages for busy fleets.
+                            We come to you. Our mobile testing service means we bring all equipment to your location in San Diego,
+                            your fleet yard, or anywhere else in Southern California. There&#39;s no need to take your truck out of service
+                            or drive to a testing center. This is one of our biggest advantages for busy San Diego fleets.
                         </p>
                     </div>
                 </div>
@@ -1255,7 +1255,7 @@ var worker_default = {
                         <p>
                             Our current pricing: HD-OBD inspection is <strong>$84</strong> per vehicle; snap-acceleration opacity test is <strong>$199</strong>;
                             RV/motorhome inspection is <strong>$250</strong>. Fleet pricing is available for multiple vehicles — call
-                            (209) 818-1371 or use the contact form for a fleet quote.
+                            (619) 786-4328 or use the contact form for a fleet quote.
                         </p>
                     </div>
                 </div>
@@ -1281,8 +1281,8 @@ var worker_default = {
                     </div>
                     <div class="faq-answer">
                         <p>
-                            Call or text us at (209) 818-1371, or fill out the <a href="#contact" style="color:#c07d00;font-weight:600;">contact form</a> on this page.
-                            We serve Stockton, Lodi, Tracy, Manteca, and throughout the San Joaquin Valley.
+                            Call or text us at (619) 786-4328, or fill out the <a href="#contact" style="color:#a8905a;font-weight:600;">contact form</a> on this page.
+                            We serve San Diego, Chula Vista, El Cajon, Escondido, National City, and throughout Southern California.
                             We offer flexible scheduling including early mornings and Saturdays to minimize fleet downtime.
                         </p>
                     </div>
@@ -1311,7 +1311,7 @@ var worker_default = {
                     <div class="faq-answer">
                         <p>
                             Yes, we offer Saturday testing. Service hours are Monday-Friday 6am-5pm and Saturday 8am-4pm.
-                            Call (209) 818-1371 to check availability and schedule a weekend test time that works for your fleet.
+                            Call (619) 786-4328 to check availability and schedule a weekend test time that works for your fleet.
                         </p>
                     </div>
                 </div>
@@ -1320,16 +1320,16 @@ var worker_default = {
     </section>
 
     <!-- Final CTA -->
-    <section class="section-padding" style="background-color: #F7F3FC; border-top: 3px solid #FDB927;">
+    <section class="section-padding" style="background-color: #FBF8F5; border-top: 3px solid #C4A962;">
         <div class="container">
             <div class="cta-section">
                 <h2>Ready to Get Compliant?</h2>
                 <p>
-                    Schedule your CARB test today. Mobile service in Stockton and the San Joaquin Valley.
+                    Schedule your CARB test today. Mobile service in San Diego and Southern California.
                     Quick, professional, licensed testing.
                 </p>
                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <a href="tel:2098181371" class="btn-primary">Call: (209) 818-1371</a>
+                    <a href="tel:6197864328" class="btn-primary">Call: (619) 786-4328</a>
                     <a href="#contact" class="btn-secondary">Schedule Online</a>
                 </div>
             </div>
@@ -1342,7 +1342,7 @@ var worker_default = {
             <h2 class="section-title">Schedule Your Inspection</h2>
             <p class="section-subtitle">
                 Fill out the form and we&#39;ll get back to you within a few hours to confirm your appointment.
-                Or call/text us directly at <a href="tel:2098181371" style="color:#c07d00;font-weight:600;">(209) 818-1371</a>.
+                Or call/text us directly at <a href="tel:6197864328" style="color:#a8905a;font-weight:600;">(619) 786-4328</a>.
             </p>
 
             <div class="contact-grid">
@@ -1351,7 +1351,7 @@ var worker_default = {
                         <div class="contact-info-icon">&#x1F4DE;</div>
                         <div>
                             <h4>Call or Text</h4>
-                            <a href="tel:2098181371">(209) 818-1371</a>
+                            <a href="tel:6197864328">(619) 786-4328</a>
                         </div>
                     </div>
                     <div class="contact-info-card">
@@ -1365,7 +1365,7 @@ var worker_default = {
                         <div class="contact-info-icon">&#x1F4CD;</div>
                         <div>
                             <h4>Service Area</h4>
-                            <p>Stockton, Lodi, Tracy, Manteca<br>San Joaquin Valley wide</p>
+                            <p>San Diego, Chula Vista, El Cajon<br>Escondido, National City &amp; more</p>
                         </div>
                     </div>
                     <div class="contact-info-card">
@@ -1394,7 +1394,7 @@ var worker_default = {
                                 </div>
                                 <div class="form-group" style="margin-bottom:0;">
                                     <label for="cf_phone">Phone *</label>
-                                    <input type="tel" id="cf_phone" name="phone" required placeholder="(916) 555-0100">
+                                    <input type="tel" id="cf_phone" name="phone" required placeholder="(619) 555-0100">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -1432,13 +1432,13 @@ var worker_default = {
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>Clean Truck Check Stockton</h4>
+                    <h4>Mobile Carb Smoke Test</h4>
                     <p style="color: #A2AAAD; font-size: 14px; margin-bottom: 15px;">
-                        Mobile CARB emissions testing serving Stockton, Lodi, Tracy, Manteca, and the San Joaquin Valley.
+                        Mobile CARB emissions testing serving San Diego, Chula Vista, El Cajon, National City, Escondido, and Southern California.
                     </p>
                     <div class="footer-contact">
                         <span class="footer-contact-icon">&#x1F4DE;</span>
-                        <a href="tel:2098181371">(209) 818-1371</a>
+                        <a href="tel:6197864328">(619) 786-4328</a>
                     </div>
                 </div>
 
@@ -1455,11 +1455,11 @@ var worker_default = {
                 <div class="footer-section">
                     <h4>Service Area</h4>
                     <ul>
-                        <li><a href="#service-area">Stockton</a></li>
-                        <li><a href="#service-area">Lodi</a></li>
-                        <li><a href="#service-area">Tracy</a></li>
-                        <li><a href="#service-area">Manteca</a></li>
-                        <li><a href="#service-area">San Joaquin Valley</a></li>
+                        <li><a href="#service-area">San Diego</a></li>
+                        <li><a href="#service-area">Chula Vista</a></li>
+                        <li><a href="#service-area">El Cajon</a></li>
+                        <li><a href="#service-area">Escondido</a></li>
+                        <li><a href="#service-area">Southern California</a></li>
                     </ul>
                 </div>
 
@@ -1479,10 +1479,10 @@ var worker_default = {
                     <strong>NorCal CARB Mobile LLC</strong> &nbsp;|&nbsp; CARB Tester ID: IF530523 &nbsp;|&nbsp; Clean Truck Check HD I&amp;M Licensed Inspector
                 </p>
                 <p>
-                    Serving Stockton, Lodi, Tracy, Manteca, Modesto, and the San Joaquin Valley.
+                    Serving San Diego, Chula Vista, El Cajon, National City, Escondido, and Southern California.
                 </p>
                 <p>
-                    &copy; 2026 carbteststockton.com &mdash; All rights reserved.
+                    &copy; 2026 mobilecarbsmoketest.com &mdash; All rights reserved.
                 </p>
             </div>
         </div>
@@ -1493,47 +1493,46 @@ var worker_default = {
     {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
-        "name": "Clean Truck Check Stockton",
-        "image": "https://norcalcarbmobile.com/logo.png",
-        "description": "Mobile CARB emissions testing in Stockton, CA. HD-OBD and smoke/opacity testing for trucks and fleets. Licensed CARB tester. We come to you.",
-        "telephone": "(209) 818-1371",
-        "url": "https://carbteststockton.com",
+        "name": "Mobile Carb Smoke Test San Diego",
+        "description": "Mobile CARB emissions testing in San Diego, CA. HD-OBD and smoke/opacity testing for trucks and fleets. Licensed CARB tester. We come to you.",
+        "telephone": "(619) 786-4328",
+        "url": "https://mobilecarbsmoketest.com",
         "address": {
             "@type": "PostalAddress",
-            "addressLocality": "Stockton",
+            "addressLocality": "San Diego",
             "addressRegion": "CA",
-            "postalCode": "95202",
+            "postalCode": "92101",
             "addressCountry": "US"
         },
         "geo": {
             "@type": "GeoCoordinates",
-            "latitude": 37.9577,
-            "longitude": -121.2908
+            "latitude": 32.7157,
+            "longitude": -117.1611
         },
         "areaServed": [
             {
                 "@type": "City",
-                "name": "Stockton",
+                "name": "San Diego",
                 "addressRegion": "CA"
             },
             {
                 "@type": "City",
-                "name": "Lodi",
+                "name": "Chula Vista",
                 "addressRegion": "CA"
             },
             {
                 "@type": "City",
-                "name": "Tracy",
+                "name": "El Cajon",
                 "addressRegion": "CA"
             },
             {
                 "@type": "City",
-                "name": "Manteca",
+                "name": "Escondido",
                 "addressRegion": "CA"
             },
             {
                 "@type": "Region",
-                "name": "San Joaquin Valley",
+                "name": "Southern California",
                 "addressRegion": "CA"
             }
         ],
@@ -1543,7 +1542,7 @@ var worker_default = {
             "reviewCount": "47"
         },
         "sameAs": [
-            "https://carbteststockton.com"
+            "https://mobilecarbsmoketest.com"
         ],
         "priceRange": "$84-$250"
     }
@@ -1553,14 +1552,14 @@ var worker_default = {
     {
         "@context": "https://schema.org",
         "@type": "Service",
-        "name": "Clean Truck Check HD I&M Inspection",
-        "description": "CARB Clean Truck Check biennial HD I&M inspections in Stockton and the San Joaquin Valley. HD-OBD and snap-acceleration opacity testing for heavy-duty diesel trucks. Licensed CARB tester IF530523.",
+        "name": "Clean Truck Check HD I&M Inspection — San Diego",
+        "description": "CARB Clean Truck Check biennial HD I&M inspections in San Diego and Southern California. HD-OBD and snap-acceleration opacity testing for heavy-duty diesel trucks. Licensed CARB tester IF530523.",
         "provider": {
             "@type": "LocalBusiness",
             "name": "NorCal CARB Mobile LLC",
-            "telephone": "(209) 818-1371"
+            "telephone": "(619) 786-4328"
         },
-        "areaServed": "San Joaquin Valley, CA",
+        "areaServed": "San Diego County, CA",
         "serviceType": ["HD-OBD Testing", "Smoke Opacity Testing", "Fleet Testing", "RV Testing"]
     }
     <\/script>
@@ -1662,10 +1661,8 @@ var worker_default = {
                 : '0 2px 10px rgba(0, 0, 0, 0.3)';
         });
 
-        // Contact Form — FormSubmit.co (free, no API key required)
-        // IMPORTANT: First submission activates the form — check info@norcalcarbmobile.com
-        // for a confirmation email from FormSubmit.co and click the link to activate.
-        const CONTACT_EMAIL = 'bgillis99@gmail.com';
+        // Contact Form — FormSubmit.co
+        const CONTACT_EMAIL = 'admin@mobilecarbsmoketest.com';
 
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -1683,7 +1680,7 @@ var worker_default = {
                 email: document.getElementById('cf_email').value,
                 service: document.getElementById('cf_service').value,
                 message: document.getElementById('cf_message').value,
-                _subject: 'New Test Request — carbteststockton.com'
+                _subject: 'New Test Request — mobilecarbsmoketest.com'
             };
 
             try {
@@ -1703,16 +1700,16 @@ var worker_default = {
                 }
             } catch (err) {
                 msg.className = 'form-message error';
-                msg.textContent = 'Something went wrong. Please call or text us at (209) 818-1371.';
+                msg.textContent = 'Something went wrong. Please call or text us at (619) 786-4328.';
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Send Request \u2192';
             }
         });
 
-        console.log('Clean Truck Check Stockton — carbteststockton.com');
+        console.log('Mobile Carb Smoke Test — mobilecarbsmoketest.com');
         console.log('CARB Tester ID: IF530523');
-        console.log('Contact: (209) 818-1371');
+        console.log('Contact: (619) 786-4328');
     <\/script>
 </body>
 </html>`;
