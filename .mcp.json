@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "domain-manager": {
+      "command": "npx",
+      "args": ["tsx", "mcp-server.ts"],
+      "cwd": "./workers/silverback-ai-studio"
+    }
+  }
+}
