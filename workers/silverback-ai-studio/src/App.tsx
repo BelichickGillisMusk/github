@@ -51,6 +51,7 @@ import {
   User
 } from "./firebase";
 import { GoogleGenAI } from "@google/genai";
+import { DomainManager } from "./components/DomainManager";
 
 // --- Types ---
 enum OperationType {
@@ -408,7 +409,7 @@ export default function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState<string | null>(null);
   const [showDashboard, setShowDashboard] = useState(false);
-  const [dashboardTab, setDashboardTab] = useState<'overview' | 'weirdness' | 'branding' | 'config'>('overview');
+  const [dashboardTab, setDashboardTab] = useState<'overview' | 'weirdness' | 'branding' | 'config' | 'domains'>('overview');
   const [isGeneratingAsset, setIsGeneratingAsset] = useState(false);
   const [generatedAssetUrl, setGeneratedAssetUrl] = useState<string | null>(null);
   const [selectedAssetType, setSelectedAssetType] = useState('App Icon');
@@ -1090,7 +1091,7 @@ export default function App() {
                 <p className="text-zinc-400">Manage reports and monitor events for 3875 Ruby St.</p>
               </div>
               <div className="flex bg-white/5 p-1 rounded-xl border border-white/10">
-                {(['overview', 'weirdness', 'branding', 'config'] as const).map((tab) => (
+                {(['overview', 'weirdness', 'branding', 'config', 'domains'] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setDashboardTab(tab)}
@@ -1615,6 +1616,10 @@ export default function App() {
                   </div>
                 </div>
               </div>
+            )}
+
+            {dashboardTab === 'domains' && (
+              <DomainManager />
             )}
 
             {/* Privacy & Compliance Section */}

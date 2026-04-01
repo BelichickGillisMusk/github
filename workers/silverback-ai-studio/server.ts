@@ -65,6 +65,123 @@ async function startServer() {
     res.json({ status: "ok", clients: clients.size });
   });
 
+  // ── Vercel domain proxy routes ──────────────────────────────────────────────
+  // Proxies to Vercel API so the React client avoids CORS issues.
+  // Requires VERCEL_TOKEN in env.
+
+  app.get("/api/vercel/projects/:projectId/domains", async (req, res) => {
+    const { projectId } = req.params;
+    const token = process.env.VERCEL_TOKEN;
+    if (!token) return res.status(500).json({ error: "VERCEL_TOKEN not configured" });
+    const upstream = await fetch(`https://api.vercel.com/v9/projects/${encodeURIComponent(projectId)}/domains`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    res.status(upstream.status).json(await upstream.json());
+  });
+
+  app.post("/api/vercel/projects/:projectId/domains", async (req, res) => {
+    const { projectId } = req.params;
+    const token = process.env.VERCEL_TOKEN;
+    if (!token) return res.status(500).json({ error: "VERCEL_TOKEN not configured" });
+    const upstream = await fetch(`https://api.vercel.com/v10/projects/${encodeURIComponent(projectId)}/domains`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: req.body.name }),
+    });
+    res.status(upstream.status).json(await upstream.json());
+  });
+
+  app.delete("/api/vercel/projects/:projectId/domains/:domain", async (req, res) => {
+    const { projectId, domain } = req.params;
+    const token = process.env.VERCEL_TOKEN;
+    if (!token) return res.status(500).json({ error: "VERCEL_TOKEN not configured" });
+    const upstream = await fetch(
+      `https://api.vercel.com/v9/projects/${encodeURIComponent(projectId)}/domains/${encodeURIComponent(domain)}`,
+      { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } }
+    );
+    res.status(upstream.status).json(await upstream.json());
+  });
+
+  app.post("/api/vercel/projects/:projectId/domains/:domain/verify", async (req, res) => {
+    const { projectId, domain } = req.params;
+    const token = process.env.VERCEL_TOKEN;
+    if (!token) return res.status(500).json({ error: "VERCEL_TOKEN not configured" });
+    const upstream = await fetch(
+      `https://api.vercel.com/v9/projects/${encodeURIComponent(projectId)}/domains/${encodeURIComponent(domain)}/verify`,
+      { method: 'POST', headers: { Authorization: `Bearer ${token}` } }
+    );
+    res.status(upstream.status).json(await upstream.json());
+  });
+
+  // ── Cloudflare DNS proxy routes ─────────────────────────────────────────────
+  // Proxies to Cloudflare API so the React client avoids CORS issues.
+  // Requires CLOUDFLARE_TOKEN (and optionally CLOUDFLARE_ACCOUNT_ID) in env.
+
+  app.get("/api/cloudflare/zones", async (_req, res) => {
+    const token = process.env.CLOUDFLARE_TOKEN;
+    if (!token) return res.status(500).json({ error: "CLOUDFLARE_TOKEN not configured" });
+    const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+    const qs = accountId ? `?account.id=${encodeURIComponent(accountId)}&per_page=50` : '?per_page=50';
+    const upstream = await fetch(`https://api.cloudflare.com/client/v4/zones${qs}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    res.status(upstream.status).json(await upstream.json());
+  });
+
+  app.get("/api/cloudflare/zones/:zoneId/dns_records", async (req, res) => {
+    const { zoneId } = req.params;
+    const token = process.env.CLOUDFLARE_TOKEN;
+    if (!token) return res.status(500).json({ error: "CLOUDFLARE_TOKEN not configured" });
+    const upstream = await fetch(
+      `https://api.cloudflare.com/client/v4/zones/${zoneId}/dns_records?per_page=100`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    res.status(upstream.status).json(await upstream.json());
+  });
+
+  app.post("/api/cloudflare/zones/:zoneId/dns_records", async (req, res) => {
+    const { zoneId } = req.params;
+    const token = process.env.CLOUDFLARE_TOKEN;
+    if (!token) return res.status(500).json({ error: "CLOUDFLARE_TOKEN not configured" });
+    const { type, name, content, ttl, proxied } = req.body;
+    const upstream = await fetch(
+      `https://api.cloudflare.com/client/v4/zones/${zoneId}/dns_records`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, name, content, ttl, proxied }),
+      }
+    );
+    res.status(upstream.status).json(await upstream.json());
+  });
+
+  app.put("/api/cloudflare/zones/:zoneId/dns_records/:recordId", async (req, res) => {
+    const { zoneId, recordId } = req.params;
+    const token = process.env.CLOUDFLARE_TOKEN;
+    if (!token) return res.status(500).json({ error: "CLOUDFLARE_TOKEN not configured" });
+    const { type, name, content, ttl, proxied } = req.body;
+    const upstream = await fetch(
+      `https://api.cloudflare.com/client/v4/zones/${zoneId}/dns_records/${recordId}`,
+      {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, name, content, ttl, proxied }),
+      }
+    );
+    res.status(upstream.status).json(await upstream.json());
+  });
+
+  app.delete("/api/cloudflare/zones/:zoneId/dns_records/:recordId", async (req, res) => {
+    const { zoneId, recordId } = req.params;
+    const token = process.env.CLOUDFLARE_TOKEN;
+    if (!token) return res.status(500).json({ error: "CLOUDFLARE_TOKEN not configured" });
+    const upstream = await fetch(
+      `https://api.cloudflare.com/client/v4/zones/${zoneId}/dns_records/${recordId}`,
+      { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } }
+    );
+    res.status(upstream.status).json(await upstream.json());
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
