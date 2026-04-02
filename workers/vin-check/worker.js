@@ -136,20 +136,21 @@ var worker_default = {
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg: #0c0c12;
-            --card: #13131d;
-            --card-border: rgba(139, 92, 246, 0.15);
-            --accent: #8b5cf6;
-            --accent-glow: rgba(139, 92, 246, 0.25);
-            --green: #22c55e;
-            --green-bg: rgba(34, 197, 94, 0.1);
-            --yellow: #eab308;
-            --yellow-bg: rgba(234, 179, 8, 0.1);
-            --red: #ef4444;
-            --blue: #3b82f6;
-            --text: #e8e8ed;
-            --text-dim: #9898a4;
-            --input-bg: #1a1a28;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-border: rgba(30, 64, 124, 0.15);
+            --accent: #1e407c;
+            --accent-glow: rgba(30, 64, 124, 0.12);
+            --accent-hover: #16325f;
+            --green: #16a34a;
+            --green-bg: rgba(22, 163, 74, 0.08);
+            --yellow: #ca8a04;
+            --yellow-bg: rgba(202, 138, 4, 0.08);
+            --red: #dc2626;
+            --blue: #2563eb;
+            --text: #1e293b;
+            --text-dim: #64748b;
+            --input-bg: #f1f5f9;
         }
 
         body {
@@ -170,12 +171,12 @@ var worker_default = {
             border: 1px solid var(--card-border);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 0 40px rgba(139, 92, 246, 0.08);
+            box-shadow: 0 4px 24px rgba(30, 64, 124, 0.08);
         }
 
         .widget-header {
             padding: 20px 24px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(30, 64, 124, 0.08);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -218,7 +219,7 @@ var worker_default = {
             width: 100%;
             padding: 14px 16px;
             background: var(--input-bg);
-            border: 1.5px solid rgba(255,255,255,0.08);
+            border: 1.5px solid rgba(30, 64, 124, 0.15);
             border-radius: 12px;
             color: var(--text);
             font-family: 'JetBrains Mono', monospace;
@@ -230,7 +231,7 @@ var worker_default = {
         }
 
         .vin-input::placeholder {
-            color: rgba(152, 152, 164, 0.5);
+            color: rgba(100, 116, 139, 0.6);
             font-family: 'Inter', sans-serif;
             letter-spacing: 0;
             text-transform: none;
@@ -275,7 +276,7 @@ var worker_default = {
             gap: 8px;
         }
 
-        .check-btn:hover { background: #7c3aed; transform: translateY(-1px); }
+        .check-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
         .check-btn:active { transform: translateY(0); }
         .check-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
@@ -321,7 +322,7 @@ var worker_default = {
         }
 
         .spec {
-            background: rgba(255,255,255,0.03);
+            background: var(--input-bg);
             padding: 8px 10px;
             border-radius: 8px;
         }
@@ -372,12 +373,12 @@ var worker_default = {
         }
 
         .verdict.needs-test .verdict-badge {
-            background: rgba(234, 179, 8, 0.2);
+            background: rgba(202, 138, 4, 0.15);
             color: var(--yellow);
         }
 
         .verdict.no-test .verdict-badge {
-            background: rgba(34, 197, 94, 0.2);
+            background: rgba(22, 163, 74, 0.15);
             color: var(--green);
         }
 
@@ -391,7 +392,7 @@ var worker_default = {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            background: rgba(139, 92, 246, 0.12);
+            background: rgba(30, 64, 124, 0.08);
             color: var(--accent);
             font-weight: 700;
             font-size: 20px;
@@ -424,11 +425,11 @@ var worker_default = {
             transition: all 0.2s;
         }
 
-        .cta-btn:hover { background: #16a34a; transform: translateY(-1px); }
+        .cta-btn:hover { background: #15803d; transform: translateY(-1px); }
 
         .error-msg {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(220, 38, 38, 0.06);
+            border: 1px solid rgba(220, 38, 38, 0.15);
             color: var(--red);
             padding: 12px 16px;
             border-radius: 12px;
@@ -444,12 +445,13 @@ var worker_default = {
             padding: 12px;
             font-size: 10px;
             color: var(--text-dim);
-            border-top: 1px solid rgba(255,255,255,0.04);
+            border-top: 1px solid rgba(30, 64, 124, 0.08);
         }
 
         .powered-by a {
             color: var(--accent);
             text-decoration: none;
+            font-weight: 600;
         }
 
         /* Embed mode - no background */
@@ -558,7 +560,7 @@ var worker_default = {
                             '<div class="verdict-header"><span class="verdict-badge">⚠ Testing Required</span></div>' +
                             '<div class="verdict-text">' + data.recommendation + '</div>' +
                             priceHtml +
-                            '<div style="margin-top:10px;font-size:12px;color:#22c55e;font-weight:600;">✓ Free retest if you fail — just follow our code flush instructions</div>' +
+                            '<div style="margin-top:10px;font-size:12px;color:#16a34a;font-weight:600;">✓ Free retest if you fail — just follow our code flush instructions</div>' +
                         '</div>';
                     ctaBtn.style.display = 'block';
                     ctaBtn.textContent = '📞 Call 916-890-4427 — Schedule Test';
