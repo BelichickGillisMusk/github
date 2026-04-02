@@ -3,5 +3,9 @@ main = "worker.js"
 compatibility_date = "2026-03-01"
 account_id = "bafa242dd95d3fdce72540d20accd0a2"
 
+routes = [
+  { pattern = "toolkit.silverbackai.agency/*", zone_name = "silverbackai.agency" }
+]
+
 [env.production]
 name = "silverbackai-toolkit"
