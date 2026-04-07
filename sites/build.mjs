@@ -149,7 +149,8 @@ function intakeFormHtml(area, attorneyShortName) {
   const isPI = area.id === 'personal-injury';
   const submitLabel = isPI ? 'Get my free consultation' : 'Submit confidential intake';
   const okName = attorneyShortName || 'Mr. Chigbu';
-  return `<form class="intake-form" data-area="${htmlEscape(area.id)}" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
+  return `<p style="font-size:13px;color:var(--muted);font-family:-apple-system,sans-serif;margin-bottom:12px;background:rgba(0,0,0,0.2);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0;">⚖️ <strong>Confidential intake — not legal advice.</strong> Submitting this form does not create an attorney-client relationship. Clifford will review your information and follow up to discuss representation.</p>
+      <form class="intake-form" data-area="${htmlEscape(area.id)}" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
         ${fields}
         <label>Your name<input name="client_name" required></label>
         <label>Phone<input name="client_phone" type="tel" required></label>
@@ -767,6 +768,138 @@ function blogShell(site, title, body) {
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${htmlEscape(title)} — ${htmlEscape(site.firmName || site.businessName || site.domain)}</title><meta name="theme-color" content="${site.colors.background}"><style>:root{--primary:${site.colors.primary};--primary-dark:${site.colors.primaryDark};--accent:${site.colors.accent};--bg:${site.colors.background};--text:${site.colors.text};--muted:${site.colors.muted};}*{box-sizing:border-box;margin:0;padding:0;}body{background:var(--bg);color:var(--text);font-family:Georgia,serif;line-height:1.6;}a{color:var(--accent);}</style></head><body>${body}</body></html>`;
 }
 
+// vCard 3.0 — "Add to Contacts" download. Compatible with iOS, Android, macOS, Outlook.
+function vcardBody(site) {
+  const fn = site.attorneyName || site.firmName || site.domain;
+  const lines = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    `FN:${fn}`,
+    `N:${(fn.split(' ').slice(-1)[0])};${fn.split(' ').slice(0, -1).join(' ')};;;`,
+    `ORG:${site.firmName || site.businessName || ''}`,
+    `TITLE:${site.attorneyTitle || 'Attorney at Law'}`,
+    site.phone ? `TEL;TYPE=WORK,VOICE:${site.phone}` : '',
+    site.email ? `EMAIL;TYPE=WORK:${site.email}` : '',
+    `URL:https://${site.domain}/`,
+  ];
+  if (site.streetAddress) {
+    lines.push(`ADR;TYPE=WORK:;;${site.streetAddress};${site.city || ''};CA;${site.postalCode || ''};USA`);
+  }
+  lines.push('CATEGORIES:Lawyer,Attorney');
+  lines.push(`NOTE:${(site.metaDescription || '').replace(/[\r\n]+/g, ' ')}`);
+  lines.push('END:VCARD');
+  return lines.filter(Boolean).join('\r\n') + '\r\n';
+}
+
+// Privacy Policy + Terms — required by California CCPA for any site collecting personal info via forms
+function privacyPolicyHtml(site) {
+  const firmName = site.firmName || site.businessName || site.domain;
+  const today = new Date().toISOString().slice(0, 10);
+  const body = `<main style="max-width:760px;margin:0 auto;padding:40px 24px;font-family:Georgia,serif;line-height:1.7;">
+    <a href="/" style="color:var(--accent);font-family:-apple-system,sans-serif;font-size:13px;">← Back to home</a>
+    <h1 style="color:var(--accent);margin:18px 0 12px;font-family:-apple-system,sans-serif;">Privacy Policy</h1>
+    <p style="color:var(--muted);font-size:13px;font-family:-apple-system,sans-serif;margin-bottom:24px;">Last updated: ${today}</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Who we are</h2>
+    <p>${htmlEscape(firmName)} ("we", "our", "us") operates the website ${site.domain} (the "Site"). We are a California law firm located at ${htmlEscape(site.address || '')}, contactable at ${site.phone || ''} or ${site.email || ''}.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">What information we collect</h2>
+    <p>We collect information you voluntarily provide when you:</p>
+    <ul style="margin:12px 0 12px 22px;">
+      <li>Submit a contact form or intake form (name, phone, email, the details of your legal matter)</li>
+      <li>Send a message through the OBI chat assistant</li>
+      <li>Email or call us</li>
+    </ul>
+    <p>We may also collect anonymous technical information automatically, including IP address, browser type, pages visited, and time of visit. We do not use tracking cookies on this site.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">How we use your information</h2>
+    <ul style="margin:12px 0 12px 22px;">
+      <li>To respond to your inquiry and discuss potential legal representation</li>
+      <li>To evaluate whether we can take your case</li>
+      <li>To follow up on a consultation or representation</li>
+      <li>To comply with legal obligations</li>
+    </ul>
+    <p><strong>We do not sell, rent, or share your personal information with third parties for their marketing purposes.</strong></p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Confidentiality and attorney-client privilege</h2>
+    <p>Information you submit through this Site is treated as confidential, but submitting an inquiry does <strong>not</strong> create an attorney-client relationship. An attorney-client relationship is formed only after a written engagement agreement is signed. Until then, please do not send sensitive case details — keep your initial message to a brief description of your legal matter.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Data retention</h2>
+    <p>Form submissions are retained for 90 days in our service provider's storage and then automatically deleted, unless we open a case file based on your inquiry, in which case retention is governed by our standard client file retention policy.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Your California rights (CCPA / CPRA)</h2>
+    <p>If you are a California resident, you have the right to:</p>
+    <ul style="margin:12px 0 12px 22px;">
+      <li>Know what personal information we collect about you</li>
+      <li>Request that we delete your personal information</li>
+      <li>Opt out of any sale or sharing of your personal information (we do not sell or share)</li>
+      <li>Non-discrimination for exercising your rights</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at <a href="mailto:${site.email}" style="color:var(--accent);">${site.email}</a> or call ${site.phone}.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Third-party services</h2>
+    <p>We use the following third-party services to operate this Site:</p>
+    <ul style="margin:12px 0 12px 22px;">
+      <li><strong>Cloudflare</strong> — content delivery, security, and analytics (cookie-free)</li>
+      <li><strong>Resend / MailChannels</strong> — email delivery for form submissions to our office</li>
+      <li><strong>Google Maps</strong> — directions to our office (loaded only when you click "Get Directions")</li>
+    </ul>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Changes to this policy</h2>
+    <p>We may update this policy from time to time. The "Last updated" date at the top reflects the most recent version. Substantive changes will be communicated via a notice on this page.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Contact</h2>
+    <p>Questions about this privacy policy?</p>
+    <p>${htmlEscape(firmName)}<br>
+    ${htmlEscape(site.address || '')}<br>
+    Phone: ${site.phone || ''}<br>
+    Email: <a href="mailto:${site.email}" style="color:var(--accent);">${site.email}</a></p>
+
+    <p style="margin-top:40px;"><a href="/" style="color:var(--accent);">← Back to home</a> · <a href="/terms/" style="color:var(--accent);">Terms of Use</a></p>
+  </main>`;
+  return blogShell(site, 'Privacy Policy', body);
+}
+
+function termsOfUseHtml(site) {
+  const firmName = site.firmName || site.businessName || site.domain;
+  const today = new Date().toISOString().slice(0, 10);
+  const body = `<main style="max-width:760px;margin:0 auto;padding:40px 24px;font-family:Georgia,serif;line-height:1.7;">
+    <a href="/" style="color:var(--accent);font-family:-apple-system,sans-serif;font-size:13px;">← Back to home</a>
+    <h1 style="color:var(--accent);margin:18px 0 12px;font-family:-apple-system,sans-serif;">Terms of Use</h1>
+    <p style="color:var(--muted);font-size:13px;font-family:-apple-system,sans-serif;margin-bottom:24px;">Last updated: ${today}</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Attorney advertising</h2>
+    <p>This website is an advertisement for legal services provided by ${htmlEscape(firmName)}. The information presented should not be construed as formal legal advice or the formation of a lawyer-client relationship.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">No legal advice</h2>
+    <p>The content on this Site, including blog posts, the FAQ, and the OBI chat assistant, is provided for general informational purposes only and is not a substitute for the advice of a licensed attorney. Every legal situation is different; do not rely on the general information here to make decisions about your specific case. Always consult with an attorney about your particular circumstances.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">No attorney-client relationship</h2>
+    <p>Visiting this Site, submitting a form, sending an email, or chatting with the OBI assistant does <strong>not</strong> create an attorney-client relationship. An attorney-client relationship is formed only after Clifford Chigbu has agreed in writing to represent you and a written engagement agreement has been signed by both parties.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Confidentiality</h2>
+    <p>Information you transmit through this Site may not be confidential or protected by attorney-client privilege until an engagement agreement is in place. Please do not transmit sensitive or confidential information about your legal matter through web forms — call our office at ${site.phone || ''} to discuss anything sensitive.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Past results disclaimer</h2>
+    <p>Past results, settlements, verdicts, awards, and recognitions described on this Site do not guarantee similar outcomes in future cases. Each legal matter is unique and outcomes depend on facts, applicable law, opposing parties, and many other factors.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Awards and ratings</h2>
+    <p>Statements regarding awards, recognition, ratings, and reviews are based on third-party sources (Google Business Profile, BusinessRate, etc.) and reflect the opinions of those third parties. They are not a comparison to or claim of superiority over other attorneys.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Jurisdiction</h2>
+    <p>Clifford Chigbu is licensed to practice law in the State of California (State Bar #${site.barNumber || ''}). The information on this Site is intended for residents of California. Use of this Site by residents of other states is not encouraged and we may decline representation for matters outside our jurisdiction.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Limitation of liability</h2>
+    <p>${htmlEscape(firmName)} makes no warranties, express or implied, regarding the accuracy or completeness of the information on this Site. We are not liable for any actions you take or fail to take based on information from this Site.</p>
+
+    <h2 style="color:var(--accent);font-family:-apple-system,sans-serif;margin-top:24px;">Governing law</h2>
+    <p>These Terms are governed by the laws of the State of California, without regard to conflict of laws principles.</p>
+
+    <p style="margin-top:40px;"><a href="/" style="color:var(--accent);">← Back to home</a> · <a href="/privacy/" style="color:var(--accent);">Privacy Policy</a></p>
+  </main>`;
+  return blogShell(site, 'Terms of Use', body);
+}
+
 // ---------- worker.js generation ----------
 function workerJs(html, site, sitemap, robots, blog, areaPages) {
   const escapedHtml = JSON.stringify(html);
@@ -774,6 +907,9 @@ function workerJs(html, site, sitemap, robots, blog, areaPages) {
   const escapedRobots = JSON.stringify(robots);
   const escapedLlmsTxt = JSON.stringify(llmsTxtBody(site));
   const kbJson = JSON.stringify(site.knowledgeBase || []);
+  const escapedPrivacy = (site.vertical === 'law') ? JSON.stringify(privacyPolicyHtml(site)) : '""';
+  const escapedTerms = (site.vertical === 'law') ? JSON.stringify(termsOfUseHtml(site)) : '""';
+  const escapedVcard = JSON.stringify(vcardBody(site));
   const blogIndex = blog.length ? JSON.stringify(blogIndexHtml(site, blog)) : '""';
   const blogPostsObj = '{' + blog.map(p => `${JSON.stringify(p.slug)}: ${JSON.stringify(blogPostHtml(site, p))}`).join(', ') + '}';
   const areaPagesObj = '{' + Object.entries(areaPages || {}).map(([id, h]) => `${JSON.stringify(id)}: ${JSON.stringify(h)}`).join(', ') + '}';
@@ -799,6 +935,9 @@ const KB = ${kbJson};
 const BLOG_INDEX = ${blogIndex};
 const BLOG_POSTS = ${blogPostsObj};
 const AREA_PAGES = ${areaPagesObj};
+const PRIVACY_HTML = ${escapedPrivacy};
+const TERMS_HTML = ${escapedTerms};
+const VCARD = ${escapedVcard};
 const SITE_ID = ${JSON.stringify(site.id)};
 const VERTICAL = ${JSON.stringify(vertical)};
 const ALERT_WEBHOOK = ${JSON.stringify(alertWebhook)};
@@ -923,6 +1062,17 @@ export default {
     if (p === "/robots.txt") return new Response(ROBOTS, { headers: { "Content-Type": "text/plain" } });
     if (p === "/sitemap.xml") return new Response(SITEMAP, { headers: { "Content-Type": "application/xml" } });
     if (p === "/llms.txt") return new Response(LLMS_TXT, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+    if ((p === "/privacy" || p === "/privacy/") && PRIVACY_HTML) return html(PRIVACY_HTML);
+    if ((p === "/terms" || p === "/terms/") && TERMS_HTML) return html(TERMS_HTML);
+    if (p === "/contact.vcf" || p === "/vcard") {
+      return new Response(VCARD, {
+        headers: {
+          "Content-Type": "text/vcard; charset=utf-8",
+          "Content-Disposition": "attachment; filename=\\"contact.vcf\\"",
+          "Cache-Control": "public, max-age=3600",
+        }
+      });
+    }
 
     // Instant search API — keyword + scored. Works without any AI binding.
     // If env.AI is bound (Cloudflare Workers AI), we also attempt semantic ranking.
@@ -989,20 +1139,41 @@ export default {
         const msg = (data.message || "").toLowerCase();
         let reply;
         if (VERTICAL === "law") {
-          if (msg.includes("price") || msg.includes("cost") || msg.includes("how much") || msg.includes("fee") || msg.includes("free")) {
-            reply = "Personal injury consultations are free — and PI cases are on contingency, so no fee unless we win. For other matters there's a modest consultation fee that's credited toward your case if you retain us. Call __PHONE__ to set it up.";
-          } else if (msg.includes("immigration") || msg.includes("green card") || msg.includes("visa") || msg.includes("deport")) {
-            reply = "Immigration is one of our main practice areas. Use the Immigration intake form on this page or call __PHONE__ — we'll keep it confidential.";
-          } else if (msg.includes("bankruptcy") || msg.includes("debt") || msg.includes("garnish")) {
-            reply = "We handle Chapter 7 and 13 bankruptcies. Filling out the bankruptcy intake form on this page is the fastest way to get a real assessment.";
-          } else if (msg.includes("divorce") || msg.includes("custody") || msg.includes("family")) {
-            reply = "We handle divorce, custody, and support matters. Family law intake form is on this page.";
-          } else if (msg.includes("hour") || msg.includes("open") || msg.includes("when")) {
-            reply = "We're open Mon–Fri 9–5:30, with after-hours by appointment. Call __PHONE__ any time — we return calls quickly.";
-          } else if (msg.includes("nutrition") || msg.includes("diet") || msg.includes("politic") || msg.includes("weather") || msg.includes("joke") || msg.includes("recipe")) {
-            reply = "I only help with legal questions for our firm. For that, you'll want a different resource. Got a legal question I can help with?";
+          // Hard guardrails:
+          // 1. NEVER give legal advice (UPL — unauthorized practice of law)
+          // 2. ALWAYS surface Clifford's phone + email
+          // 3. ALWAYS state confidentiality + no attorney-client relationship
+          // 4. REFUSE off-topic questions politely
+          // 5. NEVER recommend competitors or other firms
+          const TAIL = " (This is general info, not legal advice — only Mr. Chigbu can advise on your specific case. Call __PHONE__ or email __EMAIL__ to set up a real consultation.)";
+          const OFFTOPIC = ["nutrition", "diet", "politic", "weather", "joke", "recipe", "sport", "stock", "crypto", "music", "movie", "game", "code", "program"];
+          if (OFFTOPIC.some(t => msg.includes(t))) {
+            reply = "I only help with legal questions for the Law Offices of Clifford Chigbu. For other topics, you'll want a different resource. Got a legal question I can help with?";
+          } else if (msg.includes("price") || msg.includes("cost") || msg.includes("how much") || msg.includes("fee") || msg.includes("free")) {
+            reply = "Personal injury consultations are free, and PI cases are on contingency (no fee unless we win). For other matters there's a modest consultation fee that's credited toward your case if you retain us." + TAIL;
+          } else if (msg.includes("immigration") || msg.includes("green card") || msg.includes("visa") || msg.includes("deport") || msg.includes("citizen")) {
+            reply = "Immigration is one of Clifford's main practice areas. Family-based green cards, naturalization, deportation defense, and work visas." + TAIL;
+          } else if (msg.includes("bankruptcy") || msg.includes("debt") || msg.includes("garnish") || msg.includes("foreclos")) {
+            reply = "We handle Chapter 7 and Chapter 13 bankruptcies. Filing usually stops creditor harassment within 24 hours." + TAIL;
+          } else if (msg.includes("divorce") || msg.includes("custody") || msg.includes("family") || msg.includes("support") || msg.includes("alimony")) {
+            reply = "Clifford is a top-rated family law attorney in Elk Grove. We handle divorce, custody, child support, and restraining orders." + TAIL;
+          } else if (msg.includes("accident") || msg.includes("injury") || msg.includes("hurt") || msg.includes("crash")) {
+            reply = "Personal injury consultations are free and there's no fee unless we win. The sooner you call, the better — California has strict deadlines on injury claims." + TAIL;
+          } else if (msg.includes("contract") || msg.includes("business") || msg.includes("llc") || msg.includes("partnership")) {
+            reply = "We handle contract review, drafting, business formation, and disputes. Flat-rate contract reviews available." + TAIL;
+          } else if (msg.includes("hour") || msg.includes("open") || msg.includes("when") || msg.includes("schedule")) {
+            reply = "We're open Monday–Friday 8:30 AM to 6:00 PM, with after-hours by appointment.";
+          } else if (msg.includes("address") || msg.includes("location") || msg.includes("where") || msg.includes("office")) {
+            reply = "Our office is at 4815 Laguna Park Dr, Suite C, Elk Grove, CA 95758. We also do phone and video consultations.";
+          } else if (msg.includes("review") || msg.includes("rating") || msg.includes("good")) {
+            reply = "We're rated 4.8 stars on Google with 24+ client reviews. You can read them all on Google Maps.";
+          } else if (msg.includes("language") || msg.includes("speak")) {
+            reply = "English is our primary language, and we can arrange interpreters for Spanish and other languages on request.";
+          } else if (msg.includes("am i") || msg.includes("can i") || msg.includes("should i") || msg.includes("will i")) {
+            // User is asking for legal advice — REFUSE and redirect
+            reply = "That's exactly the kind of question Clifford should answer in person — every case is different and the right answer depends on details I can't see. The best thing is to call __PHONE__ or fill out the intake form on this page. Everything is confidential.";
           } else {
-            reply = "I'll alert the office and Mr. Chigbu. Drop your phone number and we'll call you back, or call __PHONE__ directly. Email: __EMAIL__.";
+            reply = "I can help with general questions about Family Law, Immigration, Personal Injury, Bankruptcy, and Business law in California. For anything case-specific, drop your phone number and Clifford will follow up — or call __PHONE__ directly. Email: __EMAIL__.";
           }
         } else {
           // CARB defaults

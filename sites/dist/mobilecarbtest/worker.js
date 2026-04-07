@@ -10,6 +10,9 @@ const KB = [];
 const BLOG_INDEX = "";
 const BLOG_POSTS = {};
 const AREA_PAGES = {};
+const PRIVACY_HTML = "";
+const TERMS_HTML = "";
+const VCARD = "BEGIN:VCARD\r\nVERSION:3.0\r\nFN:mobilecarbtest.com\r\nN:mobilecarbtest.com;;;;\r\nORG:\r\nTITLE:Attorney at Law\r\nTEL;TYPE=WORK,VOICE:TBD\r\nURL:https://mobilecarbtest.com/\r\nCATEGORIES:Lawyer,Attorney\r\nNOTE:\r\nEND:VCARD\r\n";
 const SITE_ID = "mobilecarbtest";
 const VERTICAL = "carb";
 const ALERT_WEBHOOK = "";
@@ -134,6 +137,17 @@ export default {
     if (p === "/robots.txt") return new Response(ROBOTS, { headers: { "Content-Type": "text/plain" } });
     if (p === "/sitemap.xml") return new Response(SITEMAP, { headers: { "Content-Type": "application/xml" } });
     if (p === "/llms.txt") return new Response(LLMS_TXT, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+    if ((p === "/privacy" || p === "/privacy/") && PRIVACY_HTML) return html(PRIVACY_HTML);
+    if ((p === "/terms" || p === "/terms/") && TERMS_HTML) return html(TERMS_HTML);
+    if (p === "/contact.vcf" || p === "/vcard") {
+      return new Response(VCARD, {
+        headers: {
+          "Content-Type": "text/vcard; charset=utf-8",
+          "Content-Disposition": "attachment; filename=\"contact.vcf\"",
+          "Cache-Control": "public, max-age=3600",
+        }
+      });
+    }
 
     // Instant search API — keyword + scored. Works without any AI binding.
     // If env.AI is bound (Cloudflare Workers AI), we also attempt semantic ranking.
@@ -200,20 +214,41 @@ export default {
         const msg = (data.message || "").toLowerCase();
         let reply;
         if (VERTICAL === "law") {
-          if (msg.includes("price") || msg.includes("cost") || msg.includes("how much") || msg.includes("fee") || msg.includes("free")) {
-            reply = "Personal injury consultations are free — and PI cases are on contingency, so no fee unless we win. For other matters there's a modest consultation fee that's credited toward your case if you retain us. Call TBD to set it up.";
-          } else if (msg.includes("immigration") || msg.includes("green card") || msg.includes("visa") || msg.includes("deport")) {
-            reply = "Immigration is one of our main practice areas. Use the Immigration intake form on this page or call TBD — we'll keep it confidential.";
-          } else if (msg.includes("bankruptcy") || msg.includes("debt") || msg.includes("garnish")) {
-            reply = "We handle Chapter 7 and 13 bankruptcies. Filling out the bankruptcy intake form on this page is the fastest way to get a real assessment.";
-          } else if (msg.includes("divorce") || msg.includes("custody") || msg.includes("family")) {
-            reply = "We handle divorce, custody, and support matters. Family law intake form is on this page.";
-          } else if (msg.includes("hour") || msg.includes("open") || msg.includes("when")) {
-            reply = "We're open Mon–Fri 9–5:30, with after-hours by appointment. Call TBD any time — we return calls quickly.";
-          } else if (msg.includes("nutrition") || msg.includes("diet") || msg.includes("politic") || msg.includes("weather") || msg.includes("joke") || msg.includes("recipe")) {
-            reply = "I only help with legal questions for our firm. For that, you'll want a different resource. Got a legal question I can help with?";
+          // Hard guardrails:
+          // 1. NEVER give legal advice (UPL — unauthorized practice of law)
+          // 2. ALWAYS surface Clifford's phone + email
+          // 3. ALWAYS state confidentiality + no attorney-client relationship
+          // 4. REFUSE off-topic questions politely
+          // 5. NEVER recommend competitors or other firms
+          const TAIL = " (This is general info, not legal advice — only Mr. Chigbu can advise on your specific case. Call TBD or email  to set up a real consultation.)";
+          const OFFTOPIC = ["nutrition", "diet", "politic", "weather", "joke", "recipe", "sport", "stock", "crypto", "music", "movie", "game", "code", "program"];
+          if (OFFTOPIC.some(t => msg.includes(t))) {
+            reply = "I only help with legal questions for the Law Offices of Clifford Chigbu. For other topics, you'll want a different resource. Got a legal question I can help with?";
+          } else if (msg.includes("price") || msg.includes("cost") || msg.includes("how much") || msg.includes("fee") || msg.includes("free")) {
+            reply = "Personal injury consultations are free, and PI cases are on contingency (no fee unless we win). For other matters there's a modest consultation fee that's credited toward your case if you retain us." + TAIL;
+          } else if (msg.includes("immigration") || msg.includes("green card") || msg.includes("visa") || msg.includes("deport") || msg.includes("citizen")) {
+            reply = "Immigration is one of Clifford's main practice areas. Family-based green cards, naturalization, deportation defense, and work visas." + TAIL;
+          } else if (msg.includes("bankruptcy") || msg.includes("debt") || msg.includes("garnish") || msg.includes("foreclos")) {
+            reply = "We handle Chapter 7 and Chapter 13 bankruptcies. Filing usually stops creditor harassment within 24 hours." + TAIL;
+          } else if (msg.includes("divorce") || msg.includes("custody") || msg.includes("family") || msg.includes("support") || msg.includes("alimony")) {
+            reply = "Clifford is a top-rated family law attorney in Elk Grove. We handle divorce, custody, child support, and restraining orders." + TAIL;
+          } else if (msg.includes("accident") || msg.includes("injury") || msg.includes("hurt") || msg.includes("crash")) {
+            reply = "Personal injury consultations are free and there's no fee unless we win. The sooner you call, the better — California has strict deadlines on injury claims." + TAIL;
+          } else if (msg.includes("contract") || msg.includes("business") || msg.includes("llc") || msg.includes("partnership")) {
+            reply = "We handle contract review, drafting, business formation, and disputes. Flat-rate contract reviews available." + TAIL;
+          } else if (msg.includes("hour") || msg.includes("open") || msg.includes("when") || msg.includes("schedule")) {
+            reply = "We're open Monday–Friday 8:30 AM to 6:00 PM, with after-hours by appointment.";
+          } else if (msg.includes("address") || msg.includes("location") || msg.includes("where") || msg.includes("office")) {
+            reply = "Our office is at 4815 Laguna Park Dr, Suite C, Elk Grove, CA 95758. We also do phone and video consultations.";
+          } else if (msg.includes("review") || msg.includes("rating") || msg.includes("good")) {
+            reply = "We're rated 4.8 stars on Google with 24+ client reviews. You can read them all on Google Maps.";
+          } else if (msg.includes("language") || msg.includes("speak")) {
+            reply = "English is our primary language, and we can arrange interpreters for Spanish and other languages on request.";
+          } else if (msg.includes("am i") || msg.includes("can i") || msg.includes("should i") || msg.includes("will i")) {
+            // User is asking for legal advice — REFUSE and redirect
+            reply = "That's exactly the kind of question Clifford should answer in person — every case is different and the right answer depends on details I can't see. The best thing is to call TBD or fill out the intake form on this page. Everything is confidential.";
           } else {
-            reply = "I'll alert the office and Mr. Chigbu. Drop your phone number and we'll call you back, or call TBD directly. Email: .";
+            reply = "I can help with general questions about Family Law, Immigration, Personal Injury, Bankruptcy, and Business law in California. For anything case-specific, drop your phone number and Clifford will follow up — or call TBD directly. Email: .";
           }
         } else {
           // CARB defaults

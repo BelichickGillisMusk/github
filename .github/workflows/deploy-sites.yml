@@ -1,8 +1,12 @@
-name: Deploy CARB Sites
+name: 🚀 Deploy Silverback Sites
 
 # Builds sites/sites.json -> sites/dist/* and deploys every site as its own
 # Cloudflare Worker. Adding a new site to sites.json automatically gets it
 # deployed on the next run — no workflow edits needed.
+#
+# ONE-TAP DEPLOY:
+#   GitHub mobile app → Actions tab → "🚀 Deploy Silverback Sites" → Run workflow
+#   → pick a site from the dropdown (or "ALL") → tap green button. Done.
 
 on:
   push:
@@ -12,13 +16,28 @@ on:
       - ".github/workflows/deploy-sites.yml"
   workflow_dispatch:
     inputs:
-      only:
-        description: "Deploy only this site id (leave blank for all)"
-        required: false
-        default: ""
+      site:
+        description: "Which site to deploy"
+        required: true
+        default: "ALL"
+        type: choice
+        options:
+          - ALL
+          - chigbulaws
+          - mobilecarbsmoketest
+          - cleantruckcheck-roseville
+          - cleantruckcheck-fairfield
+          - cleantruckcheck-stockton
+          - cleantruckcheck-hayward
+          - cleantruckcheck-lodi
+          - carbteststockton
+          - carb-clean-truck-check
+          - mobilecarbtest
+          - mobilesmoketest
 
 jobs:
   build:
+    name: 🔨 Build all sites
     runs-on: ubuntu-latest
     outputs:
       sites: ${{ steps.list.outputs.sites }}
@@ -29,15 +48,17 @@ jobs:
           node-version: "20"
       - name: Build all sites
         run: node sites/build.mjs
-      - name: List generated sites
+      - name: List sites to deploy
         id: list
         run: |
-          if [ -n "${{ github.event.inputs.only }}" ]; then
-            echo "sites=[\"${{ github.event.inputs.only }}\"]" >> $GITHUB_OUTPUT
-          else
+          input="${{ github.event.inputs.site }}"
+          if [ -z "$input" ] || [ "$input" = "ALL" ]; then
             sites=$(ls sites/dist | jq -R . | jq -sc .)
-            echo "sites=$sites" >> $GITHUB_OUTPUT
+          else
+            sites="[\"$input\"]"
           fi
+          echo "sites=$sites" >> $GITHUB_OUTPUT
+          echo "Will deploy: $sites" >> $GITHUB_STEP_SUMMARY
       - name: Upload built artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -46,6 +67,7 @@ jobs:
           retention-days: 7
 
   deploy:
+    name: 🚀 Deploy ${{ matrix.site }}
     needs: build
     runs-on: ubuntu-latest
     strategy:
@@ -65,3 +87,9 @@ jobs:
           accountId: bafa242dd95d3fdce72540d20accd0a2
           workingDirectory: sites/dist/${{ matrix.site }}
           command: deploy
+      - name: Show deploy URL
+        if: success()
+        run: |
+          echo "## ✅ ${{ matrix.site }} deployed" >> $GITHUB_STEP_SUMMARY
+          echo "Workers.dev URL: https://${{ matrix.site }}.silverbackai.workers.dev" >> $GITHUB_STEP_SUMMARY
+          echo "Custom domain (when DNS is set): check sites.json for the domain" >> $GITHUB_STEP_SUMMARY
