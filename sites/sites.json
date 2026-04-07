@@ -89,6 +89,42 @@
       "_themeNote": "Air Force Academy: royal blue (#0033A0), silver (#A6A6A6)"
     },
     {
+      "id": "cleantruckcheck-lodi",
+      "domain": "cleantruckchecklodi.com",
+      "city": "Lodi",
+      "region": "Lodi / San Joaquin County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#782F40",
+        "primaryDark": "#1A0A0F",
+        "accent": "#CEB888",
+        "background": "#1A0A0F",
+        "text": "#FFFFFF",
+        "muted": "#CEB888"
+      },
+      "themeName": "florida-state",
+      "_themeNote": "Florida State Seminoles: garnet (#782F40), gold (#CEB888)"
+    },
+    {
+      "id": "carbteststockton",
+      "domain": "carbteststockton.com",
+      "city": "Stockton",
+      "region": "Stockton / San Joaquin County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#C8102E",
+        "primaryDark": "#000000",
+        "accent": "#F1BE48",
+        "background": "#000000",
+        "text": "#FFFFFF",
+        "muted": "#F1BE48"
+      },
+      "themeName": "stockton-heat",
+      "_themeNote": "Stockton Heat (AHL hockey): red (#C8102E), black (#000000), yellow (#F1BE48)"
+    },
+    {
       "id": "cleantruckcheck-stockton",
       "domain": "cleantruckcheckstockton.com",
       "city": "Stockton",
