@@ -63,11 +63,13 @@
       "id": "chigbulaws",
       "vertical": "law",
       "domain": "chigbulaws.com",
-      "firmName": "Clifford C. Chigbu, Attorney at Law",
-      "attorneyName": "Clifford C. Chigbu",
+      "firmName": "Law Offices of Clifford Chigbu",
+      "firmNameAlt": "Clifford Chigbu Attorney at Law",
+      "attorneyName": "Clifford Chigbu",
       "attorneyTitle": "Attorney at Law",
       "attorneyShortName": "Clifford",
       "attorneyHonorific": "Mr. Chigbu",
+      "_firmNameNote": "Official signage reads 'LAW OFFICES OF CLIFFORD CHIGBU' (exterior of 4815 Laguna Park Dr). Google Business Profile uses 'Clifford Chigbu Attorney at Law'. Both are accurate — we use the full 'Law Offices of' as primary since it's on the physical building.",
       "awards": [
         {
           "year": 2025,
@@ -102,8 +104,10 @@
       "_fromEmailNote": "Sending address for the fallback emails. Must have SPF/DKIM set up in Cloudflare DNS for MailChannels, OR use Resend with this domain verified. Free Resend tier is 100 emails/day — more than enough.",
       "_domainNote": "Domain is plural 'chigbulaws.com' (inherited from prior webmaster). Do not 'correct' it.",
       "barNumber": "221386",
-      "address": "TBD — Elk Grove, CA",
-      "addressForMaps": "Chigbu Law Firm, Elk Grove, CA",
+      "address": "4815 Laguna Park Dr, Suite C, Elk Grove, CA 95758",
+      "streetAddress": "4815 Laguna Park Dr, Suite C",
+      "postalCode": "95758",
+      "addressForMaps": "4815 Laguna Park Dr STE C, Elk Grove, CA 95758",
       "_addressNote": "Replace addressForMaps with the exact street address once confirmed. Get Directions button auto-generates a Google Maps deep link from this.",
       "googleBusinessUrl": "https://www.google.com/search?q=Chigbu+Law+Firm+Elk+Grove+CA",
       "googleReviewsUrl": "https://www.google.com/search?q=Chigbu+Law+Firm+Elk+Grove+CA#lrd=reviews",
@@ -113,24 +117,13 @@
       "googleAnalyticsId": "",
       "plausibleDomain": "",
       "_analyticsNote": "Cloudflare Web Analytics token (free, no cookies) OR GA4 measurement ID (G-XXXXXXXXXX) OR Plausible domain. Set any/all — they render independently. Cloudflare Web Analytics = Cloudflare dashboard → Analytics → Web Analytics → Add a site → copy the token from the beacon script.",
-      "reviews": [
-        {
-          "rating": 5,
-          "author": "Verified client",
-          "text": "Mr. Chigbu took the time to explain everything in plain English. I never felt rushed and I always knew where my case stood."
-        },
-        {
-          "rating": 5,
-          "author": "Verified client",
-          "text": "He helped my family through the immigration process when no one else would even return our calls. Forever grateful."
-        },
-        {
-          "rating": 5,
-          "author": "Verified client",
-          "text": "Honest. Patient. Doesn't promise things he can't deliver — and then delivers more than he promised."
-        }
-      ],
-      "_reviewsNote": "Placeholder testimonials. Replace with real Google reviews (or wire up Google Places API once we have the Place ID and a billing-enabled Google Cloud project).",
+      "googleRating": 4.8,
+      "googleReviewCount": 24,
+      "_googleRatingNote": "Real Google Business Profile numbers from user's screenshot (Oct 2026). Used as authoritative aggregateRating in LegalService JSON-LD. The reviews array below is for rendered testimonials on the page — leave empty until user sends screenshots of the GBP Reviews tab with real review text.",
+      "reviews": [],
+      "deskPhotoUrl": "",
+      "officeExteriorPhotoUrl": "",
+      "_photosNote": "Once uploaded: deskPhotoUrl = Clifford at his computer (in vest + shirt at wood desk with files and monitor). officeExteriorPhotoUrl = the building at 4815 Laguna Park Dr with 'LAW OFFICES OF CLIFFORD CHIGBU' signage. Host on Cloudflare R2 or similar, paste URL here.",
       "hours": "Monday – Friday · 8:30 AM – 6:00 PM · After-hours by appointment",
       "languages": [
         "English",

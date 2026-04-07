@@ -174,11 +174,18 @@ function processStepsHtml(steps) {
   return `<div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;">${(steps||[]).map(s => `<div style="background:rgba(255,255,255,0.04);border-left:3px solid var(--accent);padding:16px 18px;border-radius:0 8px 8px 0;"><div style="color:var(--accent);font-family:-apple-system,sans-serif;font-weight:700;margin-bottom:4px;">${htmlEscape(s.step)}</div><div style="color:var(--muted);">${htmlEscape(s.text)}</div></div>`).join('')}</div>`;
 }
 
-function reviewAvgHtml(reviews) {
-  if (!reviews || !reviews.length) return '';
-  const avg = (reviews.reduce((s, r) => s + (r.rating || 5), 0) / reviews.length).toFixed(1);
+function reviewAvgHtml(site) {
+  const rating = site.googleRating || (site.reviews && site.reviews.length ? (site.reviews.reduce((s, r) => s + (r.rating || 5), 0) / site.reviews.length) : null);
+  const count = site.googleReviewCount || (site.reviews ? site.reviews.length : 0);
+  if (!rating || !count) return '';
   const stars = '★★★★★';
-  return `<div style="display:flex;align-items:center;gap:10px;margin-top:8px;font-family:-apple-system,sans-serif;"><span style="color:var(--accent);font-size:24px;letter-spacing:2px;">${stars}</span><strong style="font-size:20px;color:var(--text);">${avg}</strong><span style="color:var(--muted);font-size:14px;">(${reviews.length} reviews)</span></div>`;
+  const source = site.googleRating ? ' on Google' : '';
+  return `<div style="display:flex;align-items:center;gap:10px;margin-top:8px;font-family:-apple-system,sans-serif;flex-wrap:wrap;"><span style="color:var(--accent);font-size:24px;letter-spacing:2px;">${stars}</span><strong style="font-size:22px;color:var(--text);">${Number(rating).toFixed(1)}</strong><span style="color:var(--muted);font-size:14px;">(${count} reviews${source})</span></div>`;
+}
+
+// Shim for call sites that still pass a reviews array
+function reviewAvgHtmlLegacy(reviews) {
+  return reviewAvgHtml({ reviews });
 }
 
 function legalServiceJsonLd(site) {
@@ -208,15 +215,27 @@ function legalServiceJsonLd(site) {
   if (site.awards && site.awards.length) {
     obj.award = site.awards.map(a => `${a.title} ${a.year}${a.subtitle ? ' — ' + a.subtitle : ''}`);
   }
-  if (site.reviews && site.reviews.length) {
+  // Prefer authoritative Google numbers (googleRating / googleReviewCount) over
+  // computed average from the rendered reviews array.
+  if (site.googleRating && site.googleReviewCount) {
+    obj.aggregateRating = {
+      "@type": "AggregateRating",
+      "ratingValue": String(site.googleRating),
+      "reviewCount": String(site.googleReviewCount),
+      "bestRating": "5",
+      "worstRating": "1",
+    };
+  } else if (site.reviews && site.reviews.length) {
     const avg = (site.reviews.reduce((s, r) => s + (r.rating || 5), 0) / site.reviews.length);
     obj.aggregateRating = {
       "@type": "AggregateRating",
       "ratingValue": avg.toFixed(1),
-      "reviewCount": site.reviews.length,
+      "reviewCount": String(site.reviews.length),
       "bestRating": "5",
       "worstRating": "1",
     };
+  }
+  if (site.reviews && site.reviews.length) {
     obj.review = site.reviews.map(r => ({
       "@type": "Review",
       "reviewRating": { "@type": "Rating", "ratingValue": String(r.rating || 5), "bestRating": "5" },
@@ -369,7 +388,7 @@ footer .disclaimer{margin-top:18px;padding-top:18px;border-top:1px solid rgba(25
 
 <section>
   <h2>What clients say</h2>
-  ${reviewAvgHtml(site.reviews)}
+  ${reviewAvgHtml(site)}
   <div style="margin-top:14px;">${smallReviewsHtml(site.reviews, 2)}</div>
   <p style="margin-top:14px;"><a href="${site.googleReviewsUrl || directionsUrl(site)}" target="_blank" rel="noopener" style="color:var(--accent);">★ Read all reviews on Google →</a></p>
 </section>
@@ -525,8 +544,15 @@ function renderCarbSite(site, allSites) {
   return html;
 }
 
-function reviewsHtml(reviews) {
-  if (!reviews || !reviews.length) return '<p style="color:var(--muted);font-style:italic;">Reviews coming soon — check us on Google.</p>';
+function reviewsHtml(site) {
+  const reviews = site.reviews || [];
+  if (!reviews.length) {
+    // No individual review text yet — show a nicer placeholder with the real Google number
+    if (site.googleRating && site.googleReviewCount) {
+      return `<div style="background:rgba(255,255,255,0.04);border-left:4px solid var(--accent);padding:22px 24px;border-radius:0 8px 8px 0;"><p style="color:var(--text);font-size:17px;margin-bottom:10px;">We're humbled to have earned <strong style="color:var(--accent);">${site.googleRating} stars</strong> from <strong>${site.googleReviewCount} clients</strong> on Google.</p><p style="color:var(--muted);font-size:14px;">Click below to read every word they wrote — unfiltered, straight from Google.</p></div>`;
+    }
+    return '<p style="color:var(--muted);font-style:italic;">Reviews coming soon — check us on Google.</p>';
+  }
   return reviews.map(r => {
     const stars = '★'.repeat(r.rating || 5) + '☆'.repeat(5 - (r.rating || 5));
     return `<blockquote style="background:rgba(255,255,255,0.04);border-left:4px solid var(--accent);padding:18px 20px;border-radius:0 8px 8px 0;font-style:italic;color:var(--text);"><div style="color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;letter-spacing:2px;margin-bottom:8px;">${stars}</div>${htmlEscape(r.text)}<footer style="margin-top:10px;font-size:13px;color:var(--muted);font-style:normal;font-family:-apple-system,sans-serif;">— ${htmlEscape(r.author || 'Google reviewer')}</footer></blockquote>`;
@@ -561,8 +587,8 @@ function renderLawSite(site, allSites) {
     PRACTICE_CARDS_HTML: practiceCardsHtml(site.practiceAreas || []),
     INTAKE_FORMS_HTML: intakeFormsHtml(),
     NAV_PRACTICE_LINKS: navPracticeLinksHtml(site.practiceAreas || []),
-    AVG_RATING_HTML: reviewAvgHtml(site.reviews),
-    REVIEWS_HTML: reviewsHtml(site.reviews),
+    AVG_RATING_HTML: reviewAvgHtml(site),
+    REVIEWS_HTML: reviewsHtml(site),
     DIRECTIONS_URL: directionsUrl(site),
     GOOGLE_BUSINESS_URL: site.googleBusinessUrl || directionsUrl(site),
     GOOGLE_REVIEWS_URL: site.googleReviewsUrl || site.googleBusinessUrl || directionsUrl(site),
