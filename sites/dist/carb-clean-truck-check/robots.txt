@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://carb-clean-truck-check.com/sitemap.xml

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cleantruckcheckstockton.com/sitemap.xml

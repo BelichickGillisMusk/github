@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cleantruckcheckfairfield.com/sitemap.xml

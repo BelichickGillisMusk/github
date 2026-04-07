@@ -1,5 +1,20 @@
 # Agent Memory
 
+## ⚡ READ THIS FIRST — CARB Sites
+
+**ALL Silverback CARB sites (Mobile CARB Smoke Test, Clean Truck Check Roseville/Stockton/Hayward/Fairfield, etc.) are generated from `sites/` — NEVER edit them anywhere else.**
+
+- Source of truth: `sites/sites.json` (phone, colors, prices, FAQ, chatbot config per site)
+- Template: `sites/template.html`
+- Build: `node sites/build.mjs` → outputs `sites/dist/<site-id>/{index.html, worker.js, wrangler.toml, sitemap.xml, robots.txt}`
+- Each generated worker has the HTML embedded inline. **No KV dependency for content**, so phone/color/price fields are completely independent — changing one cannot drift another.
+- Workflow when user says "fix X on the [city] site": open `sites/sites.json`, find the site by `id` or `domain`, edit the field, run `node sites/build.mjs`, commit, deploy.
+- VIN chatbot (the gorilla 🦍) lives in the template; alerts via `ALERT_WEBHOOK` env var or `defaults.chatbot.alertWebhook` in sites.json. Bookings + chats persist in KV namespace `SUBMISSIONS` if bound.
+- Sister-site cross-links are auto-generated from sites.json — adding a new site automatically links it from every other site.
+- See `sites/README.md` for full docs.
+
+**The legacy `workers/cleantruckcheckstockton/` was deleted** — Stockton is now generated under `sites/dist/cleantruckcheck-stockton/`. The other `workers/*` folders (`silverback-ai-studio`, `silverbackai`, `security-silverbackai`, `silverbackai-toolkit`, `dmc-properties`) are unrelated products and stay where they are.
+
 ## Project Overview
 
 Cloudflare Workers monorepo for **Silverback AI** — an AI-powered security monitoring and property management platform. Multiple independently deployable workers plus a full-stack React dashboard.

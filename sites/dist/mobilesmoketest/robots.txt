@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mobilesmoketest.com/sitemap.xml

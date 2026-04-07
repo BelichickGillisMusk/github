@@ -1,0 +1,176 @@
+{
+  "$schema": "./sites.schema.json",
+  "_comment": "SINGLE SOURCE OF TRUTH for every Silverback CARB site. Edit values here and run `node build.mjs` to regenerate every site. Never edit generated index.html directly.",
+  "defaults": {
+    "businessName": "Mobile CARB Smoke Test",
+    "tagline": "Mobile CARB testing — we come to your yard, lot, or jobsite — weekends included, fleets our specialty.",
+    "chatbot": {
+      "enabled": true,
+      "name": "VIN",
+      "avatar": "🦍",
+      "greeting": "Hey, I'm VIN. Need a CARB test, pricing, or scheduling help? I'll get you a real human fast.",
+      "alertWebhook": "",
+      "_alertWebhookNote": "Optional. POST destination for new chat messages — e.g. a Make.com / Zapier webhook that texts or emails you. Leave blank to just store in KV."
+    },
+    "faq": [
+      {"q": "How fast can you come out?", "a": "Same-day in most cases. We run 24/7 — call or text any time."},
+      {"q": "Do you do fleets?", "a": "Yes — fleets are our specialty. Volume discounts available."},
+      {"q": "Weekends?", "a": "Yes, weekends and after-hours included at no extra charge."},
+      {"q": "What about motorhomes?", "a": "Same pricing as trucks. New (2013+) is OBD at the lower price; older is OVI smoke."}
+    ],
+    "prices": {
+      "obd": 119,
+      "ovi": 219
+    },
+    "obdLabel": "2013+ OBD Test",
+    "oviLabel": "2012 & Older OVI Smoke Test",
+    "motorhomeNote": "Motorhomes: same pricing — new (2013+) $119, older (2012-) $219.",
+    "hours": "24/7 Call or Text",
+    "bullets": [
+      "All vehicle classes",
+      "24/7 Call or Text",
+      "Fleet discounts available",
+      "Weekends and after-hours OK"
+    ]
+  },
+  "sites": [
+    {
+      "id": "mobilecarbsmoketest",
+      "domain": "mobilecarbsmoketest.com",
+      "city": "San Diego",
+      "region": "All San Diego County",
+      "phone": "(619) 786-4328",
+      "phoneRaw": "+16197864328",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#3D2E1E",
+        "accent": "#FFC107",
+        "background": "#3D2E1E",
+        "text": "#FFFFFF",
+        "muted": "#C9BFB3"
+      },
+      "themeName": "san-diego-amber"
+    },
+    {
+      "id": "cleantruckcheck-roseville",
+      "domain": "cleantruckcheckroseville.com",
+      "city": "Roseville",
+      "region": "Roseville / Placer County",
+      "phone": "(916) 890-0427",
+      "phoneRaw": "+19168900427",
+      "_phoneNote": "User said 916-89-0427 — assumed 916-890-0427. Confirm.",
+      "colors": {
+        "primary": "#FD5A1E",
+        "primaryDark": "#27251F",
+        "accent": "#EFB21E",
+        "background": "#27251F",
+        "text": "#FFFFFF",
+        "muted": "#AE8F6F"
+      },
+      "themeName": "sf-giants",
+      "_themeNote": "San Francisco Giants colors: orange (#FD5A1E), black (#27251F), gold (#EFB21E)"
+    },
+    {
+      "id": "cleantruckcheck-fairfield",
+      "domain": "cleantruckcheckfairfield.com",
+      "city": "Fairfield",
+      "region": "Fairfield / Solano County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#1A1A1A",
+        "accent": "#FFC107",
+        "background": "#1A1A1A",
+        "text": "#FFFFFF",
+        "muted": "#A0A0A0"
+      },
+      "themeName": "default-amber"
+    },
+    {
+      "id": "cleantruckcheck-stockton",
+      "domain": "cleantruckcheckstockton.com",
+      "city": "Stockton",
+      "region": "Stockton / San Joaquin County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#1A1A1A",
+        "accent": "#FFC107",
+        "background": "#1A1A1A",
+        "text": "#FFFFFF",
+        "muted": "#A0A0A0"
+      },
+      "themeName": "default-amber"
+    },
+    {
+      "id": "cleantruckcheck-hayward",
+      "domain": "cleantruckcheckhayward.com",
+      "city": "Hayward",
+      "region": "Hayward / Alameda County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#1A1A1A",
+        "accent": "#FFC107",
+        "background": "#1A1A1A",
+        "text": "#FFFFFF",
+        "muted": "#A0A0A0"
+      },
+      "themeName": "default-amber"
+    },
+    {
+      "id": "carb-clean-truck-check",
+      "domain": "carb-clean-truck-check.com",
+      "city": "California",
+      "region": "Statewide",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#1A1A1A",
+        "accent": "#FFC107",
+        "background": "#1A1A1A",
+        "text": "#FFFFFF",
+        "muted": "#A0A0A0"
+      },
+      "themeName": "default-amber"
+    },
+    {
+      "id": "mobilecarbtest",
+      "domain": "mobilecarbtest.com",
+      "city": "California",
+      "region": "Statewide",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#3D2E1E",
+        "accent": "#FFC107",
+        "background": "#3D2E1E",
+        "text": "#FFFFFF",
+        "muted": "#C9BFB3"
+      },
+      "themeName": "default-amber"
+    },
+    {
+      "id": "mobilesmoketest",
+      "domain": "mobilesmoketest.com",
+      "city": "California",
+      "region": "Statewide",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#3D2E1E",
+        "accent": "#FFC107",
+        "background": "#3D2E1E",
+        "text": "#FFFFFF",
+        "muted": "#C9BFB3"
+      },
+      "themeName": "default-amber"
+    }
+  ]
+}

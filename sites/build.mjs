@@ -1,0 +1,292 @@
+#!/usr/bin/env node
+// build.mjs — Generates one self-contained HTML + Cloudflare Worker per site.
+//
+// SINGLE SOURCE OF TRUTH: sites/sites.json
+// CANONICAL TEMPLATE:    sites/template.html
+//
+// For each site this writes:
+//   sites/dist/<site-id>/index.html
+//   sites/dist/<site-id>/worker.js     (HTML embedded — NO KV dependency for content)
+//   sites/dist/<site-id>/wrangler.toml
+//   sites/dist/<site-id>/sitemap.xml
+//   sites/dist/<site-id>/robots.txt
+//
+// Run:  node sites/build.mjs
+//
+// IMPORTANT: never edit dist/ files by hand. Edit sites.json or template.html.
+
+import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = __dirname;
+const DIST = join(ROOT, 'dist');
+
+const config = JSON.parse(readFileSync(join(ROOT, 'sites.json'), 'utf8'));
+const template = readFileSync(join(ROOT, 'template.html'), 'utf8');
+
+const defaults = config.defaults;
+
+function htmlEscape(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function businessNameHtml(name) {
+  // "Mobile CARB Smoke Test" → "Mobile <span class=accent>CARB</span><br>Smoke Test"
+  const words = name.split(' ');
+  if (words.length < 2) return htmlEscape(name);
+  const before = words[0];
+  const accent = words[1];
+  const after = words.slice(2).join(' ');
+  return `${htmlEscape(before)} <span class="accent">${htmlEscape(accent)}</span>${after ? '<br>' + htmlEscape(after) : ''}`;
+}
+
+function phoneLast4(phone) {
+  const digits = String(phone).replace(/\D/g, '');
+  return digits.slice(-4) || phone;
+}
+
+function faqHtml(faq) {
+  return faq.map(item =>
+    `<details><summary>${htmlEscape(item.q)}</summary><p>${htmlEscape(item.a)}</p></details>`
+  ).join('\n      ');
+}
+
+function faqJsonLd(faq) {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a }
+    }))
+  });
+}
+
+function sisterLinksHtml(currentId, allSites) {
+  return allSites
+    .filter(s => s.id !== currentId)
+    .map(s => `<a href="https://${s.domain}/" rel="noopener"><strong>${htmlEscape(s.city)}</strong><small>${htmlEscape(s.domain)}</small></a>`)
+    .join('\n        ');
+}
+
+function render(site, allSites) {
+  const obd = site.prices?.obd ?? defaults.prices.obd;
+  const ovi = site.prices?.ovi ?? defaults.prices.ovi;
+  const businessName = site.businessName ?? defaults.businessName;
+  const chatbot = site.chatbot ?? defaults.chatbot ?? { name: "Vinny", avatar: "🦍", greeting: "Hi!" };
+  const faq = site.faq ?? defaults.faq ?? [];
+
+  const tokens = {
+    ID: site.id,
+    DOMAIN: site.domain,
+    BUSINESS_NAME: businessName,
+    BUSINESS_NAME_HTML: businessNameHtml(businessName),
+    TAGLINE: site.tagline ?? defaults.tagline,
+    CITY: site.city,
+    REGION: site.region,
+    PHONE: site.phone,
+    PHONE_RAW: site.phoneRaw,
+    PHONE_LAST4: phoneLast4(site.phone),
+    OBD_LABEL: site.obdLabel ?? defaults.obdLabel,
+    OVI_LABEL: site.oviLabel ?? defaults.oviLabel,
+    OBD_PRICE: obd,
+    OVI_PRICE: ovi,
+    HOURS: site.hours ?? defaults.hours,
+    MOTORHOME_NOTE: site.motorhomeNote ?? defaults.motorhomeNote,
+    PRIMARY: site.colors.primary,
+    PRIMARY_DARK: site.colors.primaryDark,
+    ACCENT: site.colors.accent,
+    BACKGROUND: site.colors.background,
+    TEXT: site.colors.text,
+    MUTED: site.colors.muted,
+    CHAT_NAME: chatbot.name,
+    CHAT_AVATAR: chatbot.avatar,
+    CHAT_GREETING: chatbot.greeting.replace(/"/g, '\\"'),
+    FAQ_HTML: faqHtml(faq),
+    FAQ_JSONLD: faqJsonLd(faq),
+    SISTER_LINKS_HTML: sisterLinksHtml(site.id, allSites),
+  };
+
+  let html = template;
+  for (const [k, v] of Object.entries(tokens)) {
+    html = html.replaceAll(`{{${k}}}`, String(v));
+  }
+
+  const leftover = html.match(/\{\{[A-Z_]+\}\}/g);
+  if (leftover) {
+    throw new Error(`[${site.id}] unreplaced tokens: ${[...new Set(leftover)].join(', ')}`);
+  }
+  return html;
+}
+
+function sitemapXml(site) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://${site.domain}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+</urlset>`;
+}
+
+function robotsTxt(site) {
+  return `User-agent: *
+Allow: /
+Sitemap: https://${site.domain}/sitemap.xml
+`;
+}
+
+function workerJs(html, site, sitemap, robots) {
+  const escapedHtml = JSON.stringify(html);
+  const escapedSitemap = JSON.stringify(sitemap);
+  const escapedRobots = JSON.stringify(robots);
+  const alertWebhook = site.chatbot?.alertWebhook ?? defaults.chatbot?.alertWebhook ?? "";
+
+  return `// AUTO-GENERATED by sites/build.mjs — DO NOT EDIT.
+// Edit sites/sites.json or sites/template.html and re-run \`node sites/build.mjs\`.
+// Site: ${site.id} (${site.domain})
+
+const HTML = ${escapedHtml};
+const SITEMAP = ${escapedSitemap};
+const ROBOTS = ${escapedRobots};
+const SITE_ID = "${site.id}";
+const ALERT_WEBHOOK = ${JSON.stringify(alertWebhook)};
+
+async function fireAlert(env, payload) {
+  // Persist in KV if bound
+  try {
+    if (env && env.SUBMISSIONS) {
+      const key = payload.kind + "_" + Date.now();
+      await env.SUBMISSIONS.put(key, JSON.stringify(payload), { expirationTtl: 60 * 60 * 24 * 90 });
+    }
+  } catch (e) {}
+  // Forward to webhook (Make/Zapier/etc.) if configured
+  const url = (env && env.ALERT_WEBHOOK) || ALERT_WEBHOOK;
+  if (url) {
+    try {
+      await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (e) {}
+  }
+}
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (url.pathname === "/robots.txt") {
+      return new Response(ROBOTS, { headers: { "Content-Type": "text/plain" } });
+    }
+    if (url.pathname === "/sitemap.xml") {
+      return new Response(SITEMAP, { headers: { "Content-Type": "application/xml" } });
+    }
+
+    if (url.pathname === "/api/book" && request.method === "POST") {
+      try {
+        const data = await request.json();
+        await fireAlert(env, { kind: "booking", site: SITE_ID, ...data });
+        return new Response(JSON.stringify({ ok: true }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ ok: false, error: e.message }), {
+          status: 400, headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+
+    if (url.pathname === "/api/chat" && request.method === "POST") {
+      try {
+        const data = await request.json();
+        await fireAlert(env, { kind: "chat", site: SITE_ID, ...data });
+        // Simple canned reply — upgrade to LLM later if you want
+        const msg = (data.message || "").toLowerCase();
+        let reply;
+        if (msg.includes("price") || msg.includes("cost") || msg.includes("how much")) {
+          reply = "OBD test (2013+) is $__OBD__, OVI smoke (2012 & older) is $__OVI__. Motorhomes same pricing.";
+        } else if (msg.includes("hours") || msg.includes("when") || msg.includes("weekend")) {
+          reply = "We run 24/7, weekends included. We'll come to your yard, lot, or jobsite.";
+        } else if (msg.includes("schedule") || msg.includes("book") || msg.includes("appointment")) {
+          reply = "Easy — leave your phone number here and we'll text you back, or call us at __PHONE__.";
+        } else {
+          reply = "Got it — alerting the __CITY__ crew now. Drop your phone number and we'll text you in a few minutes. Or call __PHONE__.";
+        }
+        return new Response(JSON.stringify({ ok: true, reply }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ ok: false, error: e.message }), {
+          status: 400, headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+
+    return new Response(HTML, {
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "public, max-age=300",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+      }
+    });
+  }
+};
+`
+    .replaceAll('__OBD__', String(site.prices?.obd ?? defaults.prices.obd))
+    .replaceAll('__OVI__', String(site.prices?.ovi ?? defaults.prices.ovi))
+    .replaceAll('__PHONE__', site.phone)
+    .replaceAll('__CITY__', site.city);
+}
+
+function wranglerToml(site) {
+  return `# AUTO-GENERATED by sites/build.mjs — DO NOT EDIT.
+# Edit sites/sites.json then run \`node sites/build.mjs\`.
+name = "${site.id}"
+main = "worker.js"
+compatibility_date = "2026-03-01"
+account_id = "bafa242dd95d3fdce72540d20accd0a2"
+
+# Bookings + chat messages persist here (90-day TTL). Create with:
+#   wrangler kv namespace create SUBMISSIONS
+# then paste the id below and uncomment:
+# [[kv_namespaces]]
+# binding = "SUBMISSIONS"
+# id = "<paste-id-here>"
+
+# Optional: alert webhook (Make/Zapier/SMS) — overrides sites.json value
+# [vars]
+# ALERT_WEBHOOK = "https://hook.us1.make.com/xxxxxxxx"
+
+# Custom domain — uncomment after DNS is ready
+# [[routes]]
+# pattern = "${site.domain}/*"
+# zone_name = "${site.domain}"
+`;
+}
+
+// ---- main ----
+if (existsSync(DIST)) rmSync(DIST, { recursive: true, force: true });
+mkdirSync(DIST, { recursive: true });
+
+let count = 0;
+for (const site of config.sites) {
+  const html = render(site, config.sites);
+  const sitemap = sitemapXml(site);
+  const robots = robotsTxt(site);
+  const dir = join(DIST, site.id);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'index.html'), html);
+  writeFileSync(join(dir, 'worker.js'), workerJs(html, site, sitemap, robots));
+  writeFileSync(join(dir, 'wrangler.toml'), wranglerToml(site));
+  writeFileSync(join(dir, 'sitemap.xml'), sitemap);
+  writeFileSync(join(dir, 'robots.txt'), robots);
+  const obd = site.prices?.obd ?? defaults.prices.obd;
+  const ovi = site.prices?.ovi ?? defaults.prices.ovi;
+  console.log(`✓ ${site.id.padEnd(28)} → ${site.domain.padEnd(34)} OBD $${obd}  OVI $${ovi}  ${site.phone}`);
+  count++;
+}
+console.log(`\nGenerated ${count} site(s) into sites/dist/`);
+console.log(`\nNext: cd sites/dist/<site-id> && wrangler deploy`);
