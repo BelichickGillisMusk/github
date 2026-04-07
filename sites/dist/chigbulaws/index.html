@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A1320">
+<title>Chigbu Law Firm — Practical legal help when you need it most.</title>
+<meta name="description" content="Chigbu Law Firm — California attorney serving Stockton and the Central Valley. Bankruptcy, immigration, family law, personal injury. Free consultation. Call TBD.">
+<meta name="keywords" content="Chigbu law, Stockton attorney, California bankruptcy lawyer, immigration lawyer Stockton, family law, personal injury, Nigerian American attorney, free consultation">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="geo.region" content="US-CA">
+<meta name="geo.placename" content="Stockton">
+<link rel="canonical" href="https://chigbulaws.com/">
+<meta property="og:title" content="Chigbu Law Firm">
+<meta property="og:description" content="Chigbu Law Firm — California attorney serving Stockton and the Central Valley. Bankruptcy, immigration, family law, personal injury. Free consultation. Call TBD.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chigbulaws.com/">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root {
+    --primary: #0F1B2D;
+    --primary-dark: #0A1320;
+    --accent: #D4A24C;
+    --bg: #0A1320;
+    --text: #F4EFE6;
+    --muted: #9FA8B8;
+    --max-w: 760px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: Georgia, "Times New Roman", serif; line-height: 1.6; -webkit-font-smoothing: antialiased; padding-bottom: 100px; }
+  h1, h2, h3, .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+
+  /* Top nav */
+  nav.top {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--primary-dark);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav.top .brand { color: var(--accent); font-weight: 800; font-size: 18px; text-decoration: none; font-family: -apple-system, sans-serif; letter-spacing: 0.5px; }
+  nav.top button.menu-btn { background: none; border: none; color: var(--text); font-size: 26px; cursor: pointer; padding: 4px 8px; }
+  nav.top .menu-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--primary-dark);
+    border-bottom: 2px solid var(--accent);
+    padding: 12px 0;
+  }
+  nav.top .menu-panel.open { display: block; }
+  nav.top .menu-panel a {
+    display: block;
+    padding: 14px 24px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: -apple-system, sans-serif;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  nav.top .menu-panel a:hover { background: rgba(255,255,255,0.05); color: var(--accent); }
+
+  /* Hero */
+  .hero { padding: 60px 24px 40px; max-width: var(--max-w); margin: 0 auto; text-align: center; }
+  .hero .eyebrow { color: var(--accent); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; font-family: -apple-system, sans-serif; }
+  .hero h1 { font-size: 38px; line-height: 1.2; margin-bottom: 18px; font-weight: 700; color: var(--text); }
+  .hero p.lede { font-size: 19px; color: var(--muted); margin-bottom: 32px; }
+  .hero .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-block;
+    padding: 16px 28px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: -apple-system, sans-serif;
+    font-size: 16px;
+    border: 2px solid var(--accent);
+    cursor: pointer;
+  }
+  .btn.primary { background: var(--accent); color: var(--primary-dark); }
+  .btn.outline { background: transparent; color: var(--accent); }
+  .btn.block { display: block; width: 100%; text-align: center; }
+
+  section { padding: 50px 24px; max-width: var(--max-w); margin: 0 auto; }
+  section h2 { font-size: 28px; margin-bottom: 18px; color: var(--accent); }
+  section p { color: var(--muted); margin-bottom: 14px; font-size: 17px; }
+
+  /* Practice areas */
+  .practice-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 22px; }
+  @media (min-width: 600px) { .practice-grid { grid-template-columns: 1fr 1fr; } }
+  .practice-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 4px solid var(--accent);
+    padding: 22px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.15s ease, transform 0.15s ease;
+    display: block;
+  }
+  .practice-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+  .practice-card h3 { font-size: 19px; margin-bottom: 6px; color: var(--accent); font-family: -apple-system, sans-serif; }
+  .practice-card p { color: var(--muted); font-size: 14px; margin: 0; }
+  .practice-card .cta { display: block; margin-top: 10px; color: var(--accent); font-size: 13px; font-weight: 600; font-family: -apple-system, sans-serif; }
+
+  /* About */
+  .about { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 30px 24px; margin-top: 18px; }
+  .about p { font-style: italic; }
+
+  /* Contact card */
+  .contact-card {
+    background: var(--primary);
+    color: var(--primary-dark);
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+    margin: 40px auto;
+    max-width: var(--max-w);
+  }
+  .contact-card h2 { color: var(--primary-dark); margin-bottom: 12px; font-size: 24px; }
+  .contact-card .info { font-family: -apple-system, sans-serif; font-size: 17px; margin: 8px 0; }
+  .contact-card a { color: var(--primary-dark); text-decoration: underline; font-weight: 700; }
+
+  /* FAQ */
+  details { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 16px 18px; margin-bottom: 10px; cursor: pointer; }
+  details summary { font-weight: 600; color: var(--text); list-style: none; font-family: -apple-system, sans-serif; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: " +"; color: var(--accent); float: right; }
+  details[open] summary::after { content: " –"; }
+  details p { margin-top: 10px; color: var(--muted); font-size: 15px; font-style: normal; }
+
+  /* Footer */
+  footer {
+    background: var(--primary-dark);
+    border-top: 2px solid var(--accent);
+    padding: 30px 24px 20px;
+    margin-top: 60px;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    font-family: -apple-system, sans-serif;
+  }
+  footer .firm { color: var(--accent); font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+  footer .disclaimer { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+  /* Sticky bottom CTA */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--accent);
+    color: var(--primary-dark);
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: -apple-system, sans-serif;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.3);
+    z-index: 40;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+
+  /* Chatbot */
+  #obi-fab { position: fixed; bottom: 90px; right: 18px; width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: var(--primary-dark); border: none; font-size: 28px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); cursor: pointer; z-index: 60; }
+  #obi-panel { position: fixed; bottom: 160px; right: 18px; width: min(340px, calc(100vw - 36px)); max-height: 60vh; background: var(--primary-dark); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 61; display: none; flex-direction: column; overflow: hidden; }
+  #obi-panel.open { display: flex; }
+  #obi-panel header { background: var(--accent); color: var(--primary-dark); padding: 14px 16px; display: flex; align-items: center; gap: 10px; font-weight: 800; font-family: -apple-system, sans-serif; }
+  #obi-panel .close { margin-left: auto; background: none; border: none; color: var(--primary-dark); font-size: 22px; cursor: pointer; }
+  #obi-log { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; font-family: -apple-system, sans-serif; }
+  #obi-log .msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; line-height: 1.4; }
+  #obi-log .msg.bot { background: rgba(255,255,255,0.08); color: var(--text); align-self: flex-start; }
+  #obi-log .msg.you { background: var(--accent); color: var(--primary-dark); align-self: flex-end; font-weight: 600; }
+  #obi-form { display: flex; gap: 6px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+  #obi-form input { flex: 1; background: rgba(0,0,0,0.3); color: var(--text); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 10px 12px; font-size: 14px; font-family: inherit; }
+  #obi-form button { background: var(--accent); color: var(--primary-dark); border: none; border-radius: 10px; padding: 0 14px; font-weight: 700; cursor: pointer; }
+</style>
+<style>
+form.intake-form label { display:flex; flex-direction:column; gap:6px; font-family:-apple-system,sans-serif; font-size:14px; color: var(--muted); }
+form.intake-form input, form.intake-form select, form.intake-form textarea {
+  background: rgba(0,0,0,0.3); color: var(--text); border:1px solid rgba(255,255,255,0.15);
+  border-radius:8px; padding:12px; font-size:15px; font-family:inherit;
+}
+section#intakes h2 { margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="/" class="brand">Chigbu Law Firm</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+  <div class="menu-panel" id="menuPanel">
+    <a href="#about">About</a>
+    <a href="#intake-bankruptcy">Bankruptcy</a>
+    <a href="#intake-immigration">Immigration</a>
+    <a href="#intake-family">Family Law</a>
+    <a href="#intake-personal-injury">Personal Injury</a>
+    <a href="#intake-estate-planning">Wills &amp; Estate Planning</a>
+    <a href="#reviews">Reviews</a>
+    <a href="/blog/">Blog</a>
+    <a href="#contact">Contact &amp; Directions</a>
+    <a href="https://www.google.com/maps/dir/?api=1&destination=Chigbu%20Law%20Firm%2C%20Stockton%2C%20CA" target="_blank" rel="noopener">🧭 Get Directions</a>
+    <a href="tel:TBD">📞 TBD</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Stockton, California</div>
+  <h1>Practical legal help when you need it most.</h1>
+  <p class="lede">A solo California attorney serving immigrants, families, and working people. Free, confidential first consultation.</p>
+  <div class="cta-row">
+    <a href="#practice" class="btn primary">See How I Can Help</a>
+    <a href="tel:TBD" class="btn outline">Call TBD</a>
+  </div>
+</header>
+
+<section id="about">
+  <h2>About Mr. Chigbu</h2>
+  <div class="about">
+    <p>Mr. Chigbu came to the United States from Nigeria with a single conviction: that the law should work for ordinary people, not against them. Decades later, he runs a solo California practice built on that same idea.</p><p>He doesn't fill the office with diplomas or photos of himself. He fills it with clients who walk in worried and walk out with a plan. Whether you're facing creditors, fighting for your family, or trying to stay in this country, you'll get straight answers, an honest assessment, and a lawyer who picks up the phone.</p><p>If a case isn't a fit, he'll tell you. If it is, he'll fight for it like it's his own.</p>
+  </div>
+</section>
+
+<section id="practice">
+  <h2>Practice Areas</h2>
+  <p>Click any area below to fill out a free, confidential intake form. By the time we meet, we'll already have what we need to move fast.</p>
+  <div class="practice-grid">
+    <a class="practice-card" href="#intake-bankruptcy"><h3>Bankruptcy</h3><p>Chapter 7 and Chapter 13. Stop garnishments, foreclosure, harassment from creditors.</p><span class="cta">Start free intake →</span></a>
+    <a class="practice-card" href="#intake-immigration"><h3>Immigration</h3><p>Family-based petitions, green cards, naturalization, deportation defense, work visas.</p><span class="cta">Start free intake →</span></a>
+    <a class="practice-card" href="#intake-family"><h3>Family Law</h3><p>Divorce, custody, child &amp; spousal support, restraining orders, adoption.</p><span class="cta">Start free intake →</span></a>
+    <a class="practice-card" href="#intake-personal-injury"><h3>Personal Injury</h3><p>Car accidents, slip and fall, dog bites, workplace injuries. No fee unless we win.</p><span class="cta">Start free intake →</span></a>
+    <a class="practice-card" href="#intake-estate-planning"><h3>Wills &amp; Estate Planning</h3><p>Wills, trusts, powers of attorney, advance directives. Protect your family.</p><span class="cta">Start free intake →</span></a>
+  </div>
+</section>
+
+<section id="intakes">
+  <div id="intake-bankruptcy" style="margin-top:30px;">
+      <h2>Bankruptcy — Free Confidential Intake</h2>
+      <form class="intake-form" data-area="bankruptcy" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
+        <label>Household size<input name="household_size" type="number" required></label>
+        <label>Approximate monthly household income<input name="monthly_income" type="text" required></label>
+        <label>Approximate total unsecured debt (credit cards, medical, personal loans)<input name="total_unsecured_debt" type="text" required></label>
+        <label>Do you own a home?<select name="own_home" required><option value="">— select —</option><option value="Yes">Yes</option><option value="No">No</option></select></label>
+        <label>Are wages currently being garnished?<select name="garnishment" required><option value="">— select —</option><option value="Yes">Yes</option><option value="No">No</option><option value="Threatened but not yet">Threatened but not yet</option></select></label>
+        <label>Any pending lawsuits or judgments?<textarea name="lawsuits" rows="3"></textarea></label>
+        <label>Have you filed bankruptcy before? When?<input name="prior_bankruptcy" type="text"></label>
+        <label>What&#39;s your top goal?<select name="goal" required><option value="">— select —</option><option value="Stop creditor harassment">Stop creditor harassment</option><option value="Save my home">Save my home</option><option value="Wipe out debt and start over">Wipe out debt and start over</option><option value="Stop wage garnishment">Stop wage garnishment</option><option value="Not sure yet">Not sure yet</option></select></label>
+        <label>Your name<input name="client_name" required></label>
+        <label>Phone<input name="client_phone" type="tel" required></label>
+        <label>Email<input name="client_email" type="email" required></label>
+        <label>Anything else we should know?<textarea name="notes" rows="3"></textarea></label>
+        <button type="submit" class="btn primary block">Submit confidential intake</button>
+        <div class="ok" hidden style="color:#7BE7A2;">✓ Received. Mr. Chigbu (or our office) will reach out shortly.</div>
+      </form>
+    </div>
+    <div id="intake-immigration" style="margin-top:30px;">
+      <h2>Immigration — Free Confidential Intake</h2>
+      <form class="intake-form" data-area="immigration" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
+        <label>Country of origin<input name="country_of_origin" type="text" required></label>
+        <label>Current immigration status<select name="current_status" required><option value="">— select —</option><option value="U.S. citizen">U.S. citizen</option><option value="Lawful permanent resident">Lawful permanent resident</option><option value="Visa holder">Visa holder</option><option value="Undocumented">Undocumented</option><option value="Asylum seeker">Asylum seeker</option><option value="DACA">DACA</option><option value="Other / not sure">Other / not sure</option></select></label>
+        <label>Approximately how many years in the U.S.?<input name="years_in_us" type="number"></label>
+        <label>Immediate family in the U.S. (spouse, children, parents)?<textarea name="family_in_us" rows="3"></textarea></label>
+        <label>Any criminal history (even minor)?<select name="criminal_history" required><option value="">— select —</option><option value="No">No</option><option value="Yes — minor">Yes — minor</option><option value="Yes — significant">Yes — significant</option><option value="Prefer to discuss in person">Prefer to discuss in person</option></select></label>
+        <label>Are you in removal/deportation proceedings?<select name="deportation" required><option value="">— select —</option><option value="No">No</option><option value="Yes">Yes</option><option value="Not sure">Not sure</option></select></label>
+        <label>What outcome are you hoping for?<textarea name="goal" rows="3" required></textarea></label>
+        <label>Your name<input name="client_name" required></label>
+        <label>Phone<input name="client_phone" type="tel" required></label>
+        <label>Email<input name="client_email" type="email" required></label>
+        <label>Anything else we should know?<textarea name="notes" rows="3"></textarea></label>
+        <button type="submit" class="btn primary block">Submit confidential intake</button>
+        <div class="ok" hidden style="color:#7BE7A2;">✓ Received. Mr. Chigbu (or our office) will reach out shortly.</div>
+      </form>
+    </div>
+    <div id="intake-family" style="margin-top:30px;">
+      <h2>Family Law — Free Confidential Intake</h2>
+      <form class="intake-form" data-area="family" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
+        <label>What type of family law matter?<select name="matter_type" required><option value="">— select —</option><option value="Divorce">Divorce</option><option value="Custody / visitation">Custody / visitation</option><option value="Child support">Child support</option><option value="Spousal support">Spousal support</option><option value="Restraining order">Restraining order</option><option value="Adoption">Adoption</option><option value="Other">Other</option></select></label>
+        <label>If married, date of marriage<input name="marriage_date" type="text"></label>
+        <label>Date of separation (if any)<input name="separation_date" type="text"></label>
+        <label>Children (ages, custody arrangement if any)<textarea name="children" rows="3"></textarea></label>
+        <label>Any history of domestic violence or restraining orders?<select name="domestic_violence" required><option value="">— select —</option><option value="No">No</option><option value="Yes — against me">Yes — against me</option><option value="Yes — against the other party">Yes — against the other party</option><option value="Prefer to discuss in person">Prefer to discuss in person</option></select></label>
+        <label>How urgent is this?<select name="urgency" required><option value="">— select —</option><option value="Emergency — today">Emergency — today</option><option value="Within a week">Within a week</option><option value="Within a month">Within a month</option><option value="Just exploring">Just exploring</option></select></label>
+        <label>Your name<input name="client_name" required></label>
+        <label>Phone<input name="client_phone" type="tel" required></label>
+        <label>Email<input name="client_email" type="email" required></label>
+        <label>Anything else we should know?<textarea name="notes" rows="3"></textarea></label>
+        <button type="submit" class="btn primary block">Submit confidential intake</button>
+        <div class="ok" hidden style="color:#7BE7A2;">✓ Received. Mr. Chigbu (or our office) will reach out shortly.</div>
+      </form>
+    </div>
+    <div id="intake-personal-injury" style="margin-top:30px;">
+      <h2>Personal Injury — Free Confidential Intake</h2>
+      <form class="intake-form" data-area="personal-injury" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
+        <label>What kind of incident?<select name="incident_type" required><option value="">— select —</option><option value="Car accident">Car accident</option><option value="Slip and fall">Slip and fall</option><option value="Workplace injury">Workplace injury</option><option value="Dog bite">Dog bite</option><option value="Medical injury">Medical injury</option><option value="Other">Other</option></select></label>
+        <label>Date of incident<input name="incident_date" type="text" required></label>
+        <label>Briefly describe injuries<textarea name="injuries" rows="3" required></textarea></label>
+        <label>Are you currently receiving medical treatment?<select name="treatment" required><option value="">— select —</option><option value="Yes">Yes</option><option value="No">No</option><option value="I should be">I should be</option></select></label>
+        <label>Has any insurance company contacted you?<select name="insurance_contact" required><option value="">— select —</option><option value="No">No</option><option value="Yes — mine">Yes — mine</option><option value="Yes — other party&#39;s">Yes — other party&#39;s</option><option value="Yes — both">Yes — both</option></select></label>
+        <label>Was a police report filed?<select name="police_report" required><option value="">— select —</option><option value="Yes">Yes</option><option value="No">No</option><option value="Not sure">Not sure</option></select></label>
+        <label>Your name<input name="client_name" required></label>
+        <label>Phone<input name="client_phone" type="tel" required></label>
+        <label>Email<input name="client_email" type="email" required></label>
+        <label>Anything else we should know?<textarea name="notes" rows="3"></textarea></label>
+        <button type="submit" class="btn primary block">Submit confidential intake</button>
+        <div class="ok" hidden style="color:#7BE7A2;">✓ Received. Mr. Chigbu (or our office) will reach out shortly.</div>
+      </form>
+    </div>
+    <div id="intake-estate-planning" style="margin-top:30px;">
+      <h2>Wills &amp; Estate Planning — Free Confidential Intake</h2>
+      <form class="intake-form" data-area="estate-planning" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
+        <label>What do you need?<select name="documents_needed" required><option value="">— select —</option><option value="Just a will">Just a will</option><option value="Will + trust">Will + trust</option><option value="Power of attorney">Power of attorney</option><option value="Advance healthcare directive">Advance healthcare directive</option><option value="Full estate plan">Full estate plan</option><option value="Not sure">Not sure</option></select></label>
+        <label>Do you have minor children?<select name="minor_children" required><option value="">— select —</option><option value="Yes">Yes</option><option value="No">No</option></select></label>
+        <label>Do you own real estate?<select name="real_estate" required><option value="">— select —</option><option value="Yes — one property">Yes — one property</option><option value="Yes — multiple">Yes — multiple</option><option value="No">No</option></select></label>
+        <label>Rough total estate value (your best guess)<input name="rough_estate_value" type="text"></label>
+        <label>Your name<input name="client_name" required></label>
+        <label>Phone<input name="client_phone" type="tel" required></label>
+        <label>Email<input name="client_email" type="email" required></label>
+        <label>Anything else we should know?<textarea name="notes" rows="3"></textarea></label>
+        <button type="submit" class="btn primary block">Submit confidential intake</button>
+        <div class="ok" hidden style="color:#7BE7A2;">✓ Received. Mr. Chigbu (or our office) will reach out shortly.</div>
+      </form>
+    </div>
+</section>
+
+<section id="faq">
+  <h2>Common questions</h2>
+  <details><summary>Is the consultation really free?</summary><p>Yes. The first conversation is always free and confidential. You&#39;re not committing to anything by reaching out.</p></details>
+      <details><summary>Do you take cases on a payment plan?</summary><p>For most matters, yes. We&#39;ll work out something that fits your situation in the first meeting.</p></details>
+      <details><summary>What languages do you speak?</summary><p>English and Igbo. We can also arrange interpreters for Spanish and other languages on request.</p></details>
+      <details><summary>Where is your office?</summary><p>Stockton, California. We meet by appointment and also do phone and video consultations.</p></details>
+      <details><summary>How fast can we meet?</summary><p>Same day or next day in most cases. Call the number on this page.</p></details>
+</section>
+
+<section id="reviews">
+  <h2>What clients say</h2>
+  <p>Honest reviews from real people on Google.</p>
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:18px;">
+    <blockquote style="background:rgba(255,255,255,0.04);border-left:4px solid var(--accent);padding:18px 20px;border-radius:0 8px 8px 0;font-style:italic;color:var(--text);"><div style="color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;letter-spacing:2px;margin-bottom:8px;">★★★★★</div>Mr. Chigbu took the time to explain everything in plain English. I never felt rushed and I always knew where my case stood.<footer style="margin-top:10px;font-size:13px;color:var(--muted);font-style:normal;font-family:-apple-system,sans-serif;">— Verified client</footer></blockquote>
+    <blockquote style="background:rgba(255,255,255,0.04);border-left:4px solid var(--accent);padding:18px 20px;border-radius:0 8px 8px 0;font-style:italic;color:var(--text);"><div style="color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;letter-spacing:2px;margin-bottom:8px;">★★★★★</div>He helped my family through the immigration process when no one else would even return our calls. Forever grateful.<footer style="margin-top:10px;font-size:13px;color:var(--muted);font-style:normal;font-family:-apple-system,sans-serif;">— Verified client</footer></blockquote>
+    <blockquote style="background:rgba(255,255,255,0.04);border-left:4px solid var(--accent);padding:18px 20px;border-radius:0 8px 8px 0;font-style:italic;color:var(--text);"><div style="color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;letter-spacing:2px;margin-bottom:8px;">★★★★★</div>Honest. Patient. Doesn&#39;t promise things he can&#39;t deliver — and then delivers more than he promised.<footer style="margin-top:10px;font-size:13px;color:var(--muted);font-style:normal;font-family:-apple-system,sans-serif;">— Verified client</footer></blockquote>
+  </div>
+  <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+    <a class="btn outline" href="https://www.google.com/search?q=Chigbu+Law+Firm+Stockton#lrd=reviews" target="_blank" rel="noopener">★ Read all reviews on Google</a>
+    <a class="btn outline" href="https://www.google.com/search?q=Chigbu+Law+Firm+Stockton" target="_blank" rel="noopener">Leave a review</a>
+  </div>
+</section>
+
+<div class="contact-card" id="contact">
+  <h2>Talk to Mr. Chigbu</h2>
+  <p class="info">📞 <a href="tel:TBD">TBD</a></p>
+  <p class="info">✉️ <a href="mailto:chigbulaw@sbcglobal.net">chigbulaw@sbcglobal.net</a></p>
+  <p class="info">📍 TBD — Stockton, CA</p>
+  <p class="info" style="font-size:14px;opacity:0.85;">Mon–Fri 9:00 AM – 5:30 PM · After-hours by appointment</p>
+  <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+    <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&destination=Chigbu%20Law%20Firm%2C%20Stockton%2C%20CA" target="_blank" rel="noopener" style="background:var(--primary-dark);color:var(--accent);border-color:var(--primary-dark);">🧭 Get Directions</a>
+    <a class="btn primary" href="https://www.google.com/search?q=Chigbu+Law+Firm+Stockton" target="_blank" rel="noopener" style="background:var(--primary-dark);color:var(--accent);border-color:var(--primary-dark);">View on Google</a>
+  </div>
+</div>
+
+<footer>
+  <div class="firm">Chigbu Law Firm</div>
+  <div>Mr. Chigbu · State Bar of California</div>
+  <div>📞 TBD · ✉️ chigbulaw@sbcglobal.net</div>
+  <div><a href="/blog/" style="color:var(--accent)">Blog</a> · <a href="/sitemap.xml" style="color:var(--muted)">Sitemap</a></div>
+  <div class="disclaimer">This website is attorney advertising. The information on this site is for general informational purposes only and does not constitute legal advice. No attorney-client relationship is formed by use of this site or by submission of an intake form. Past results do not guarantee future outcomes. Licensed in the State of California.</div>
+</footer>
+
+<a class="sticky-cta" href="tel:TBD">📞 Free Consultation · TBD</a>
+
+<!-- Chatbot -->
+<button id="obi-fab" aria-label="Chat with OBI">⚖️</button>
+<div id="obi-panel" role="dialog" aria-label="Chat">
+  <header>
+    <span>⚖️</span>
+    <span>OBI</span>
+    <button class="close" id="obi-close" aria-label="Close">×</button>
+  </header>
+  <div id="obi-log"></div>
+  <form id="obi-form">
+    <input id="obi-input" placeholder="Ask a quick question…" autocomplete="off" required>
+    <button type="submit">→</button>
+  </form>
+</div>
+
+<script>
+  // Hamburger
+  const menuBtn = document.getElementById('menuBtn');
+  const menuPanel = document.getElementById('menuPanel');
+  menuBtn.addEventListener('click', () => menuPanel.classList.toggle('open'));
+  menuPanel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menuPanel.classList.remove('open')));
+
+  // Intake forms
+  document.querySelectorAll('form.intake-form').forEach(form => {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this).entries());
+      data.site = "chigbulaws";
+      data.area = this.dataset.area;
+      data.timestamp = new Date().toISOString();
+      try {
+        await fetch('/api/intake', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+      } catch (err) {}
+      const ok = this.querySelector('.ok');
+      if (ok) ok.hidden = false;
+      this.reset();
+    });
+  });
+
+  // Chatbot
+  const fab = document.getElementById('obi-fab');
+  const panel = document.getElementById('obi-panel');
+  const log = document.getElementById('obi-log');
+  const form = document.getElementById('obi-form');
+  const input = document.getElementById('obi-input');
+  const closeBtn = document.getElementById('obi-close');
+  const sessionId = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  let opened = false;
+  function addMsg(text, who) {
+    const el = document.createElement('div');
+    el.className = 'msg ' + who;
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+  fab.addEventListener('click', () => {
+    panel.classList.add('open');
+    if (!opened) { addMsg("Hi, I'm OBI — Mr. Chigbu's intake assistant. Ask me anything about bankruptcy, immigration, family law, or set up a free consult. I keep things confidential.", 'bot'); opened = true; }
+    input.focus();
+  });
+  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    addMsg(text, 'you');
+    input.value = '';
+    try {
+      const res = await fetch('/api/chat', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ site: "chigbulaws", sessionId, message: text, timestamp: new Date().toISOString() }) });
+      const data = await res.json().catch(()=>({}));
+      addMsg(data.reply || "I'll have Mr. Chigbu reach out. Leave your phone or call TBD.", 'bot');
+    } catch (err) {
+      addMsg("Couldn't reach the server. Please call TBD.", 'bot');
+    }
+  });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": "Chigbu Law Firm",
+  "telephone": "TBD",
+  "email": "chigbulaw@sbcglobal.net",
+  "url": "https://chigbulaws.com/",
+  "address": { "@type": "PostalAddress", "addressLocality": "Stockton", "addressRegion": "CA", "addressCountry": "US" },
+  "areaServed": "California — serving Stockton, Sacramento, and the Central Valley",
+  "founder": { "@type": "Person", "name": "Mr. Chigbu" },
+  "knowsLanguage": ["English","Igbo"]
+}
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the consultation really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The first conversation is always free and confidential. You're not committing to anything by reaching out."}},{"@type":"Question","name":"Do you take cases on a payment plan?","acceptedAnswer":{"@type":"Answer","text":"For most matters, yes. We'll work out something that fits your situation in the first meeting."}},{"@type":"Question","name":"What languages do you speak?","acceptedAnswer":{"@type":"Answer","text":"English and Igbo. We can also arrange interpreters for Spanish and other languages on request."}},{"@type":"Question","name":"Where is your office?","acceptedAnswer":{"@type":"Answer","text":"Stockton, California. We meet by appointment and also do phone and video consultations."}},{"@type":"Question","name":"How fast can we meet?","acceptedAnswer":{"@type":"Answer","text":"Same day or next day in most cases. Call the number on this page."}}]}</script>
+</body>
+</html>

@@ -1,6 +1,19 @@
 {
   "$schema": "./sites.schema.json",
-  "_comment": "SINGLE SOURCE OF TRUTH for every Silverback CARB site. Edit values here and run `node build.mjs` to regenerate every site. Never edit generated index.html directly.",
+  "_comment": "SINGLE SOURCE OF TRUTH for every Silverback site. Edit values here and run `node build.mjs` to regenerate every site. Never edit generated index.html directly.",
+  "verticalDefaults": {
+    "law": {
+      "businessName": "Chigbu Law Firm",
+      "chatbot": {
+        "enabled": true,
+        "name": "OBI",
+        "avatar": "⚖️",
+        "greeting": "Hi, I'm OBI — Mr. Chigbu's intake assistant. Ask me anything about bankruptcy, immigration, family law, or set up a free consult. I keep things confidential.",
+        "alertWebhook": ""
+      },
+      "disclaimer": "This website is attorney advertising. The information on this site is for general informational purposes only and does not constitute legal advice. No attorney-client relationship is formed by use of this site or by submission of an intake form. Past results do not guarantee future outcomes. Licensed in the State of California."
+    }
+  },
   "defaults": {
     "businessName": "Mobile CARB Smoke Test",
     "tagline": "Mobile CARB testing — we come to your yard, lot, or jobsite — weekends included, fleets our specialty.",
@@ -34,6 +47,127 @@
     ]
   },
   "sites": [
+    {
+      "id": "chigbulaws",
+      "vertical": "law",
+      "domain": "chigbulaws.com",
+      "firmName": "Chigbu Law Firm",
+      "attorneyName": "Mr. Chigbu",
+      "city": "Stockton",
+      "region": "California — serving Stockton, Sacramento, and the Central Valley",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "email": "chigbulaw@sbcglobal.net",
+      "_emailNote": "Locked — client cannot change. Do not 'fix' the spelling.",
+      "_domainNote": "Domain is plural 'chigbulaws.com' (inherited from prior webmaster). Do not 'correct' it.",
+      "address": "TBD — Stockton, CA",
+      "addressForMaps": "Chigbu Law Firm, Stockton, CA",
+      "_addressNote": "Replace addressForMaps with the exact street address once confirmed. Get Directions button auto-generates a Google Maps deep link from this.",
+      "googleBusinessUrl": "https://www.google.com/search?q=Chigbu+Law+Firm+Stockton",
+      "googleReviewsUrl": "https://www.google.com/search?q=Chigbu+Law+Firm+Stockton#lrd=reviews",
+      "googlePlaceId": "",
+      "_googleNote": "Once you have the Google Place ID, paste it into googlePlaceId and we'll wire up native review writing. Get the Place ID at https://developers.google.com/maps/documentation/places/web-service/place-id",
+      "reviews": [
+        { "rating": 5, "author": "Verified client", "text": "Mr. Chigbu took the time to explain everything in plain English. I never felt rushed and I always knew where my case stood." },
+        { "rating": 5, "author": "Verified client", "text": "He helped my family through the immigration process when no one else would even return our calls. Forever grateful." },
+        { "rating": 5, "author": "Verified client", "text": "Honest. Patient. Doesn't promise things he can't deliver — and then delivers more than he promised." }
+      ],
+      "_reviewsNote": "Placeholder testimonials. Replace with real Google reviews (or wire up Google Places API once we have the Place ID and a billing-enabled Google Cloud project).",
+      "hours": "Mon–Fri 9:00 AM – 5:30 PM · After-hours by appointment",
+      "languages": ["English", "Igbo"],
+      "barAdmissions": "State Bar of California",
+      "colors": {
+        "primary": "#0F1B2D",
+        "primaryDark": "#0A1320",
+        "accent": "#D4A24C",
+        "background": "#0A1320",
+        "text": "#F4EFE6",
+        "muted": "#9FA8B8"
+      },
+      "themeName": "law-navy-gold",
+      "_themeNote": "Deep navy + warm gold. Refined, trustworthy, no clichéd lawyer-stock-photo feel. Adjust freely in this object.",
+      "eyebrow": "Stockton, California",
+      "headline": "Practical legal help when you need it most.",
+      "subheadline": "A solo California attorney serving immigrants, families, and working people. Free, confidential first consultation.",
+      "metaDescription": "Chigbu Law Firm — California attorney serving Stockton and the Central Valley. Bankruptcy, immigration, family law, personal injury. Free consultation. Call TBD.",
+      "keywords": "Chigbu law, Stockton attorney, California bankruptcy lawyer, immigration lawyer Stockton, family law, personal injury, Nigerian American attorney, free consultation",
+      "aboutHtml": "<p>Mr. Chigbu came to the United States from Nigeria with a single conviction: that the law should work for ordinary people, not against them. Decades later, he runs a solo California practice built on that same idea.</p><p>He doesn't fill the office with diplomas or photos of himself. He fills it with clients who walk in worried and walk out with a plan. Whether you're facing creditors, fighting for your family, or trying to stay in this country, you'll get straight answers, an honest assessment, and a lawyer who picks up the phone.</p><p>If a case isn't a fit, he'll tell you. If it is, he'll fight for it like it's his own.</p>",
+      "practiceAreas": [
+        {
+          "id": "bankruptcy",
+          "name": "Bankruptcy",
+          "blurb": "Chapter 7 and Chapter 13. Stop garnishments, foreclosure, harassment from creditors.",
+          "intake": [
+            { "name": "household_size", "label": "Household size", "type": "number", "required": true },
+            { "name": "monthly_income", "label": "Approximate monthly household income", "type": "text", "required": true },
+            { "name": "total_unsecured_debt", "label": "Approximate total unsecured debt (credit cards, medical, personal loans)", "type": "text", "required": true },
+            { "name": "own_home", "label": "Do you own a home?", "type": "select", "options": ["Yes", "No"], "required": true },
+            { "name": "garnishment", "label": "Are wages currently being garnished?", "type": "select", "options": ["Yes", "No", "Threatened but not yet"], "required": true },
+            { "name": "lawsuits", "label": "Any pending lawsuits or judgments?", "type": "textarea", "required": false },
+            { "name": "prior_bankruptcy", "label": "Have you filed bankruptcy before? When?", "type": "text", "required": false },
+            { "name": "goal", "label": "What's your top goal?", "type": "select", "options": ["Stop creditor harassment", "Save my home", "Wipe out debt and start over", "Stop wage garnishment", "Not sure yet"], "required": true }
+          ]
+        },
+        {
+          "id": "immigration",
+          "name": "Immigration",
+          "blurb": "Family-based petitions, green cards, naturalization, deportation defense, work visas.",
+          "intake": [
+            { "name": "country_of_origin", "label": "Country of origin", "type": "text", "required": true },
+            { "name": "current_status", "label": "Current immigration status", "type": "select", "options": ["U.S. citizen", "Lawful permanent resident", "Visa holder", "Undocumented", "Asylum seeker", "DACA", "Other / not sure"], "required": true },
+            { "name": "years_in_us", "label": "Approximately how many years in the U.S.?", "type": "number", "required": false },
+            { "name": "family_in_us", "label": "Immediate family in the U.S. (spouse, children, parents)?", "type": "textarea", "required": false },
+            { "name": "criminal_history", "label": "Any criminal history (even minor)?", "type": "select", "options": ["No", "Yes — minor", "Yes — significant", "Prefer to discuss in person"], "required": true },
+            { "name": "deportation", "label": "Are you in removal/deportation proceedings?", "type": "select", "options": ["No", "Yes", "Not sure"], "required": true },
+            { "name": "goal", "label": "What outcome are you hoping for?", "type": "textarea", "required": true }
+          ]
+        },
+        {
+          "id": "family",
+          "name": "Family Law",
+          "blurb": "Divorce, custody, child & spousal support, restraining orders, adoption.",
+          "intake": [
+            { "name": "matter_type", "label": "What type of family law matter?", "type": "select", "options": ["Divorce", "Custody / visitation", "Child support", "Spousal support", "Restraining order", "Adoption", "Other"], "required": true },
+            { "name": "marriage_date", "label": "If married, date of marriage", "type": "text", "required": false },
+            { "name": "separation_date", "label": "Date of separation (if any)", "type": "text", "required": false },
+            { "name": "children", "label": "Children (ages, custody arrangement if any)", "type": "textarea", "required": false },
+            { "name": "domestic_violence", "label": "Any history of domestic violence or restraining orders?", "type": "select", "options": ["No", "Yes — against me", "Yes — against the other party", "Prefer to discuss in person"], "required": true },
+            { "name": "urgency", "label": "How urgent is this?", "type": "select", "options": ["Emergency — today", "Within a week", "Within a month", "Just exploring"], "required": true }
+          ]
+        },
+        {
+          "id": "personal-injury",
+          "name": "Personal Injury",
+          "blurb": "Car accidents, slip and fall, dog bites, workplace injuries. No fee unless we win.",
+          "intake": [
+            { "name": "incident_type", "label": "What kind of incident?", "type": "select", "options": ["Car accident", "Slip and fall", "Workplace injury", "Dog bite", "Medical injury", "Other"], "required": true },
+            { "name": "incident_date", "label": "Date of incident", "type": "text", "required": true },
+            { "name": "injuries", "label": "Briefly describe injuries", "type": "textarea", "required": true },
+            { "name": "treatment", "label": "Are you currently receiving medical treatment?", "type": "select", "options": ["Yes", "No", "I should be"], "required": true },
+            { "name": "insurance_contact", "label": "Has any insurance company contacted you?", "type": "select", "options": ["No", "Yes — mine", "Yes — other party's", "Yes — both"], "required": true },
+            { "name": "police_report", "label": "Was a police report filed?", "type": "select", "options": ["Yes", "No", "Not sure"], "required": true }
+          ]
+        },
+        {
+          "id": "estate-planning",
+          "name": "Wills & Estate Planning",
+          "blurb": "Wills, trusts, powers of attorney, advance directives. Protect your family.",
+          "intake": [
+            { "name": "documents_needed", "label": "What do you need?", "type": "select", "options": ["Just a will", "Will + trust", "Power of attorney", "Advance healthcare directive", "Full estate plan", "Not sure"], "required": true },
+            { "name": "minor_children", "label": "Do you have minor children?", "type": "select", "options": ["Yes", "No"], "required": true },
+            { "name": "real_estate", "label": "Do you own real estate?", "type": "select", "options": ["Yes — one property", "Yes — multiple", "No"], "required": true },
+            { "name": "rough_estate_value", "label": "Rough total estate value (your best guess)", "type": "text", "required": false }
+          ]
+        }
+      ],
+      "faq": [
+        { "q": "Is the consultation really free?", "a": "Yes. The first conversation is always free and confidential. You're not committing to anything by reaching out." },
+        { "q": "Do you take cases on a payment plan?", "a": "For most matters, yes. We'll work out something that fits your situation in the first meeting." },
+        { "q": "What languages do you speak?", "a": "English and Igbo. We can also arrange interpreters for Spanish and other languages on request." },
+        { "q": "Where is your office?", "a": "Stockton, California. We meet by appointment and also do phone and video consultations." },
+        { "q": "How fast can we meet?", "a": "Same day or next day in most cases. Call the number on this page." }
+      ]
+    },
     {
       "id": "mobilecarbsmoketest",
       "domain": "mobilecarbsmoketest.com",
