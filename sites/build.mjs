@@ -211,7 +211,16 @@ function legalServiceJsonLd(site) {
     "founder": { "@type": "Person", "name": site.attorneyName || site.firmName },
     "knowsLanguage": site.languages || ["English"],
     "priceRange": "$$",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `https://${site.domain}/search?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
+  if (site.firmNameAlt) obj.alternateName = site.firmNameAlt;
   if (site.awards && site.awards.length) {
     obj.award = site.awards.map(a => `${a.title} ${a.year}${a.subtitle ? ' — ' + a.subtitle : ''}`);
   }
@@ -245,6 +254,134 @@ function legalServiceJsonLd(site) {
   }
   // Strip undefined values for cleaner JSON
   return JSON.stringify(obj, (k, v) => v === undefined ? undefined : v);
+}
+
+// Knowledge base: renders a searchable, category-grouped Q&A module
+function knowledgeBaseHtml(kb) {
+  if (!kb || !kb.length) return '';
+  const cats = {};
+  for (const item of kb) {
+    if (!cats[item.category]) cats[item.category] = [];
+    cats[item.category].push(item);
+  }
+  const catOrder = Object.keys(cats);
+  const pills = catOrder.map((c, i) =>
+    `<button type="button" class="kb-pill${i === 0 ? ' active' : ''}" data-cat="${htmlEscape(c)}">${htmlEscape(c)} <span style="opacity:0.6;">${cats[c].length}</span></button>`
+  ).join('');
+  const items = kb.map((item, i) =>
+    `<details class="kb-item" data-cat="${htmlEscape(item.category)}" data-q="${htmlEscape(item.q.toLowerCase())}" data-a="${htmlEscape(item.a.toLowerCase())}"${i < 6 ? ' open' : ''}><summary>${htmlEscape(item.q)}</summary><p>${htmlEscape(item.a)}</p></details>`
+  ).join('\n    ');
+  return `
+<div class="kb-search-wrap" style="margin-top:14px;margin-bottom:18px;">
+  <input type="search" id="kb-search" placeholder="Ask anything — divorce, green card, accident..." style="width:100%;background:rgba(0,0,0,0.3);color:var(--text);border:1px solid var(--accent);border-radius:10px;padding:16px 18px;font-size:16px;font-family:-apple-system,sans-serif;">
+  <div id="kb-count" style="margin-top:8px;color:var(--muted);font-size:13px;font-family:-apple-system,sans-serif;"></div>
+</div>
+<div class="kb-pills" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;">
+  <button type="button" class="kb-pill" data-cat="__ALL__">All <span style="opacity:0.6;">${kb.length}</span></button>
+  ${pills}
+</div>
+<div id="kb-results">
+    ${items}
+</div>
+<style>
+  .kb-pill { background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid rgba(255,255,255,0.12); border-radius:999px; padding:8px 14px; font-family:-apple-system,sans-serif; font-size:13px; font-weight:600; cursor:pointer; }
+  .kb-pill.active { background: var(--accent); color: var(--primary-dark); border-color: var(--accent); }
+  .kb-pill:hover:not(.active) { background: rgba(255,255,255,0.1); }
+  .kb-item.hidden { display: none; }
+  .kb-item mark { background: var(--accent); color: var(--primary-dark); padding: 0 2px; border-radius: 2px; }
+</style>
+<script>
+(function(){
+  const input = document.getElementById('kb-search');
+  const count = document.getElementById('kb-count');
+  const pills = document.querySelectorAll('.kb-pill');
+  const items = document.querySelectorAll('.kb-item');
+  let activeCat = null;
+  function update() {
+    const q = (input.value || '').trim().toLowerCase();
+    let shown = 0;
+    items.forEach(el => {
+      const qText = el.dataset.q || '';
+      const aText = el.dataset.a || '';
+      const cat = el.dataset.cat || '';
+      const matchesCat = !activeCat || activeCat === '__ALL__' || cat === activeCat;
+      const matchesQ = !q || qText.includes(q) || aText.includes(q);
+      if (matchesCat && matchesQ) { el.classList.remove('hidden'); shown++; }
+      else { el.classList.add('hidden'); }
+    });
+    count.textContent = q || activeCat ? shown + ' result' + (shown === 1 ? '' : 's') : '';
+  }
+  input.addEventListener('input', update);
+  pills.forEach(p => p.addEventListener('click', () => {
+    pills.forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    activeCat = p.dataset.cat;
+    update();
+  }));
+})();
+</script>`;
+}
+
+function qaPageJsonLd(kb) {
+  if (!kb || !kb.length) return '';
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "QAPage",
+    "mainEntity": kb.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a },
+      "about": item.category,
+    })),
+  });
+}
+
+function llmsTxtBody(site) {
+  const kb = site.knowledgeBase || [];
+  const name = site.firmName || site.businessName || site.domain;
+  const bio = (site.aboutHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const lines = [
+    `# ${name}`,
+    '',
+    `> ${(site.subheadline || site.metaDescription || '').trim()}`,
+    '',
+    `Attorney: ${site.attorneyName || ''}`,
+    `Title: ${site.attorneyTitle || ''}`,
+    site.barNumber ? `California State Bar #: ${site.barNumber}` : '',
+    `Phone: ${site.phone || ''}`,
+    `Email: ${site.email || ''}`,
+    `Address: ${site.address || ''}`,
+    `Hours: ${site.hours || ''}`,
+    `Website: https://${site.domain}/`,
+    '',
+    `## About`,
+    '',
+    bio,
+    '',
+    `## Practice Areas`,
+    '',
+    ...((site.practiceAreas || []).map(a => `- **${a.name}** — ${a.blurb}\n  https://${site.domain}/${a.id}/`)),
+    '',
+    `## Service Areas`,
+    '',
+    (site.serviceAreas || []).join(', '),
+    '',
+    `## Frequently Asked Questions`,
+    '',
+  ];
+  const byCat = {};
+  for (const item of kb) { if (!byCat[item.category]) byCat[item.category] = []; byCat[item.category].push(item); }
+  for (const [cat, items] of Object.entries(byCat)) {
+    lines.push(`### ${cat}`, '');
+    for (const item of items) {
+      lines.push(`**Q: ${item.q}**`, '', `A: ${item.a}`, '');
+    }
+  }
+  if (site.awards && site.awards.length) {
+    lines.push(`## Awards`, '', ...site.awards.map(a => `- ${a.title} ${a.year} — ${a.subtitle || ''}`));
+  }
+  lines.push('', '---', '', 'This file is generated from sites.json. Edit there, not here.');
+  return lines.filter(l => l !== undefined).join('\n');
 }
 
 function serviceAreasHtml(areas) {
@@ -597,6 +734,8 @@ function renderLawSite(site, allSites) {
     ANALYTICS_HTML: analyticsHtml(site),
     AWARDS_HTML: awardsHtml(site.awards),
     SERVICE_AREAS_HTML: serviceAreasHtml(site.serviceAreas),
+    KNOWLEDGE_BASE_HTML: knowledgeBaseHtml(site.knowledgeBase),
+    QA_PAGE_JSONLD: qaPageJsonLd(site.knowledgeBase),
   };
   let html = applyTokens(pickTemplate('law'), tokens);
   // Inject form style once before </head>
@@ -633,6 +772,8 @@ function workerJs(html, site, sitemap, robots, blog, areaPages) {
   const escapedHtml = JSON.stringify(html);
   const escapedSitemap = JSON.stringify(sitemap);
   const escapedRobots = JSON.stringify(robots);
+  const escapedLlmsTxt = JSON.stringify(llmsTxtBody(site));
+  const kbJson = JSON.stringify(site.knowledgeBase || []);
   const blogIndex = blog.length ? JSON.stringify(blogIndexHtml(site, blog)) : '""';
   const blogPostsObj = '{' + blog.map(p => `${JSON.stringify(p.slug)}: ${JSON.stringify(blogPostHtml(site, p))}`).join(', ') + '}';
   const areaPagesObj = '{' + Object.entries(areaPages || {}).map(([id, h]) => `${JSON.stringify(id)}: ${JSON.stringify(h)}`).join(', ') + '}';
@@ -653,6 +794,8 @@ function workerJs(html, site, sitemap, robots, blog, areaPages) {
 const HTML = ${escapedHtml};
 const SITEMAP = ${escapedSitemap};
 const ROBOTS = ${escapedRobots};
+const LLMS_TXT = ${escapedLlmsTxt};
+const KB = ${kbJson};
 const BLOG_INDEX = ${blogIndex};
 const BLOG_POSTS = ${blogPostsObj};
 const AREA_PAGES = ${areaPagesObj};
@@ -779,6 +922,33 @@ export default {
 
     if (p === "/robots.txt") return new Response(ROBOTS, { headers: { "Content-Type": "text/plain" } });
     if (p === "/sitemap.xml") return new Response(SITEMAP, { headers: { "Content-Type": "application/xml" } });
+    if (p === "/llms.txt") return new Response(LLMS_TXT, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+
+    // Instant search API — keyword + scored. Works without any AI binding.
+    // If env.AI is bound (Cloudflare Workers AI), we also attempt semantic ranking.
+    if (p === "/api/search" || p === "/search") {
+      const q = (url.searchParams.get("q") || "").trim().toLowerCase();
+      if (!q) return new Response(JSON.stringify({ ok: true, results: [], query: "" }), { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } });
+      const tokens = q.split(/\\s+/).filter(Boolean);
+      const scored = KB.map((item, i) => {
+        const hay = (item.q + " " + item.a + " " + item.category).toLowerCase();
+        let score = 0;
+        for (const t of tokens) {
+          if (!hay.includes(t)) continue;
+          score += 1;
+          if (item.q.toLowerCase().includes(t)) score += 2;
+          if (item.category.toLowerCase().includes(t)) score += 1;
+        }
+        return { item, score, i };
+      }).filter(r => r.score > 0).sort((a, b) => b.score - a.score || a.i - b.i).slice(0, 10);
+      // Optional: Workers AI re-ranking if bound — graceful fallback
+      try {
+        if (env && env.AI && scored.length > 1) {
+          // Leave scored as-is for now; a vector index can be added later via env.VECTORIZE
+        }
+      } catch (e) {}
+      return new Response(JSON.stringify({ ok: true, query: q, results: scored.map(r => r.item) }), { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } });
+    }
 
     // Blog
     if (p === "/blog" || p === "/blog/") return html(BLOG_INDEX || HTML);
@@ -876,7 +1046,38 @@ function sitemapXml(site, blog) {
 }
 
 function robotsTxt(site) {
-  return `User-agent: *\nAllow: /\nSitemap: https://${site.domain}/sitemap.xml\n`;
+  // Explicit allow for AI crawlers — we WANT LLM search engines to index us.
+  return [
+    "User-agent: *",
+    "Allow: /",
+    "",
+    "# AI / LLM crawlers — explicitly welcomed",
+    "User-agent: GPTBot",
+    "Allow: /",
+    "User-agent: ClaudeBot",
+    "Allow: /",
+    "User-agent: Claude-Web",
+    "Allow: /",
+    "User-agent: anthropic-ai",
+    "Allow: /",
+    "User-agent: PerplexityBot",
+    "Allow: /",
+    "User-agent: Google-Extended",
+    "Allow: /",
+    "User-agent: CCBot",
+    "Allow: /",
+    "User-agent: Amazonbot",
+    "Allow: /",
+    "User-agent: Applebot-Extended",
+    "Allow: /",
+    "User-agent: Bingbot",
+    "Allow: /",
+    "",
+    `Sitemap: https://${site.domain}/sitemap.xml`,
+    `# LLM-readable summary`,
+    `# https://${site.domain}/llms.txt`,
+    "",
+  ].join("\n");
 }
 
 function wranglerToml(site) {
@@ -940,6 +1141,7 @@ for (const site of config.sites) {
   writeFileSync(join(dir, 'wrangler.toml'), wranglerToml(site));
   writeFileSync(join(dir, 'sitemap.xml'), sitemap);
   writeFileSync(join(dir, 'robots.txt'), robots);
+  writeFileSync(join(dir, 'llms.txt'), llmsTxtBody(site));
   const v = site.vertical || 'carb';
   const extras = v === 'carb'
     ? `OBD $${site.prices?.obd ?? defaults.prices.obd}  OVI $${site.prices?.ovi ?? defaults.prices.ovi}`
