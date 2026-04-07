@@ -71,8 +71,8 @@ export default {
         const msg = (data.message || "").toLowerCase();
         let reply;
         if (VERTICAL === "law") {
-          if (msg.includes("price") || msg.includes("cost") || msg.includes("how much") || msg.includes("fee")) {
-            reply = "First consultations are free and confidential. Fees depend on the matter — bankruptcy and personal injury usually have no upfront cost. Want to set up the free consult?";
+          if (msg.includes("price") || msg.includes("cost") || msg.includes("how much") || msg.includes("fee") || msg.includes("free")) {
+            reply = "Personal injury consultations are free — and PI cases are on contingency, so no fee unless we win. For other matters there's a modest consultation fee that's credited toward your case if you retain us. Call (916) 890-0427 to set it up.";
           } else if (msg.includes("immigration") || msg.includes("green card") || msg.includes("visa") || msg.includes("deport")) {
             reply = "Immigration is one of our main practice areas. Use the Immigration intake form on this page or call (916) 890-0427 — we'll keep it confidential.";
           } else if (msg.includes("bankruptcy") || msg.includes("debt") || msg.includes("garnish")) {

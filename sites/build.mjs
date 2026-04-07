@@ -137,14 +137,19 @@ function intakeFieldHtml(field) {
 }
 
 function practiceCardsHtml(areas) {
-  return areas.map(a => `<a class="practice-card" href="#intake-${htmlEscape(a.id)}"><h3>${htmlEscape(a.name)}</h3><p>${htmlEscape(a.blurb)}</p><span class="cta">Start free intake →</span></a>`).join('\n    ');
+  return areas.map(a => {
+    const cta = a.id === 'personal-injury' ? 'Free PI consult →' : 'Start confidential intake →';
+    return `<a class="practice-card" href="#intake-${htmlEscape(a.id)}"><h3>${htmlEscape(a.name)}</h3><p>${htmlEscape(a.blurb)}</p><span class="cta">${cta}</span></a>`;
+  }).join('\n    ');
 }
 
 function intakeFormsHtml(areas) {
   return areas.map(a => {
     const fields = a.intake.map(intakeFieldHtml).join('\n        ');
+    const isPI = a.id === 'personal-injury';
+    const subtitle = isPI ? 'Free Consultation · No Fee Unless We Win' : 'Confidential Intake';
     return `<div id="intake-${htmlEscape(a.id)}" style="margin-top:30px;">
-      <h2>${htmlEscape(a.name)} — Free Confidential Intake</h2>
+      <h2>${htmlEscape(a.name)} — ${subtitle}</h2>
       <form class="intake-form" data-area="${htmlEscape(a.id)}" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
         ${fields}
         <label>Your name<input name="client_name" required></label>
@@ -269,6 +274,7 @@ function renderLawSite(site, allSites) {
     ABOUT_HTML: site.aboutHtml || '<p>About text coming soon.</p>',
     ADDRESS_HTML: htmlEscape(site.address || ''),
     BAR_ADMISSIONS: site.barAdmissions || '',
+    BAR_NUMBER: site.barNumber || 'TBD',
     LANGUAGES_JSON: JSON.stringify(site.languages || ['English']),
     DISCLAIMER: site.disclaimer || vDef.disclaimer || '',
     PRACTICE_CARDS_HTML: practiceCardsHtml(site.practiceAreas || []),
@@ -397,8 +403,8 @@ export default {
         const msg = (data.message || "").toLowerCase();
         let reply;
         if (VERTICAL === "law") {
-          if (msg.includes("price") || msg.includes("cost") || msg.includes("how much") || msg.includes("fee")) {
-            reply = "First consultations are free and confidential. Fees depend on the matter — bankruptcy and personal injury usually have no upfront cost. Want to set up the free consult?";
+          if (msg.includes("price") || msg.includes("cost") || msg.includes("how much") || msg.includes("fee") || msg.includes("free")) {
+            reply = "Personal injury consultations are free — and PI cases are on contingency, so no fee unless we win. For other matters there's a modest consultation fee that's credited toward your case if you retain us. Call __PHONE__ to set it up.";
           } else if (msg.includes("immigration") || msg.includes("green card") || msg.includes("visa") || msg.includes("deport")) {
             reply = "Immigration is one of our main practice areas. Use the Immigration intake form on this page or call __PHONE__ — we'll keep it confidential.";
           } else if (msg.includes("bankruptcy") || msg.includes("debt") || msg.includes("garnish")) {

@@ -204,8 +204,11 @@
   <h1>{{HEADLINE}}</h1>
   <p class="lede">{{SUBHEADLINE}}</p>
   <div class="cta-row">
-    <a href="#practice" class="btn primary">See How I Can Help</a>
+    <a href="#contact-form" class="btn primary">Tell Us About Your Case</a>
     <a href="tel:{{PHONE_RAW}}" class="btn outline">Call {{PHONE}}</a>
+  </div>
+  <div style="margin-top:18px;font-size:13px;color:var(--muted);font-family:-apple-system,sans-serif;">
+    ⚖️ {{ATTORNEY_NAME}} · State Bar of California #{{BAR_NUMBER}} · <a href="https://apps.calbar.ca.gov/attorney/Licensee/Detail/{{BAR_NUMBER}}" target="_blank" rel="noopener" style="color:var(--accent);">verify</a>
   </div>
 </header>
 
@@ -216,9 +219,24 @@
   </div>
 </section>
 
+<section id="contact-form">
+  <h2>Tell us about your case</h2>
+  <p>The fastest way to get help. Tell us briefly what's going on — we'll review and reach out to set up a consultation. Personal injury consultations are free; other matters carry a modest consultation fee that's credited toward your case if you retain us.</p>
+  <form class="intake-form quick-contact" data-area="general" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;margin-top:20px;">
+    <label>Your name<input name="client_name" required></label>
+    <label>Phone<input name="client_phone" type="tel" required></label>
+    <label>Email<input name="client_email" type="email" required></label>
+    <label>What kind of legal matter?<select name="matter_type" required><option value="">— select —</option><option>Bankruptcy</option><option>Immigration</option><option>Family law</option><option>Personal injury</option><option>Wills / Estate planning</option><option>Other / Not sure</option></select></label>
+    <label>Briefly describe your situation<textarea name="summary" rows="4" required></textarea></label>
+    <label>How urgent is this?<select name="urgency" required><option>Just exploring</option><option>Within a month</option><option>Within a week</option><option>Emergency — today</option></select></label>
+    <button type="submit" class="btn primary block">Send to Mr. Chigbu</button>
+    <div class="ok" hidden style="color:#7BE7A2;">✓ Received. We'll be in touch shortly.</div>
+  </form>
+</section>
+
 <section id="practice">
   <h2>Practice Areas</h2>
-  <p>Click any area below to fill out a free, confidential intake form. By the time we meet, we'll already have what we need to move fast.</p>
+  <p>Want to give us more detail up front? Each practice area below has a longer intake form. Filling it out helps Mr. Chigbu give you a real assessment faster — and the deeper you go, the more useful the consultation will be.</p>
   <div class="practice-grid">
     {{PRACTICE_CARDS_HTML}}
   </div>
@@ -259,13 +277,13 @@
 
 <footer>
   <div class="firm">{{FIRM_NAME}}</div>
-  <div>{{ATTORNEY_NAME}} · {{BAR_ADMISSIONS}}</div>
+  <div>{{ATTORNEY_NAME}} · {{BAR_ADMISSIONS}} · Cal. Bar #{{BAR_NUMBER}}</div>
   <div>📞 {{PHONE}} · ✉️ {{EMAIL}}</div>
   <div><a href="/blog/" style="color:var(--accent)">Blog</a> · <a href="/sitemap.xml" style="color:var(--muted)">Sitemap</a></div>
   <div class="disclaimer">{{DISCLAIMER}}</div>
 </footer>
 
-<a class="sticky-cta" href="tel:{{PHONE_RAW}}">📞 Free Consultation · {{PHONE}}</a>
+<a class="sticky-cta" href="tel:{{PHONE_RAW}}">📞 Talk to {{ATTORNEY_NAME}} · {{PHONE}}</a>
 
 <!-- Chatbot -->
 <button id="obi-fab" aria-label="Chat with {{CHAT_NAME}}">{{CHAT_AVATAR}}</button>
