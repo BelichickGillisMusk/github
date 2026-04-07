@@ -198,11 +198,16 @@ function legalServiceJsonLd(site) {
       "postalCode": site.postalCode || undefined,
       "addressCountry": "US",
     },
-    "areaServed": site.region || site.city,
+    "areaServed": site.serviceAreas && site.serviceAreas.length
+      ? site.serviceAreas.map(a => ({ "@type": "City", "name": a + ", CA" }))
+      : (site.region || site.city),
     "founder": { "@type": "Person", "name": site.attorneyName || site.firmName },
     "knowsLanguage": site.languages || ["English"],
     "priceRange": "$$",
   };
+  if (site.awards && site.awards.length) {
+    obj.award = site.awards.map(a => `${a.title} ${a.year}${a.subtitle ? ' — ' + a.subtitle : ''}`);
+  }
   if (site.reviews && site.reviews.length) {
     const avg = (site.reviews.reduce((s, r) => s + (r.rating || 5), 0) / site.reviews.length);
     obj.aggregateRating = {
@@ -221,6 +226,18 @@ function legalServiceJsonLd(site) {
   }
   // Strip undefined values for cleaner JSON
   return JSON.stringify(obj, (k, v) => v === undefined ? undefined : v);
+}
+
+function serviceAreasHtml(areas) {
+  if (!areas || !areas.length) return '';
+  const chips = areas.map(a => `<span style="display:inline-block;padding:8px 14px;background:rgba(212,162,76,0.12);border:1px solid rgba(212,162,76,0.35);color:var(--text);border-radius:999px;font-size:13px;font-family:-apple-system,sans-serif;">📍 ${htmlEscape(a)}</span>`).join(' ');
+  return `<div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;">${chips}</div>`;
+}
+
+function awardsHtml(awards) {
+  if (!awards || !awards.length) return '';
+  const cards = awards.map(a => `<div style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(212,162,76,0.18),rgba(212,162,76,0.06));border:1px solid var(--accent);padding:10px 16px;border-radius:999px;font-family:-apple-system,sans-serif;"><span style="color:var(--accent);font-size:18px;">🏆</span><span style="color:var(--text);font-weight:700;font-size:13px;line-height:1.3;">${htmlEscape(a.title)} ${a.year}</span><span style="color:var(--muted);font-size:12px;">· ${htmlEscape(a.subtitle || '')}</span></div>`).join(' ');
+  return `<div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">${cards}</div>`;
 }
 
 function analyticsHtml(site) {
@@ -552,6 +569,8 @@ function renderLawSite(site, allSites) {
     GOOGLE_REVIEW_WRITE_URL: site.googleReviewWriteUrl || (site.googlePlaceId ? `https://search.google.com/local/writereview?placeid=${site.googlePlaceId}` : (site.googleBusinessUrl || directionsUrl(site))),
     LEGAL_SERVICE_JSONLD: legalServiceJsonLd(site),
     ANALYTICS_HTML: analyticsHtml(site),
+    AWARDS_HTML: awardsHtml(site.awards),
+    SERVICE_AREAS_HTML: serviceAreasHtml(site.serviceAreas),
   };
   let html = applyTokens(pickTemplate('law'), tokens);
   // Inject form style once before </head>
