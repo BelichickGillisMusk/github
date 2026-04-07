@@ -358,20 +358,8 @@
   });
 </script>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LegalService",
-  "name": "{{FIRM_NAME}}",
-  "telephone": "{{PHONE}}",
-  "email": "{{EMAIL}}",
-  "url": "https://{{DOMAIN}}/",
-  "address": { "@type": "PostalAddress", "addressLocality": "{{CITY}}", "addressRegion": "CA", "addressCountry": "US" },
-  "areaServed": "{{REGION}}",
-  "founder": { "@type": "Person", "name": "{{ATTORNEY_NAME}}" },
-  "knowsLanguage": {{LANGUAGES_JSON}}
-}
-</script>
+<script type="application/ld+json">{{LEGAL_SERVICE_JSONLD}}</script>
 <script type="application/ld+json">{{FAQ_JSONLD}}</script>
+{{ANALYTICS_HTML}}
 </body>
 </html>

@@ -74,6 +74,10 @@
       "googleReviewsUrl": "https://www.google.com/search?q=Chigbu+Law+Firm+Stockton#lrd=reviews",
       "googlePlaceId": "",
       "_googleNote": "Once you have the Google Place ID, paste it into googlePlaceId and we'll wire up native review writing. Get the Place ID at https://developers.google.com/maps/documentation/places/web-service/place-id",
+      "cloudflareAnalyticsToken": "",
+      "googleAnalyticsId": "",
+      "plausibleDomain": "",
+      "_analyticsNote": "Cloudflare Web Analytics token (free, no cookies) OR GA4 measurement ID (G-XXXXXXXXXX) OR Plausible domain. Set any/all — they render independently. Cloudflare Web Analytics = Cloudflare dashboard → Analytics → Web Analytics → Add a site → copy the token from the beacon script.",
       "reviews": [
         { "rating": 5, "author": "Verified client", "text": "Mr. Chigbu took the time to explain everything in plain English. I never felt rushed and I always knew where my case stood." },
         { "rating": 5, "author": "Verified client", "text": "He helped my family through the immigration process when no one else would even return our calls. Forever grateful." },

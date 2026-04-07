@@ -181,6 +181,66 @@ function reviewAvgHtml(reviews) {
   return `<div style="display:flex;align-items:center;gap:10px;margin-top:8px;font-family:-apple-system,sans-serif;"><span style="color:var(--accent);font-size:24px;letter-spacing:2px;">${stars}</span><strong style="font-size:20px;color:var(--text);">${avg}</strong><span style="color:var(--muted);font-size:14px;">(${reviews.length} reviews)</span></div>`;
 }
 
+function legalServiceJsonLd(site) {
+  const obj = {
+    "@context": "https://schema.org",
+    "@type": "LegalService",
+    "name": site.firmName || site.businessName || site.domain,
+    "telephone": site.phone || 'TBD',
+    "email": site.email || undefined,
+    "url": `https://${site.domain}/`,
+    "image": site.ogImage || undefined,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": site.streetAddress || undefined,
+      "addressLocality": site.city || undefined,
+      "addressRegion": "CA",
+      "postalCode": site.postalCode || undefined,
+      "addressCountry": "US",
+    },
+    "areaServed": site.region || site.city,
+    "founder": { "@type": "Person", "name": site.attorneyName || site.firmName },
+    "knowsLanguage": site.languages || ["English"],
+    "priceRange": "$$",
+  };
+  if (site.reviews && site.reviews.length) {
+    const avg = (site.reviews.reduce((s, r) => s + (r.rating || 5), 0) / site.reviews.length);
+    obj.aggregateRating = {
+      "@type": "AggregateRating",
+      "ratingValue": avg.toFixed(1),
+      "reviewCount": site.reviews.length,
+      "bestRating": "5",
+      "worstRating": "1",
+    };
+    obj.review = site.reviews.map(r => ({
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": String(r.rating || 5), "bestRating": "5" },
+      "author": { "@type": "Person", "name": r.author || "Google reviewer" },
+      "reviewBody": r.text,
+    }));
+  }
+  // Strip undefined values for cleaner JSON
+  return JSON.stringify(obj, (k, v) => v === undefined ? undefined : v);
+}
+
+function analyticsHtml(site) {
+  const parts = [];
+  // Cloudflare Web Analytics — free, privacy-respecting, no cookies
+  if (site.cloudflareAnalyticsToken) {
+    parts.push(`<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "${site.cloudflareAnalyticsToken}"}'></script>`);
+  }
+  // Google Analytics 4 — only if explicitly configured
+  if (site.googleAnalyticsId) {
+    parts.push(`<script async src="https://www.googletagmanager.com/gtag/js?id=${site.googleAnalyticsId}"></script>`);
+    parts.push(`<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${site.googleAnalyticsId}');</script>`);
+  }
+  // Plausible — privacy-first, EU-hosted option
+  if (site.plausibleDomain) {
+    parts.push(`<script defer data-domain="${site.plausibleDomain}" src="https://plausible.io/js/script.js"></script>`);
+  }
+  return parts.join('\n');
+}
+
 function smallReviewsHtml(reviews, limit = 2) {
   if (!reviews || !reviews.length) return '';
   return reviews.slice(0, limit).map(r => `<blockquote style="background:rgba(255,255,255,0.04);border-left:3px solid var(--accent);padding:14px 18px;border-radius:0 6px 6px 0;font-style:italic;color:var(--text);margin-bottom:10px;"><div style="color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;letter-spacing:2px;font-size:13px;">${'★'.repeat(r.rating || 5)}</div>${htmlEscape(r.text)}<footer style="margin-top:8px;font-size:12px;color:var(--muted);font-style:normal;font-family:-apple-system,sans-serif;">— ${htmlEscape(r.author || 'Google reviewer')}</footer></blockquote>`).join('');
@@ -366,7 +426,7 @@ ${JSON.stringify({
   }))
 })}
 </script>
-
+${analyticsHtml(site)}
 </body></html>`;
 }
 
@@ -439,6 +499,7 @@ function renderCarbSite(site, allSites) {
     OVI_PRICE: ovi,
     MOTORHOME_NOTE: site.motorhomeNote ?? defaults.motorhomeNote,
     SISTER_LINKS_HTML: sisterLinksHtml(site.id, allSites, 'carb'),
+    ANALYTICS_HTML: analyticsHtml(site),
   };
   const template = pickTemplate('carb');
   const html = applyTokens(template, tokens);
@@ -489,6 +550,8 @@ function renderLawSite(site, allSites) {
     GOOGLE_BUSINESS_URL: site.googleBusinessUrl || directionsUrl(site),
     GOOGLE_REVIEWS_URL: site.googleReviewsUrl || site.googleBusinessUrl || directionsUrl(site),
     GOOGLE_REVIEW_WRITE_URL: site.googleReviewWriteUrl || (site.googlePlaceId ? `https://search.google.com/local/writereview?placeid=${site.googlePlaceId}` : (site.googleBusinessUrl || directionsUrl(site))),
+    LEGAL_SERVICE_JSONLD: legalServiceJsonLd(site),
+    ANALYTICS_HTML: analyticsHtml(site),
   };
   let html = applyTokens(pickTemplate('law'), tokens);
   // Inject form style once before </head>
