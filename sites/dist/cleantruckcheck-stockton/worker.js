@@ -11,20 +11,113 @@ const AREA_PAGES = {};
 const SITE_ID = "cleantruckcheck-stockton";
 const VERTICAL = "carb";
 const ALERT_WEBHOOK = "";
+const FALLBACK_EMAIL = "";
+const FROM_EMAIL = "noreply@cleantruckcheckstockton.com";
+const FROM_NAME = "cleantruckcheckstockton.com";
+
+// Format a submission payload into a plain-text email body
+function formatEmailBody(payload) {
+  const lines = [];
+  lines.push("New " + (payload.kind || "submission") + " from " + SITE_ID);
+  lines.push("Time: " + (payload.timestamp || new Date().toISOString()));
+  if (payload.area) lines.push("Practice area: " + payload.area);
+  lines.push("");
+  const skip = new Set(["kind", "site", "timestamp"]);
+  for (const [k, v] of Object.entries(payload)) {
+    if (skip.has(k) || v == null || v === "") continue;
+    const label = k.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+    lines.push(label + ": " + v);
+  }
+  return lines.join("\n");
+}
+
+function formatEmailSubject(payload) {
+  const kind = payload.kind === "intake" ? "Intake"
+            : payload.kind === "booking" ? "Booking"
+            : payload.kind === "chat" ? "Chat message"
+            : "Submission";
+  const who = payload.client_name || payload.name || "someone";
+  const what = payload.area ? " (" + payload.area + ")" : "";
+  return "[" + SITE_ID + "] " + kind + what + " — " + who;
+}
+
+// Resend API — free 100/day, simplest to set up.
+// Requires: wrangler secret put RESEND_API_KEY
+async function sendViaResend(env, to, subject, body, replyTo) {
+  if (!env || !env.RESEND_API_KEY) return false;
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + env.RESEND_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: FROM_NAME + " <" + FROM_EMAIL + ">",
+        to: [to],
+        subject: subject,
+        text: body,
+        reply_to: replyTo || undefined,
+      }),
+    });
+    return res.ok;
+  } catch (e) { return false; }
+}
+
+// MailChannels — free, works from Cloudflare Workers if the sending domain has
+// SPF/DKIM configured. Best-effort fallback if Resend isn't set up.
+async function sendViaMailChannels(to, subject, body, replyTo) {
+  try {
+    const res = await fetch("https://api.mailchannels.net/tx/v1/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: to }] }],
+        from: { email: FROM_EMAIL, name: FROM_NAME },
+        reply_to: replyTo ? { email: replyTo } : undefined,
+        subject: subject,
+        content: [{ type: "text/plain", value: body }],
+      }),
+    });
+    return res.ok;
+  } catch (e) { return false; }
+}
+
+async function sendFallbackEmail(env, payload) {
+  if (!FALLBACK_EMAIL) return false;
+  const subject = formatEmailSubject(payload);
+  const body = formatEmailBody(payload);
+  const replyTo = payload.client_email || payload.email || undefined;
+  // Try Resend first (most reliable), then MailChannels as last resort
+  if (await sendViaResend(env, FALLBACK_EMAIL, subject, body, replyTo)) return true;
+  if (await sendViaMailChannels(FALLBACK_EMAIL, subject, body, replyTo)) return true;
+  return false;
+}
 
 async function fireAlert(env, payload) {
+  // 1. Always persist in KV if bound (survives everything else failing)
   try {
     if (env && env.SUBMISSIONS) {
       const key = payload.kind + "_" + Date.now();
       await env.SUBMISSIONS.put(key, JSON.stringify(payload), { expirationTtl: 60 * 60 * 24 * 90 });
     }
   } catch (e) {}
+  // 2. Fire webhook (Make/Zapier/SMS) — primary alert path
+  let webhookOk = false;
   const url = (env && env.ALERT_WEBHOOK) || ALERT_WEBHOOK;
   if (url) {
     try {
-      await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      webhookOk = res.ok;
     } catch (e) {}
   }
+  // 3. Email fallback — always send, regardless of webhook status. Double-belt.
+  //    (If you only want email when the webhook fails, change to: if (!webhookOk) await sendFallbackEmail(env, payload);)
+  await sendFallbackEmail(env, payload);
 }
 
 function html(body) {
