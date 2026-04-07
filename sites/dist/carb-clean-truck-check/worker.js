@@ -7,6 +7,7 @@ const SITEMAP = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"htt
 const ROBOTS = "User-agent: *\nAllow: /\nSitemap: https://carb-clean-truck-check.com/sitemap.xml\n";
 const BLOG_INDEX = "";
 const BLOG_POSTS = {};
+const AREA_PAGES = {};
 const SITE_ID = "carb-clean-truck-check";
 const VERTICAL = "carb";
 const ALERT_WEBHOOK = "";
@@ -43,6 +44,12 @@ export default {
     if (p.startsWith("/blog/")) {
       const slug = p.replace(/^\/blog\//, "").replace(/\/$/, "");
       if (BLOG_POSTS[slug]) return html(BLOG_POSTS[slug]);
+    }
+
+    // Practice area pages (law sites)
+    if (p.length > 1) {
+      const areaId = p.replace(/^\//, "").replace(/\/$/, "");
+      if (AREA_PAGES[areaId]) return html(AREA_PAGES[areaId]);
     }
 
     // Bookings (CARB) / Intakes (Law) / Chat — all funnel through fireAlert

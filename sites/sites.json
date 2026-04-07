@@ -52,7 +52,9 @@
       "vertical": "law",
       "domain": "chigbulaws.com",
       "firmName": "Chigbu Law Firm",
-      "attorneyName": "Mr. Chigbu",
+      "attorneyName": "Clifford Chigbu, Esq.",
+      "attorneyShortName": "Clifford",
+      "attorneyHonorific": "Mr. Chigbu",
       "city": "Stockton",
       "region": "California — serving Stockton, Sacramento, and the Central Valley",
       "phone": "TBD",
@@ -93,34 +95,70 @@
       "subheadline": "A solo California attorney serving immigrants, families, and working people. Direct, confidential consultations. Personal injury cases on contingency — no fee unless we win.",
       "metaDescription": "Chigbu Law Firm — California attorney serving Stockton and the Central Valley. Bankruptcy, immigration, family law, personal injury (no fee unless we win). Call TBD.",
       "keywords": "Chigbu law, Stockton attorney, California bankruptcy lawyer, immigration lawyer Stockton, family law, personal injury, Nigerian American attorney, free consultation",
-      "aboutHtml": "<p>Mr. Chigbu came to the United States from Nigeria with a single conviction: that the law should work for ordinary people, not against them. Decades later, he runs a solo California practice built on that same idea.</p><p>He doesn't fill the office with diplomas or photos of himself. He fills it with clients who walk in worried and walk out with a plan. Whether you're facing creditors, fighting for your family, or trying to stay in this country, you'll get straight answers, an honest assessment, and a lawyer who picks up the phone.</p><p>If a case isn't a fit, he'll tell you. If it is, he'll fight for it like it's his own.</p>",
+      "aboutHtml": "<p>Clifford Chigbu came to the United States from Nigeria with a single conviction: that the law should work for ordinary people, not against them. Decades later, he runs a solo California practice built on that same idea.</p><p>He doesn't fill the office with diplomas or photos of himself. He fills it with clients who walk in worried and walk out with a plan. Whether you're facing creditors, fighting for your family, or trying to stay in this country, you'll get straight answers, an honest assessment, and a lawyer who picks up the phone.</p><p>If a case isn't a fit, he'll tell you. If it is, he'll fight for it like it's his own.</p>",
       "practiceAreas": [
         {
           "id": "bankruptcy",
           "name": "Bankruptcy",
           "blurb": "Chapter 7 and Chapter 13. Stop garnishments, foreclosure, harassment from creditors.",
+          "areaHeadline": "Stop the harassment. Get your life back.",
+          "areaSubhead": "Chapter 7 and Chapter 13 bankruptcy in California. Most clients walk out of the first meeting with a real plan and a real number.",
+          "bullets": [
+            "Stop wage garnishments — usually within 24 hours of filing",
+            "Stop foreclosure and repossession",
+            "End creditor calls and lawsuits",
+            "Wipe out qualifying credit card, medical, and personal-loan debt",
+            "Payment plans available for filing fees and attorney fees"
+          ],
+          "process": [
+            { "step": "1. Quick intake", "text": "6 questions on this page. Takes about 90 seconds." },
+            { "step": "2. Honest assessment", "text": "Mr. Chigbu reviews and tells you straight whether bankruptcy is your best move — and which chapter." },
+            { "step": "3. Filing & relief", "text": "If we move forward, the automatic stay stops creditor action the moment we file." }
+          ],
+          "areaFaq": [
+            { "q": "Will I lose my house?", "a": "Usually no. California's homestead exemption protects most home equity for primary residences. We'll review your specific situation." },
+            { "q": "How long does it take?", "a": "Chapter 7 typically wraps in 3–4 months. Chapter 13 is a 3–5 year plan." },
+            { "q": "Will it ruin my credit?", "a": "Bankruptcy stays on your credit 7–10 years, but most clients see scores recover faster than they expected — and you start from zero debt." }
+          ],
           "intake": [
-            { "name": "household_size", "label": "Household size", "type": "number", "required": true },
             { "name": "monthly_income", "label": "Approximate monthly household income", "type": "text", "required": true },
-            { "name": "total_unsecured_debt", "label": "Approximate total unsecured debt (credit cards, medical, personal loans)", "type": "text", "required": true },
+            { "name": "total_unsecured_debt", "label": "Total unsecured debt (credit cards, medical, personal loans)", "type": "text", "required": true },
             { "name": "own_home", "label": "Do you own a home?", "type": "select", "options": ["Yes", "No"], "required": true },
             { "name": "garnishment", "label": "Are wages currently being garnished?", "type": "select", "options": ["Yes", "No", "Threatened but not yet"], "required": true },
-            { "name": "lawsuits", "label": "Any pending lawsuits or judgments?", "type": "textarea", "required": false },
-            { "name": "prior_bankruptcy", "label": "Have you filed bankruptcy before? When?", "type": "text", "required": false },
-            { "name": "goal", "label": "What's your top goal?", "type": "select", "options": ["Stop creditor harassment", "Save my home", "Wipe out debt and start over", "Stop wage garnishment", "Not sure yet"], "required": true }
+            { "name": "prior_bankruptcy", "label": "Filed bankruptcy before?", "type": "select", "options": ["No", "Yes — within 8 years", "Yes — over 8 years ago"], "required": true },
+            { "name": "goal", "label": "What's your top priority?", "type": "select", "options": ["Stop creditor harassment", "Save my home", "Wipe out debt and start over", "Stop wage garnishment", "Not sure yet"], "required": true }
           ]
         },
         {
           "id": "immigration",
           "name": "Immigration",
           "blurb": "Family-based petitions, green cards, naturalization, deportation defense, work visas.",
+          "areaHeadline": "An immigrant lawyer for immigrants.",
+          "areaSubhead": "Mr. Chigbu came here from Nigeria. He understands what's at stake — and he treats every client's case like it's his family's.",
+          "bullets": [
+            "Family-based green cards and visa petitions",
+            "Naturalization and citizenship",
+            "Deportation and removal defense",
+            "Work visas (H-1B, L-1, O-1) and PERM",
+            "DACA renewals and adjustment of status",
+            "Asylum and humanitarian relief"
+          ],
+          "process": [
+            { "step": "1. Confidential intake", "text": "6 quick questions. Everything on this page is confidential." },
+            { "step": "2. Honest review", "text": "Mr. Chigbu personally reviews — not a paralegal. He'll tell you what's possible and what's not." },
+            { "step": "3. Filing & follow-through", "text": "We handle the petitions, the agencies, and we keep you informed at every step." }
+          ],
+          "areaFaq": [
+            { "q": "Is it safe to fill out this form if I'm undocumented?", "a": "Yes. Everything you submit is protected by attorney-client confidentiality the moment we receive it." },
+            { "q": "Do you handle deportation cases?", "a": "Yes. If you or a family member is in removal proceedings, contact us today — timing matters." },
+            { "q": "How long does it take to get a green card?", "a": "It depends on the category and country of origin — anywhere from months to years. We'll give you a realistic timeline." }
+          ],
           "intake": [
             { "name": "country_of_origin", "label": "Country of origin", "type": "text", "required": true },
             { "name": "current_status", "label": "Current immigration status", "type": "select", "options": ["U.S. citizen", "Lawful permanent resident", "Visa holder", "Undocumented", "Asylum seeker", "DACA", "Other / not sure"], "required": true },
-            { "name": "years_in_us", "label": "Approximately how many years in the U.S.?", "type": "number", "required": false },
-            { "name": "family_in_us", "label": "Immediate family in the U.S. (spouse, children, parents)?", "type": "textarea", "required": false },
+            { "name": "family_in_us", "label": "Immediate family in the U.S.?", "type": "textarea", "required": false },
             { "name": "criminal_history", "label": "Any criminal history (even minor)?", "type": "select", "options": ["No", "Yes — minor", "Yes — significant", "Prefer to discuss in person"], "required": true },
-            { "name": "deportation", "label": "Are you in removal/deportation proceedings?", "type": "select", "options": ["No", "Yes", "Not sure"], "required": true },
+            { "name": "deportation", "label": "In removal/deportation proceedings?", "type": "select", "options": ["No", "Yes", "Not sure"], "required": true },
             { "name": "goal", "label": "What outcome are you hoping for?", "type": "textarea", "required": true }
           ]
         },
@@ -128,24 +166,64 @@
           "id": "family",
           "name": "Family Law",
           "blurb": "Divorce, custody, child & spousal support, restraining orders, adoption.",
+          "areaHeadline": "Family decisions are personal. Your lawyer should be too.",
+          "areaSubhead": "Divorce, custody, support, restraining orders, adoption. Direct representation from a lawyer who actually knows your name.",
+          "bullets": [
+            "Uncontested and contested divorce",
+            "Child custody and visitation",
+            "Child support and spousal support modifications",
+            "Domestic violence restraining orders",
+            "Adoption (step-parent, relative, agency)",
+            "Premarital and postnuptial agreements"
+          ],
+          "process": [
+            { "step": "1. Quick intake", "text": "6 questions to help us understand what kind of help you need." },
+            { "step": "2. Strategy meeting", "text": "We sit down (or video call) and lay out your options, timelines, and likely outcomes." },
+            { "step": "3. Action", "text": "Filing, negotiation, or trial — whatever protects you and your kids best." }
+          ],
+          "areaFaq": [
+            { "q": "How long does a divorce take in California?", "a": "Six months minimum from the date the other party is served. Most cases settle before trial." },
+            { "q": "Do I need to go to court?", "a": "Often no — many family law matters resolve through negotiation or mediation. But if court is needed, we're ready." },
+            { "q": "What if I can't afford this right now?", "a": "We offer payment plans for most family matters. Tell us your situation honestly and we'll work with you." }
+          ],
           "intake": [
-            { "name": "matter_type", "label": "What type of family law matter?", "type": "select", "options": ["Divorce", "Custody / visitation", "Child support", "Spousal support", "Restraining order", "Adoption", "Other"], "required": true },
-            { "name": "marriage_date", "label": "If married, date of marriage", "type": "text", "required": false },
+            { "name": "matter_type", "label": "Type of family law matter", "type": "select", "options": ["Divorce", "Custody / visitation", "Child support", "Spousal support", "Restraining order", "Adoption", "Other"], "required": true },
+            { "name": "marriage_date", "label": "Date of marriage (if married)", "type": "text", "required": false },
             { "name": "separation_date", "label": "Date of separation (if any)", "type": "text", "required": false },
-            { "name": "children", "label": "Children (ages, custody arrangement if any)", "type": "textarea", "required": false },
-            { "name": "domestic_violence", "label": "Any history of domestic violence or restraining orders?", "type": "select", "options": ["No", "Yes — against me", "Yes — against the other party", "Prefer to discuss in person"], "required": true },
-            { "name": "urgency", "label": "How urgent is this?", "type": "select", "options": ["Emergency — today", "Within a week", "Within a month", "Just exploring"], "required": true }
+            { "name": "children", "label": "Children — ages and current custody", "type": "textarea", "required": false },
+            { "name": "domestic_violence", "label": "Any history of domestic violence?", "type": "select", "options": ["No", "Yes — against me", "Yes — against the other party", "Prefer to discuss in person"], "required": true },
+            { "name": "urgency", "label": "How urgent?", "type": "select", "options": ["Emergency — today", "Within a week", "Within a month", "Just exploring"], "required": true }
           ]
         },
         {
           "id": "personal-injury",
           "name": "Personal Injury",
           "blurb": "Car accidents, slip and fall, dog bites, workplace injuries. No fee unless we win.",
+          "areaHeadline": "Injured? You pay nothing unless we win.",
+          "areaSubhead": "Free consultation. No fees, no costs, no risk to you. We only get paid if you do.",
+          "bullets": [
+            "Car, truck, and motorcycle accidents",
+            "Slip and fall / premises liability",
+            "Dog bites",
+            "Workplace injuries and third-party claims",
+            "Wrongful death",
+            "We front all costs — you pay nothing out of pocket"
+          ],
+          "process": [
+            { "step": "1. Free consultation", "text": "Tell us what happened. We'll tell you straight whether you have a case." },
+            { "step": "2. Investigation & treatment", "text": "We work with medical providers and gather evidence while you focus on recovery." },
+            { "step": "3. Settlement or trial", "text": "Most cases settle. If insurance won't be reasonable, we go to trial." }
+          ],
+          "areaFaq": [
+            { "q": "How much does this cost me?", "a": "Nothing up front. Our fee is a percentage of the recovery — only if we win." },
+            { "q": "How long do I have to file?", "a": "California's deadline (statute of limitations) is generally 2 years for personal injury, but it can be much shorter in some cases. Don't wait — call." },
+            { "q": "Should I talk to the other side's insurance?", "a": "No. Talk to us first — anything you say to them can be used to lower your settlement." }
+          ],
           "intake": [
             { "name": "incident_type", "label": "What kind of incident?", "type": "select", "options": ["Car accident", "Slip and fall", "Workplace injury", "Dog bite", "Medical injury", "Other"], "required": true },
             { "name": "incident_date", "label": "Date of incident", "type": "text", "required": true },
-            { "name": "injuries", "label": "Briefly describe injuries", "type": "textarea", "required": true },
-            { "name": "treatment", "label": "Are you currently receiving medical treatment?", "type": "select", "options": ["Yes", "No", "I should be"], "required": true },
+            { "name": "injuries", "label": "Briefly describe your injuries", "type": "textarea", "required": true },
+            { "name": "treatment", "label": "Currently receiving medical treatment?", "type": "select", "options": ["Yes", "No", "I should be"], "required": true },
             { "name": "insurance_contact", "label": "Has any insurance company contacted you?", "type": "select", "options": ["No", "Yes — mine", "Yes — other party's", "Yes — both"], "required": true },
             { "name": "police_report", "label": "Was a police report filed?", "type": "select", "options": ["Yes", "No", "Not sure"], "required": true }
           ]
@@ -154,11 +232,33 @@
           "id": "estate-planning",
           "name": "Wills & Estate Planning",
           "blurb": "Wills, trusts, powers of attorney, advance directives. Protect your family.",
+          "areaHeadline": "Protect your family. It's easier than you think.",
+          "areaSubhead": "Wills, trusts, powers of attorney, healthcare directives. Most California families need a basic estate plan — and don't have one.",
+          "bullets": [
+            "Simple and complex wills",
+            "Living trusts (revocable and irrevocable)",
+            "Durable power of attorney",
+            "Advance healthcare directives",
+            "Guardianship designations for minor children",
+            "Probate avoidance strategies"
+          ],
+          "process": [
+            { "step": "1. Quick intake", "text": "6 questions to figure out what you actually need." },
+            { "step": "2. Plan meeting", "text": "We map out the right documents for your family — no upselling, no unnecessary trusts." },
+            { "step": "3. Signing", "text": "Documents drafted, reviewed, signed, and notarized." }
+          ],
+          "areaFaq": [
+            { "q": "Do I need a trust or just a will?", "a": "Depends on your assets and goals. A will is enough for many people; a trust avoids probate and can save your family thousands." },
+            { "q": "How much does a basic estate plan cost?", "a": "Significantly less than what your family loses without one. We give flat-rate quotes after the first meeting." },
+            { "q": "What happens if I die without a will in California?", "a": "California's intestacy laws decide who gets what — and it's often not what you'd choose." }
+          ],
           "intake": [
             { "name": "documents_needed", "label": "What do you need?", "type": "select", "options": ["Just a will", "Will + trust", "Power of attorney", "Advance healthcare directive", "Full estate plan", "Not sure"], "required": true },
             { "name": "minor_children", "label": "Do you have minor children?", "type": "select", "options": ["Yes", "No"], "required": true },
             { "name": "real_estate", "label": "Do you own real estate?", "type": "select", "options": ["Yes — one property", "Yes — multiple", "No"], "required": true },
-            { "name": "rough_estate_value", "label": "Rough total estate value (your best guess)", "type": "text", "required": false }
+            { "name": "rough_estate_value", "label": "Rough total estate value", "type": "text", "required": false },
+            { "name": "marital_status", "label": "Marital status", "type": "select", "options": ["Single", "Married", "Domestic partner", "Divorced", "Widowed"], "required": true },
+            { "name": "concerns", "label": "Any specific concerns?", "type": "textarea", "required": false }
           ]
         }
       ],

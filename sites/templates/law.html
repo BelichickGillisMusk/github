@@ -191,7 +191,7 @@
   <div class="menu-panel" id="menuPanel">
     <a href="#about">About</a>
     {{NAV_PRACTICE_LINKS}}
-    <a href="#reviews">Reviews</a>
+    <a href="#reviews-top">Reviews</a>
     <a href="/blog/">Blog</a>
     <a href="#contact">Contact &amp; Directions</a>
     <a href="{{DIRECTIONS_URL}}" target="_blank" rel="noopener">🧭 Get Directions</a>
@@ -219,6 +219,18 @@
   </div>
 </section>
 
+<section id="reviews-top">
+  <h2>What clients say about {{ATTORNEY_NAME}}</h2>
+  {{AVG_RATING_HTML}}
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:18px;">
+    {{REVIEWS_HTML}}
+  </div>
+  <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+    <a class="btn outline" href="{{GOOGLE_REVIEWS_URL}}" target="_blank" rel="noopener">★ Read all on Google</a>
+    <a class="btn outline" href="{{GOOGLE_REVIEW_WRITE_URL}}" target="_blank" rel="noopener">Leave a review</a>
+  </div>
+</section>
+
 <section id="contact-form">
   <h2>Tell us about your case</h2>
   <p>The fastest way to get help. Tell us briefly what's going on — we'll review and reach out to set up a consultation. Personal injury consultations are free; other matters carry a modest consultation fee that's credited toward your case if you retain us.</p>
@@ -242,25 +254,9 @@
   </div>
 </section>
 
-<section id="intakes">
-  {{INTAKE_FORMS_HTML}}
-</section>
-
 <section id="faq">
   <h2>Common questions</h2>
   {{FAQ_HTML}}
-</section>
-
-<section id="reviews">
-  <h2>What clients say</h2>
-  <p>Honest reviews from real people on Google.</p>
-  <div style="display:flex;flex-direction:column;gap:14px;margin-top:18px;">
-    {{REVIEWS_HTML}}
-  </div>
-  <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
-    <a class="btn outline" href="{{GOOGLE_REVIEWS_URL}}" target="_blank" rel="noopener">★ Read all reviews on Google</a>
-    <a class="btn outline" href="{{GOOGLE_REVIEW_WRITE_URL}}" target="_blank" rel="noopener">Leave a review</a>
-  </div>
 </section>
 
 <div class="contact-card" id="contact">

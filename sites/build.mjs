@@ -139,32 +139,235 @@ function intakeFieldHtml(field) {
 function practiceCardsHtml(areas) {
   return areas.map(a => {
     const cta = a.id === 'personal-injury' ? 'Free PI consult →' : 'Start confidential intake →';
-    return `<a class="practice-card" href="#intake-${htmlEscape(a.id)}"><h3>${htmlEscape(a.name)}</h3><p>${htmlEscape(a.blurb)}</p><span class="cta">${cta}</span></a>`;
+    return `<a class="practice-card" href="/${htmlEscape(a.id)}/"><h3>${htmlEscape(a.name)}</h3><p>${htmlEscape(a.blurb)}</p><span class="cta">${cta}</span></a>`;
   }).join('\n    ');
 }
 
-function intakeFormsHtml(areas) {
-  return areas.map(a => {
-    const fields = a.intake.map(intakeFieldHtml).join('\n        ');
-    const isPI = a.id === 'personal-injury';
-    const subtitle = isPI ? 'Free Consultation · No Fee Unless We Win' : 'Confidential Intake';
-    return `<div id="intake-${htmlEscape(a.id)}" style="margin-top:30px;">
-      <h2>${htmlEscape(a.name)} — ${subtitle}</h2>
-      <form class="intake-form" data-area="${htmlEscape(a.id)}" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
+// Per-area intake form, used on /<area>/ pages
+function intakeFormHtml(area, attorneyShortName) {
+  const fields = area.intake.map(intakeFieldHtml).join('\n        ');
+  const isPI = area.id === 'personal-injury';
+  const submitLabel = isPI ? 'Get my free consultation' : 'Submit confidential intake';
+  const okName = attorneyShortName || 'Mr. Chigbu';
+  return `<form class="intake-form" data-area="${htmlEscape(area.id)}" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;">
         ${fields}
         <label>Your name<input name="client_name" required></label>
         <label>Phone<input name="client_phone" type="tel" required></label>
         <label>Email<input name="client_email" type="email" required></label>
-        <label>Anything else we should know?<textarea name="notes" rows="3"></textarea></label>
-        <button type="submit" class="btn primary block">Submit confidential intake</button>
-        <div class="ok" hidden style="color:#7BE7A2;">✓ Received. Mr. Chigbu (or our office) will reach out shortly.</div>
-      </form>
-    </div>`;
-  }).join('\n    ');
+        <button type="submit" class="btn primary block">${submitLabel}</button>
+        <div class="ok" hidden style="color:#7BE7A2;">✓ Received. ${htmlEscape(okName)} will be in touch shortly.</div>
+      </form>`;
 }
 
+// Home page no longer renders all intakes inline — practice area cards link to /<area>/
+function intakeFormsHtml() { return ''; }
+
 function navPracticeLinksHtml(areas) {
-  return areas.map(a => `<a href="#intake-${htmlEscape(a.id)}">${htmlEscape(a.name)}</a>`).join('\n    ');
+  return areas.map(a => `<a href="/${htmlEscape(a.id)}/">${htmlEscape(a.name)}</a>`).join('\n    ');
+}
+
+function bulletsHtml(bullets) {
+  return `<ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;margin-top:14px;">${(bullets||[]).map(b => `<li style="padding-left:24px;position:relative;color:var(--text);"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">✓</span>${htmlEscape(b)}</li>`).join('')}</ul>`;
+}
+
+function processStepsHtml(steps) {
+  return `<div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;">${(steps||[]).map(s => `<div style="background:rgba(255,255,255,0.04);border-left:3px solid var(--accent);padding:16px 18px;border-radius:0 8px 8px 0;"><div style="color:var(--accent);font-family:-apple-system,sans-serif;font-weight:700;margin-bottom:4px;">${htmlEscape(s.step)}</div><div style="color:var(--muted);">${htmlEscape(s.text)}</div></div>`).join('')}</div>`;
+}
+
+function reviewAvgHtml(reviews) {
+  if (!reviews || !reviews.length) return '';
+  const avg = (reviews.reduce((s, r) => s + (r.rating || 5), 0) / reviews.length).toFixed(1);
+  const stars = '★★★★★';
+  return `<div style="display:flex;align-items:center;gap:10px;margin-top:8px;font-family:-apple-system,sans-serif;"><span style="color:var(--accent);font-size:24px;letter-spacing:2px;">${stars}</span><strong style="font-size:20px;color:var(--text);">${avg}</strong><span style="color:var(--muted);font-size:14px;">(${reviews.length} reviews)</span></div>`;
+}
+
+function smallReviewsHtml(reviews, limit = 2) {
+  if (!reviews || !reviews.length) return '';
+  return reviews.slice(0, limit).map(r => `<blockquote style="background:rgba(255,255,255,0.04);border-left:3px solid var(--accent);padding:14px 18px;border-radius:0 6px 6px 0;font-style:italic;color:var(--text);margin-bottom:10px;"><div style="color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;letter-spacing:2px;font-size:13px;">${'★'.repeat(r.rating || 5)}</div>${htmlEscape(r.text)}<footer style="margin-top:8px;font-size:12px;color:var(--muted);font-style:normal;font-family:-apple-system,sans-serif;">— ${htmlEscape(r.author || 'Google reviewer')}</footer></blockquote>`).join('');
+}
+
+// ---------- per-area page (full HTML doc, no external template needed) ----------
+function lawAreaPageHtml(site, area) {
+  const c = site.colors;
+  const phone = site.phone || 'TBD';
+  const phoneRaw = site.phoneRaw || 'TBD';
+  const firmName = site.firmName || 'Law Firm';
+  const attorneyName = site.attorneyName || firmName;
+  const shortName = site.attorneyShortName || attorneyName.split(' ')[0];
+  const isPI = area.id === 'personal-injury';
+  const titleSuffix = isPI ? 'Free Consultation' : 'Confidential Intake';
+  const consultBadge = isPI ? '✓ Free consultation · No fee unless we win' : '✓ Confidential · 6 quick questions · ~90 seconds';
+  return `<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="${c.background}">
+<title>${htmlEscape(area.name)} Lawyer in ${htmlEscape(site.city || 'California')} — ${htmlEscape(firmName)}</title>
+<meta name="description" content="${htmlEscape(area.areaSubhead || area.blurb)} Call ${phone}. ${titleSuffix}.">
+<meta name="keywords" content="${htmlEscape(area.name)} lawyer ${htmlEscape(site.city || '')}, California ${htmlEscape(area.name)} attorney, ${htmlEscape(firmName)}, ${htmlEscape(attorneyName)}">
+<link rel="canonical" href="https://${site.domain}/${area.id}/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="geo.region" content="US-CA">
+<meta name="geo.placename" content="${htmlEscape(site.city || '')}">
+<meta property="og:title" content="${htmlEscape(area.name)} — ${htmlEscape(firmName)}">
+<meta property="og:description" content="${htmlEscape(area.areaSubhead || area.blurb)}">
+<meta property="og:url" content="https://${site.domain}/${area.id}/">
+<meta property="og:type" content="website">
+<style>
+:root{--primary:${c.primary};--primary-dark:${c.primaryDark};--accent:${c.accent};--bg:${c.background};--text:${c.text};--muted:${c.muted};--max-w:760px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:100px;}
+h1,h2,h3{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;}
+nav.top{position:sticky;top:0;z-index:50;background:var(--primary-dark);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+nav.top .brand{color:var(--accent);font-weight:800;font-size:18px;text-decoration:none;font-family:-apple-system,sans-serif;letter-spacing:0.5px;}
+nav.top button.menu-btn{background:none;border:none;color:var(--text);font-size:26px;cursor:pointer;padding:4px 8px;}
+nav.top .menu-panel{display:none;position:absolute;top:100%;right:0;left:0;background:var(--primary-dark);border-bottom:2px solid var(--accent);padding:12px 0;}
+nav.top .menu-panel.open{display:block;}
+nav.top .menu-panel a{display:block;padding:14px 24px;color:var(--text);text-decoration:none;font-family:-apple-system,sans-serif;border-bottom:1px solid rgba(255,255,255,0.05);}
+nav.top .menu-panel a:hover{background:rgba(255,255,255,0.05);color:var(--accent);}
+.crumb{padding:14px 24px;max-width:var(--max-w);margin:0 auto;color:var(--muted);font-size:13px;font-family:-apple-system,sans-serif;}
+.crumb a{color:var(--accent);text-decoration:none;}
+.area-hero{padding:30px 24px 20px;max-width:var(--max-w);margin:0 auto;}
+.area-hero .badge{display:inline-block;background:rgba(212,162,76,0.15);color:var(--accent);padding:6px 14px;border-radius:999px;font-size:13px;font-family:-apple-system,sans-serif;font-weight:600;margin-bottom:14px;}
+.area-hero h1{font-size:34px;line-height:1.2;margin-bottom:14px;color:var(--text);}
+.area-hero p.lede{font-size:18px;color:var(--muted);}
+section{padding:30px 24px;max-width:var(--max-w);margin:0 auto;}
+section h2{font-size:24px;margin-bottom:8px;color:var(--accent);}
+section p{color:var(--muted);font-size:16px;}
+.btn{display:inline-block;padding:16px 28px;border-radius:6px;font-weight:700;text-decoration:none;font-family:-apple-system,sans-serif;font-size:16px;border:2px solid var(--accent);cursor:pointer;}
+.btn.primary{background:var(--accent);color:var(--primary-dark);}
+.btn.outline{background:transparent;color:var(--accent);}
+.btn.block{display:block;width:100%;text-align:center;}
+form.intake-form label{display:flex;flex-direction:column;gap:6px;font-family:-apple-system,sans-serif;font-size:14px;color:var(--muted);}
+form.intake-form input,form.intake-form select,form.intake-form textarea{background:rgba(0,0,0,0.3);color:var(--text);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:12px;font-size:15px;font-family:inherit;}
+details{background:rgba(255,255,255,0.04);border-radius:8px;padding:14px 18px;margin-bottom:8px;cursor:pointer;}
+details summary{font-weight:600;color:var(--text);list-style:none;font-family:-apple-system,sans-serif;}
+details summary::-webkit-details-marker{display:none;}
+details summary::after{content:" +";color:var(--accent);float:right;}
+details[open] summary::after{content:" –";}
+details p{margin-top:8px;color:var(--muted);font-size:14px;}
+footer{background:var(--primary-dark);border-top:2px solid var(--accent);padding:30px 24px 20px;margin-top:60px;color:var(--muted);font-size:13px;text-align:center;font-family:-apple-system,sans-serif;}
+footer .firm{color:var(--accent);font-weight:700;font-size:16px;margin-bottom:8px;}
+footer .disclaimer{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08);font-size:11px;line-height:1.5;max-width:600px;margin-left:auto;margin-right:auto;}
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:var(--accent);color:var(--primary-dark);text-align:center;padding:16px;text-decoration:none;font-weight:700;font-family:-apple-system,sans-serif;box-shadow:0 -4px 16px rgba(0,0,0,0.3);z-index:40;padding-bottom:calc(16px + env(safe-area-inset-bottom));}
+</style></head><body>
+
+<nav class="top">
+  <a href="/" class="brand">${htmlEscape(firmName)}</a>
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <div class="menu-panel" id="menuPanel">
+    <a href="/">Home</a>
+    <a href="/#about">About</a>
+    ${(site.practiceAreas||[]).map(a => `<a href="/${htmlEscape(a.id)}/">${htmlEscape(a.name)}</a>`).join('\n    ')}
+    <a href="/#reviews">Reviews</a>
+    <a href="/blog/">Blog</a>
+    <a href="/#contact">Contact &amp; Directions</a>
+    <a href="tel:${phoneRaw}">📞 ${phone}</a>
+  </div>
+</nav>
+
+<div class="crumb"><a href="/">${htmlEscape(firmName)}</a> · ${htmlEscape(area.name)}</div>
+
+<header class="area-hero">
+  <div class="badge">${consultBadge}</div>
+  <h1>${htmlEscape(area.areaHeadline || area.name)}</h1>
+  <p class="lede">${htmlEscape(area.areaSubhead || area.blurb)}</p>
+</header>
+
+<section id="form">
+  <h2>${isPI ? 'Free consultation request' : 'Quick intake — 6 questions'}</h2>
+  <p style="margin-bottom:14px;">Takes about 90 seconds. Confidential.</p>
+  ${intakeFormHtml(area, shortName)}
+</section>
+
+<section>
+  <h2>What I can help with</h2>
+  ${bulletsHtml(area.bullets)}
+</section>
+
+<section>
+  <h2>How it works</h2>
+  ${processStepsHtml(area.process)}
+</section>
+
+<section>
+  <h2>What clients say</h2>
+  ${reviewAvgHtml(site.reviews)}
+  <div style="margin-top:14px;">${smallReviewsHtml(site.reviews, 2)}</div>
+  <p style="margin-top:14px;"><a href="${site.googleReviewsUrl || directionsUrl(site)}" target="_blank" rel="noopener" style="color:var(--accent);">★ Read all reviews on Google →</a></p>
+</section>
+
+<section>
+  <h2>Common ${htmlEscape(area.name.toLowerCase())} questions</h2>
+  ${(area.areaFaq||[]).map(f => `<details><summary>${htmlEscape(f.q)}</summary><p>${htmlEscape(f.a)}</p></details>`).join('')}
+</section>
+
+<section style="text-align:center;">
+  <h2>Ready to talk?</h2>
+  <p style="margin-bottom:18px;">Call ${phone} or email <a href="mailto:${site.email}" style="color:var(--accent);">${site.email}</a></p>
+  <a class="btn primary" href="tel:${phoneRaw}">📞 Call ${phone}</a>
+</section>
+
+<footer>
+  <div class="firm">${htmlEscape(firmName)}</div>
+  <div>${htmlEscape(attorneyName)} · State Bar of California #${site.barNumber || 'TBD'}</div>
+  <div>📞 ${phone} · ✉️ ${site.email || ''}</div>
+  <div><a href="/" style="color:var(--accent)">Home</a> · <a href="/blog/" style="color:var(--accent)">Blog</a></div>
+  <div class="disclaimer">${htmlEscape(site.disclaimer || (verticalDefaults.law && verticalDefaults.law.disclaimer) || '')}</div>
+</footer>
+
+<a class="sticky-cta" href="tel:${phoneRaw}">📞 Talk to ${htmlEscape(shortName)} · ${phone}</a>
+
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const menuPanel=document.getElementById('menuPanel');
+menuBtn.addEventListener('click',()=>menuPanel.classList.toggle('open'));
+document.querySelectorAll('form.intake-form').forEach(form=>{
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    const data=Object.fromEntries(new FormData(this).entries());
+    data.site="${site.id}";
+    data.area=this.dataset.area;
+    data.timestamp=new Date().toISOString();
+    try{await fetch('/api/intake',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});}catch(err){}
+    const ok=this.querySelector('.ok');
+    if(ok)ok.hidden=false;
+    this.reset();
+  });
+});
+</script>
+
+<script type="application/ld+json">
+${JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": firmName,
+  "serviceType": area.name,
+  "telephone": phone,
+  "email": site.email,
+  "url": `https://${site.domain}/${area.id}/`,
+  "areaServed": site.region || site.city,
+  "founder": { "@type": "Person", "name": attorneyName },
+  "aggregateRating": site.reviews && site.reviews.length ? {
+    "@type": "AggregateRating",
+    "ratingValue": (site.reviews.reduce((s, r) => s + (r.rating || 5), 0) / site.reviews.length).toFixed(1),
+    "reviewCount": site.reviews.length
+  } : undefined
+})}
+</script>
+<script type="application/ld+json">
+${JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": (area.areaFaq||[]).map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a }
+  }))
+})}
+</script>
+
+</body></html>`;
 }
 
 // Generic style for intake form labels (injected once via <style> in worker)
@@ -278,8 +481,9 @@ function renderLawSite(site, allSites) {
     LANGUAGES_JSON: JSON.stringify(site.languages || ['English']),
     DISCLAIMER: site.disclaimer || vDef.disclaimer || '',
     PRACTICE_CARDS_HTML: practiceCardsHtml(site.practiceAreas || []),
-    INTAKE_FORMS_HTML: intakeFormsHtml(site.practiceAreas || []),
+    INTAKE_FORMS_HTML: intakeFormsHtml(),
     NAV_PRACTICE_LINKS: navPracticeLinksHtml(site.practiceAreas || []),
+    AVG_RATING_HTML: reviewAvgHtml(site.reviews),
     REVIEWS_HTML: reviewsHtml(site.reviews),
     DIRECTIONS_URL: directionsUrl(site),
     GOOGLE_BUSINESS_URL: site.googleBusinessUrl || directionsUrl(site),
@@ -317,12 +521,13 @@ function blogShell(site, title, body) {
 }
 
 // ---------- worker.js generation ----------
-function workerJs(html, site, sitemap, robots, blog) {
+function workerJs(html, site, sitemap, robots, blog, areaPages) {
   const escapedHtml = JSON.stringify(html);
   const escapedSitemap = JSON.stringify(sitemap);
   const escapedRobots = JSON.stringify(robots);
   const blogIndex = blog.length ? JSON.stringify(blogIndexHtml(site, blog)) : '""';
   const blogPostsObj = '{' + blog.map(p => `${JSON.stringify(p.slug)}: ${JSON.stringify(blogPostHtml(site, p))}`).join(', ') + '}';
+  const areaPagesObj = '{' + Object.entries(areaPages || {}).map(([id, h]) => `${JSON.stringify(id)}: ${JSON.stringify(h)}`).join(', ') + '}';
   const alertWebhook = site.chatbot?.alertWebhook ?? defaults.chatbot?.alertWebhook ?? '';
   const obdPrice = site.prices?.obd ?? defaults.prices?.obd ?? '';
   const oviPrice = site.prices?.ovi ?? defaults.prices?.ovi ?? '';
@@ -339,6 +544,7 @@ const SITEMAP = ${escapedSitemap};
 const ROBOTS = ${escapedRobots};
 const BLOG_INDEX = ${blogIndex};
 const BLOG_POSTS = ${blogPostsObj};
+const AREA_PAGES = ${areaPagesObj};
 const SITE_ID = ${JSON.stringify(site.id)};
 const VERTICAL = ${JSON.stringify(vertical)};
 const ALERT_WEBHOOK = ${JSON.stringify(alertWebhook)};
@@ -375,6 +581,12 @@ export default {
     if (p.startsWith("/blog/")) {
       const slug = p.replace(/^\\/blog\\//, "").replace(/\\/$/, "");
       if (BLOG_POSTS[slug]) return html(BLOG_POSTS[slug]);
+    }
+
+    // Practice area pages (law sites)
+    if (p.length > 1) {
+      const areaId = p.replace(/^\\//, "").replace(/\\/$/, "");
+      if (AREA_PAGES[areaId]) return html(AREA_PAGES[areaId]);
     }
 
     // Bookings (CARB) / Intakes (Law) / Chat — all funnel through fireAlert
@@ -449,6 +661,11 @@ export default {
 
 function sitemapXml(site, blog) {
   const urls = [`<url><loc>https://${site.domain}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>`];
+  if ((site.vertical || 'carb') === 'law') {
+    for (const a of (site.practiceAreas || [])) {
+      urls.push(`<url><loc>https://${site.domain}/${a.id}/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>`);
+    }
+  }
   if (blog.length) urls.push(`<url><loc>https://${site.domain}/blog/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
   for (const p of blog) urls.push(`<url><loc>https://${site.domain}/blog/${p.slug}/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>`);
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  ${urls.join('\n  ')}\n</urlset>`;
@@ -488,7 +705,20 @@ for (const site of config.sites) {
   const dir = join(DIST, site.id);
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, 'index.html'), html);
-  writeFileSync(join(dir, 'worker.js'), workerJs(html, site, sitemap, robots, blog));
+
+  // Generate per-area pages for law sites
+  const areaPages = {};
+  if ((site.vertical || 'carb') === 'law') {
+    for (const a of (site.practiceAreas || [])) {
+      const pageHtml = lawAreaPageHtml(site, a);
+      areaPages[a.id] = pageHtml;
+      const areaDir = join(dir, a.id);
+      mkdirSync(areaDir, { recursive: true });
+      writeFileSync(join(areaDir, 'index.html'), pageHtml);
+    }
+  }
+
+  writeFileSync(join(dir, 'worker.js'), workerJs(html, site, sitemap, robots, blog, areaPages));
   writeFileSync(join(dir, 'wrangler.toml'), wranglerToml(site));
   writeFileSync(join(dir, 'sitemap.xml'), sitemap);
   writeFileSync(join(dir, 'robots.txt'), robots);
