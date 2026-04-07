@@ -78,14 +78,15 @@
       "phone": "TBD",
       "phoneRaw": "TBD",
       "colors": {
-        "primary": "#FFC107",
-        "primaryDark": "#1A1A1A",
-        "accent": "#FFC107",
-        "background": "#1A1A1A",
+        "primary": "#0033A0",
+        "primaryDark": "#0A0F2C",
+        "accent": "#A6A6A6",
+        "background": "#0A0F2C",
         "text": "#FFFFFF",
-        "muted": "#A0A0A0"
+        "muted": "#B8C0D0"
       },
-      "themeName": "default-amber"
+      "themeName": "air-force-academy",
+      "_themeNote": "Air Force Academy: royal blue (#0033A0), silver (#A6A6A6)"
     },
     {
       "id": "cleantruckcheck-stockton",
@@ -112,14 +113,15 @@
       "phone": "TBD",
       "phoneRaw": "TBD",
       "colors": {
-        "primary": "#FFC107",
-        "primaryDark": "#1A1A1A",
-        "accent": "#FFC107",
-        "background": "#1A1A1A",
+        "primary": "#A5ACAF",
+        "primaryDark": "#000000",
+        "accent": "#A5ACAF",
+        "background": "#000000",
         "text": "#FFFFFF",
-        "muted": "#A0A0A0"
+        "muted": "#9099A0"
       },
-      "themeName": "default-amber"
+      "themeName": "raiders",
+      "_themeNote": "Las Vegas Raiders: silver (#A5ACAF), black (#000000)"
     },
     {
       "id": "carb-clean-truck-check",
@@ -146,14 +148,15 @@
       "phone": "TBD",
       "phoneRaw": "TBD",
       "colors": {
-        "primary": "#FFC107",
-        "primaryDark": "#3D2E1E",
-        "accent": "#FFC107",
-        "background": "#3D2E1E",
+        "primary": "#AA0000",
+        "primaryDark": "#1C1C1C",
+        "accent": "#B3995D",
+        "background": "#1C1C1C",
         "text": "#FFFFFF",
-        "muted": "#C9BFB3"
+        "muted": "#B3995D"
       },
-      "themeName": "default-amber"
+      "themeName": "49ers",
+      "_themeNote": "San Francisco 49ers: scarlet (#AA0000), gold (#B3995D)"
     },
     {
       "id": "mobilesmoketest",
