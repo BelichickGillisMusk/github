@@ -1,22 +1,52 @@
 // worker.js - Silverback AI Homepage
 var worker_default = {
   async fetch(request) {
+    const url = new URL(request.url);
+
+    // robots.txt
+    if (url.pathname === "/robots.txt") {
+      return new Response(
+        "User-agent: *\nAllow: /\nSitemap: https://silverbackai.agency/sitemap.xml\n",
+        { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } }
+      );
+    }
+
+    // sitemap.xml
+    if (url.pathname === "/sitemap.xml") {
+      const urls = ["/", "/security-ai", "/tenant-portal", "/rent-roll"];
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join("\n")}
+</urlset>`;
+      return new Response(xml, {
+        headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=86400" }
+      });
+    }
+
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Silverback AI — AI consulting and ready-made solutions for businesses. Pre-built tools for legal, property management, and more. Expert AI integration and custom builds.">
-    <meta name="keywords" content="AI consulting, AI solutions, AI tools for lawyers, AI property management, AI integration, custom AI builds, Silverback AI">
+    <meta name="description" content="Silverback AI — AI consulting and ready-made solutions for businesses. Pre-built tools for legal, property management, security, and more. Expert AI integration and custom builds.">
+    <meta name="keywords" content="AI consulting, AI solutions, AI tools for lawyers, AI property management, AI security, AI integration, custom AI builds, Silverback AI">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://silverbackai.agency/">
     <meta property="og:title" content="Silverback AI — Intelligent Solutions, Built to Last">
-    <meta property="og:description" content="AI consulting and pre-built solutions for businesses. Legal, property management, web, and custom AI integration.">
+    <meta property="og:description" content="AI consulting and pre-built solutions for businesses. Legal, property management, web, security, and custom AI integration.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://silverbackai.agency/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Silverback AI — Intelligent Solutions, Built to Last">
+    <meta name="twitter:description" content="AI consulting and pre-built solutions for businesses.">
     <meta name="theme-color" content="#0a0a0f">
     <title>Silverback AI — Intelligent Solutions, Built to Last</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
         * {
             margin: 0;
@@ -683,7 +713,7 @@ var worker_default = {
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">
+                <a href="/" class="logo">
                     <div class="logo-mark">
                         <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="40" height="40" rx="10" fill="#16161f"/>
@@ -860,13 +890,24 @@ var worker_default = {
 
                 <div class="solution-card">
                     <div class="solution-icon">&#x1F3E2;</div>
-                    <h3>Property Manager Pro</h3>
+                    <h3>Rent DMC Suite</h3>
                     <p>
-                        AI-powered tenant communication, maintenance request routing,
-                        lease analysis, and vacancy marketing for apartment owners
-                        and complex managers.
+                        AI-powered tenant communication, rent roll automation, tenant
+                        portal, and maintenance request routing for property owners.
+                        Built for real-world property management.
                     </p>
-                    <span class="solution-tag">Real Estate</span>
+                    <span class="solution-tag">Property</span>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">&#x1F4F9;</div>
+                    <h3>Security AI</h3>
+                    <p>
+                        AI-powered camera monitoring, motion alerts, and incident
+                        analysis for properties and businesses. Smarter than a guard,
+                        cheaper than a service.
+                    </p>
+                    <span class="solution-tag">Security</span>
                 </div>
 
                 <div class="solution-card">
@@ -995,7 +1036,7 @@ var worker_default = {
                 Book a free discovery call. No pressure, no jargon &mdash; just a
                 conversation about what&#39;s possible.
             </p>
-            <a href="mailto:hello@silverbackai.com" class="btn-primary">Get In Touch</a>
+            <a href="mailto:hello@silverbackai.agency" class="btn-primary">Get In Touch</a>
         </div>
     </section>
 
@@ -1003,7 +1044,7 @@ var worker_default = {
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="#" class="logo">
+                    <a href="/" class="logo">
                         <div class="logo-mark">
                             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="40" height="40" rx="10" fill="#16161f"/>
@@ -1032,7 +1073,8 @@ var worker_default = {
                     <h4>Solutions</h4>
                     <ul>
                         <li><a href="#solutions">Legal AI Suite</a></li>
-                        <li><a href="#solutions">Property Manager Pro</a></li>
+                        <li><a href="#solutions">Rent DMC Suite</a></li>
+                        <li><a href="#solutions">Security AI</a></li>
                         <li><a href="#solutions">Web &amp; Content Builder</a></li>
                         <li><a href="#solutions">Custom Tools</a></li>
                     </ul>
@@ -1108,14 +1150,14 @@ var worker_default = {
         "@type": "Organization",
         "name": "Silverback AI",
         "description": "AI consulting and pre-built solutions for businesses. Legal AI, property management tools, web builders, and custom AI integration.",
-        "url": "https://silverbackai.com",
+        "url": "https://silverbackai.agency",
         "sameAs": [],
         "contactPoint": {
             "@type": "ContactPoint",
-            "email": "hello@silverbackai.com",
+            "email": "hello@silverbackai.agency",
             "contactType": "sales"
         },
-        "knowsAbout": ["Artificial Intelligence", "AI Consulting", "AI Integration", "Legal Technology", "Property Management Software", "Agentic AI Systems"]
+        "knowsAbout": ["Artificial Intelligence", "AI Consulting", "AI Integration", "Legal Technology", "Property Management Software", "Security AI", "Agentic AI Systems"]
     }
     <\/script>
 </body>
@@ -1123,7 +1165,11 @@ var worker_default = {
     return new Response(html, {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
-        "Cache-Control": "public, max-age=3600"
+        "Cache-Control": "public, max-age=86400, s-maxage=604800",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
       }
     });
   }
