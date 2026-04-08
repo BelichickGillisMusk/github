@@ -1,46 +1,32 @@
 // worker.js - Silverback AI Homepage
-var worker_default = {
-  async fetch(request) {
-    const url = new URL(request.url);
+//
+// Routes:
+//   GET  /robots.txt     -> robots file
+//   GET  /sitemap.xml    -> sitemap
+//   GET  /               -> homepage
+//   POST /api/intake     -> intake form handler (logged via console.log)
+//   GET  /tools/:slug    -> scaffolded tool pages (5 slugs wired up)
+//   *                    -> 404 page
 
-    // robots.txt
-    if (url.pathname === "/robots.txt") {
-      return new Response(
-        "User-agent: *\nAllow: /\nSitemap: https://silverbackai.agency/sitemap.xml\n",
-        { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } }
-      );
-    }
-
-    // sitemap.xml
-    if (url.pathname === "/sitemap.xml") {
-      const urls = ["/", "/security-ai", "/tenant-portal", "/rent-roll"];
-      const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join("\n")}
-</urlset>`;
-      return new Response(xml, {
-        headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=86400" }
-      });
-    }
-
-    const html = `<!DOCTYPE html>
+function renderHomepage() {
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Silverback AI — AI consulting and ready-made solutions for businesses. Pre-built tools for legal, property management, security, and more. Expert AI integration and custom builds.">
-    <meta name="keywords" content="AI consulting, AI solutions, AI tools for lawyers, AI property management, AI security, AI integration, custom AI builds, Silverback AI">
+    <meta name="description" content="What keeps you up at night? Silverback AI builds the tool that fixes it. Custom AI systems for small business — legal, property management, security, and more. Shipped fast, runs while you sleep.">
+    <meta name="keywords" content="AI consulting, custom AI tools, small business AI, AI security, property management AI, legal AI, Silverback AI">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://silverbackai.agency/">
-    <meta property="og:title" content="Silverback AI — Intelligent Solutions, Built to Last">
-    <meta property="og:description" content="AI consulting and pre-built solutions for businesses. Legal, property management, web, security, and custom AI integration.">
+    <meta property="og:title" content="Silverback AI — What keeps you up at night?">
+    <meta property="og:description" content="We build the tool that fixes it. Custom AI systems for small business, shipped fast, running while you sleep.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://silverbackai.agency/">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Silverback AI — Intelligent Solutions, Built to Last">
-    <meta name="twitter:description" content="AI consulting and pre-built solutions for businesses.">
-    <meta name="theme-color" content="#0a0a0f">
-    <title>Silverback AI — Intelligent Solutions, Built to Last</title>
+    <meta name="twitter:title" content="Silverback AI — What keeps you up at night?">
+    <meta name="twitter:description" content="We build the tool that fixes it. Custom AI for small business, shipped fast.">
+    <meta name="theme-color" content="#07070b">
+    <title>Silverback AI — What keeps you up at night?</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,18 +41,22 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
         }
 
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #111118;
-            --bg-card: #16161f;
+            --bg-primary: #07070b;
+            --bg-secondary: #0f0f17;
+            --bg-card: #15151f;
+            --bg-input: #1b1b28;
             --accent: #8b5cf6;
-            --accent-glow: rgba(139, 92, 246, 0.15);
+            --accent-glow: rgba(139, 92, 246, 0.18);
             --accent-hover: #a78bfa;
+            --accent-bright: #c4b5fd;
             --silver: #c0c0c8;
             --vest: #ccff00;
-            --text-primary: #e8e8ed;
-            --text-secondary: #9898a4;
-            --border: rgba(139, 92, 246, 0.2);
-            --border-subtle: rgba(255, 255, 255, 0.06);
+            --text-primary: #ffffff;
+            --text-secondary: #c2c2d0;
+            --text-tertiary: #86868f;
+            --border: rgba(139, 92, 246, 0.3);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-input: rgba(255, 255, 255, 0.12);
         }
 
         body {
@@ -177,8 +167,7 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
 
         /* Hero */
         .hero {
-            padding: 120px 0 100px;
-            text-align: center;
+            padding: 96px 0 72px;
             position: relative;
             overflow: hidden;
         }
@@ -186,27 +175,39 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
         .hero::before {
             content: '';
             position: absolute;
-            top: -200px;
+            top: -300px;
             left: 50%;
             transform: translateX(-50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            width: 1100px;
+            height: 1100px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
             pointer-events: none;
         }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 64px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-copy { max-width: 560px; }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(139, 92, 246, 0.1);
+            background: rgba(139, 92, 246, 0.12);
             border: 1px solid var(--border);
-            padding: 8px 20px;
+            padding: 8px 18px;
             border-radius: 100px;
             font-size: 13px;
-            color: var(--accent);
-            font-weight: 500;
-            margin-bottom: 32px;
+            color: var(--accent-bright);
+            font-weight: 600;
+            margin-bottom: 28px;
+            letter-spacing: 0.3px;
         }
 
         .hero-badge-dot {
@@ -214,48 +215,37 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
             height: 6px;
             background: var(--accent);
             border-radius: 50%;
+            box-shadow: 0 0 12px var(--accent);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
         }
 
         .hero h1 {
-            font-size: 64px;
+            font-size: clamp(40px, 5.6vw, 72px);
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1.05;
             margin-bottom: 24px;
-            letter-spacing: -2px;
-            position: relative;
-            z-index: 1;
+            letter-spacing: -2.5px;
+            color: var(--text-primary);
         }
 
         .hero h1 .gradient-text {
-            background: linear-gradient(135deg, var(--accent) 0%, #c084fc 50%, var(--silver) 100%);
+            background: linear-gradient(135deg, #c4b5fd 0%, var(--accent) 45%, #f0abfc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
-            font-size: 20px;
+        .hero p.hero-lede {
+            font-size: 19px;
             color: var(--text-secondary);
-            max-width: 640px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 40px;
+            line-height: 1.65;
+            max-width: 540px;
         }
 
         .btn-primary {
@@ -269,6 +259,7 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
             transition: all 0.2s;
             border: none;
             cursor: pointer;
+            display: inline-block;
         }
 
         .btn-primary:hover {
@@ -277,101 +268,247 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
             box-shadow: 0 8px 30px var(--accent-glow);
         }
 
-        .btn-outline {
-            background: transparent;
-            color: var(--text-primary);
-            padding: 16px 36px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            border: 1px solid var(--border);
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--accent);
-            background: var(--accent-glow);
-            transform: translateY(-2px);
+        .hero-illustration-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
         .hero-illustration {
-            max-width: 420px;
-            margin: 0 auto 32px;
+            max-width: 460px;
+            width: 100%;
             position: relative;
-            z-index: 1;
         }
 
         .hero-illustration svg {
             width: 100%;
             height: auto;
-            filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.08));
+            filter: drop-shadow(0 0 60px rgba(139, 92, 246, 0.22));
         }
 
-        @media (max-width: 768px) {
-            .hero {
-                padding: 80px 0 60px;
-            }
-            .hero h1 {
-                font-size: 40px;
-                letter-spacing: -1px;
-            }
-            .hero p {
-                font-size: 17px;
-            }
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            .btn-primary, .btn-outline {
-                width: 100%;
-                max-width: 320px;
-                text-align: center;
-            }
-            .hero-illustration {
-                max-width: 300px;
-            }
+        /* Intake form */
+        .intake-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: rgba(21, 21, 31, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-input);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
         }
 
-        /* Stats */
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1px;
-            background: var(--border-subtle);
-            border-top: 1px solid var(--border-subtle);
-            border-bottom: 1px solid var(--border-subtle);
+        .intake-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .stat-item {
-            background: var(--bg-secondary);
-            padding: 32px 24px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--accent);
-            letter-spacing: -1px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 4px;
+        .intake-field label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
         }
 
-        @media (max-width: 768px) {
-            .stats-bar {
-                grid-template-columns: repeat(2, 1fr);
+        .intake-field input,
+        .intake-field textarea,
+        .intake-field select {
+            background: var(--bg-input);
+            color: var(--text-primary);
+            border: 1px solid var(--border-input);
+            border-radius: 10px;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .intake-field input::placeholder,
+        .intake-field textarea::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .intake-field input:focus,
+        .intake-field textarea:focus,
+        .intake-field select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+        }
+
+        .intake-field textarea {
+            resize: vertical;
+            min-height: 96px;
+            line-height: 1.55;
+        }
+
+        .intake-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .intake-submit {
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            color: #fff;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .intake-submit:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.35);
+        }
+
+        .intake-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .intake-footnote {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: center;
+            margin-top: -4px;
+        }
+
+        .intake-success {
+            text-align: center;
+            padding: 36px 24px;
+        }
+
+        .intake-success .check {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(74, 222, 128, 0.15);
+            border: 2px solid #4ade80;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #4ade80;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .intake-success h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .intake-success p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .intake-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 960px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                text-align: left;
             }
-            .stat-number {
-                font-size: 28px;
-            }
+            .hero-copy { max-width: 100%; }
+            .hero-illustration-wrap { order: -1; }
+            .hero-illustration { max-width: 280px; }
+        }
+
+        @media (max-width: 640px) {
+            .hero { padding: 64px 0 48px; }
+            .hero h1 { letter-spacing: -1.5px; }
+            .hero p.hero-lede { font-size: 16px; }
+            .intake-form { padding: 22px; border-radius: 16px; }
+            .intake-row { grid-template-columns: 1fr; }
+            .hero-illustration { max-width: 220px; }
+        }
+
+        /* Live Now */
+        .live-now { background: var(--bg-secondary); }
+
+        .live-now-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .live-now-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: border-color 0.2s, transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .live-now-card:hover {
+            border-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .live-now-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #4ade80;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .live-now-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 8px #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        .live-now-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .live-now-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .live-now-url {
+            font-family: 'SFMono-Regular', Menlo, Monaco, monospace;
+            font-size: 12px;
+            color: var(--accent-bright);
+            margin-top: 4px;
         }
 
         /* Section base */
@@ -390,11 +527,12 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
         }
 
         .section-title {
-            font-size: 42px;
-            font-weight: 700;
+            font-size: clamp(32px, 4.5vw, 46px);
+            font-weight: 800;
             text-align: center;
             margin-bottom: 16px;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
+            color: var(--text-primary);
         }
 
         .section-subtitle {
@@ -402,9 +540,10 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
             color: var(--text-secondary);
             font-size: 18px;
             margin-bottom: 64px;
-            max-width: 600px;
+            max-width: 640px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
         }
 
         @media (max-width: 768px) {
@@ -736,8 +875,8 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
                 <nav>
                     <a href="#solutions">Solutions</a>
                     <a href="#services">Services</a>
-                    <a href="#process">How It Works</a>
-                    <a href="#contact" class="nav-cta">Get Started</a>
+                    <a href="#live">Live Now</a>
+                    <a href="#intake-form" class="nav-cta">Tell Us What Hurts</a>
                 </nav>
             </div>
         </div>
@@ -745,11 +884,53 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
 
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">
-                <span class="hero-badge-dot"></span>
-                AI Solutions &amp; Consulting
+          <div class="hero-grid">
+            <div class="hero-copy">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    Small-business AI, shipped fast
+                </div>
+                <h1>
+                    What keeps you<br>
+                    <span class="gradient-text">up at night?</span>
+                </h1>
+                <p class="hero-lede">
+                    We build the tool that fixes it. Not a demo. Not a slide deck.
+                    A working system, shipped fast &mdash; and it runs while you sleep.
+                </p>
+
+                <form class="intake-form" id="intake-form" novalidate>
+                    <div class="intake-row">
+                        <div class="intake-field">
+                            <label for="intake-name">Name</label>
+                            <input id="intake-name" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+                        </div>
+                        <div class="intake-field">
+                            <label for="intake-email">Email</label>
+                            <input id="intake-email" name="email" type="email" placeholder="you@company.com" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="intake-field">
+                        <label for="intake-message">What keeps you up at night?</label>
+                        <textarea id="intake-message" name="message" placeholder="The problem you wish an AI tool could handle while you sleep..." required></textarea>
+                    </div>
+                    <div class="intake-field">
+                        <label for="intake-budget">Budget (optional)</label>
+                        <select id="intake-budget" name="budget">
+                            <option value="">I'm not sure yet</option>
+                            <option value="under-5k">Under $5k</option>
+                            <option value="5k-15k">$5k &ndash; $15k</option>
+                            <option value="15k-50k">$15k &ndash; $50k</option>
+                            <option value="50k-plus">$50k+</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="intake-submit">Send it &rarr;</button>
+                    <p class="intake-footnote">You'll hear back within 24 hours. No pitch decks, no pressure.</p>
+                </form>
             </div>
-            <div class="hero-illustration">
+
+            <div class="hero-illustration-wrap">
+              <div class="hero-illustration">
                 <svg viewBox="0 0 480 340" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <!-- Moon glow -->
                     <circle cx="380" cy="75" r="55" fill="#fdf4c1" opacity="0.06"/>
@@ -831,41 +1012,11 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
                     <circle cx="243" cy="145" r="1.2" fill="#1a1a24"/>
                     <circle cx="243.4" cy="144.6" r="0.4" fill="#8b5cf6"/>
                 </svg>
+              </div>
             </div>
-            <h1>
-                Intelligent Solutions,<br>
-                <span class="gradient-text">Built to Last</span>
-            </h1>
-            <p>
-                We build pre-made AI tools for industries that need them and consult on
-                integrating AI into your workflow. From legal to property management &mdash;
-                we make AI accessible, practical, and permanent.
-            </p>
-            <div class="hero-buttons">
-                <a href="#solutions" class="btn-primary">Explore Solutions</a>
-                <a href="#contact" class="btn-outline">Book a Consultation</a>
-            </div>
+          </div>
         </div>
     </section>
-
-    <div class="stats-bar">
-        <div class="stat-item">
-            <div class="stat-number">50+</div>
-            <div class="stat-label">Clients Served</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">12</div>
-            <div class="stat-label">Pre-Built Tools</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">98%</div>
-            <div class="stat-label">Client Retention</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">24/7</div>
-            <div class="stat-label">AI Runs For You</div>
-        </div>
-    </div>
 
     <section class="solutions section" id="solutions">
         <div class="container">
@@ -886,17 +1037,6 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
                         to minutes.
                     </p>
                     <span class="solution-tag">Legal</span>
-                </div>
-
-                <div class="solution-card">
-                    <div class="solution-icon">&#x1F3E2;</div>
-                    <h3>Rent DMC Suite</h3>
-                    <p>
-                        AI-powered tenant communication, rent roll automation, tenant
-                        portal, and maintenance request routing for property owners.
-                        Built for real-world property management.
-                    </p>
-                    <span class="solution-tag">Property</span>
                 </div>
 
                 <div class="solution-card">
@@ -1029,14 +1169,48 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
         </div>
     </section>
 
+    <section class="live-now section" id="live">
+        <div class="container">
+            <div class="section-label">Currently Running</div>
+            <h2 class="section-title">Tools We've Built. In Production.</h2>
+            <p class="section-subtitle">
+                Real systems, running right now. Not demos, not mockups &mdash;
+                actual tools serving actual customers.
+            </p>
+
+            <div class="live-now-grid">
+                <a class="live-now-card" href="https://security.silverbackai.agency" target="_blank" rel="noopener">
+                    <span class="live-now-status">Live</span>
+                    <h3>Silverback AI Security</h3>
+                    <p>AI-powered property security with weirdness detection, real-time alerts, and privacy-first monitoring. First deployment: Ruby Street Apartments, Oakland.</p>
+                    <span class="live-now-url">security.silverbackai.agency &rarr;</span>
+                </a>
+
+                <a class="live-now-card" href="https://cleantruckcheckstockton.com" target="_blank" rel="noopener">
+                    <span class="live-now-status">Live</span>
+                    <h3>Clean Truck Check &mdash; Stockton</h3>
+                    <p>Mobile CARB emissions testing site. HD-OBD and smoke/opacity testing, built for NorCal CARB Mobile's Stockton service area.</p>
+                    <span class="live-now-url">cleantruckcheckstockton.com &rarr;</span>
+                </a>
+
+                <a class="live-now-card" href="#intake-form">
+                    <span class="live-now-status">Yours?</span>
+                    <h3>Your Tool Here</h3>
+                    <p>We build one per client, on purpose. If the thing keeping you up at night isn't on this list, tell us about it &mdash; we probably haven't built it yet because no one's asked.</p>
+                    <span class="live-now-url">Scroll up, fill out the form &uarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <section class="cta-section" id="contact">
         <div class="container">
-            <h2>Ready to Put AI to Work?</h2>
+            <h2>Still reading?</h2>
             <p>
-                Book a free discovery call. No pressure, no jargon &mdash; just a
-                conversation about what&#39;s possible.
+                Then something's on your mind. Scroll up and tell us about it &mdash;
+                we read every intake form.
             </p>
-            <a href="mailto:hello@silverbackai.agency" class="btn-primary">Get In Touch</a>
+            <a href="#intake-form" class="btn-primary">Take me to the form</a>
         </div>
     </section>
 
@@ -1073,7 +1247,6 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
                     <h4>Solutions</h4>
                     <ul>
                         <li><a href="#solutions">Legal AI Suite</a></li>
-                        <li><a href="#solutions">Rent DMC Suite</a></li>
                         <li><a href="#solutions">Security AI</a></li>
                         <li><a href="#solutions">Web &amp; Content Builder</a></li>
                         <li><a href="#solutions">Custom Tools</a></li>
@@ -1093,15 +1266,17 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
                 <div class="footer-col">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#intake-form">Get In Touch</a></li>
                         <li><a href="#process">How It Works</a></li>
+                        <li><a href="#live">Live Now</a></li>
+                        <li><a href="mailto:hello@silverbackai.agency">hello@silverbackai.agency</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>&copy; 2026 Silverback AI. All rights reserved.</p>
-                <p>Intelligent solutions, built to last.</p>
+                <p>Small-business AI, shipped fast.</p>
             </div>
         </div>
     </footer>
@@ -1142,6 +1317,46 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
                 ? 'rgba(139, 92, 246, 0.15)'
                 : 'rgba(255, 255, 255, 0.06)';
         });
+
+        // Intake form submission
+        const intakeForm = document.getElementById('intake-form');
+        if (intakeForm) {
+            intakeForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = intakeForm.querySelector('.intake-submit');
+                const existingError = intakeForm.querySelector('.intake-error');
+                if (existingError) existingError.remove();
+
+                const data = Object.fromEntries(new FormData(intakeForm));
+                if (!data.name || !data.email || !data.message) return;
+
+                btn.disabled = true;
+                btn.textContent = 'Sending...';
+
+                try {
+                    const res = await fetch('/api/intake', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    if (!res.ok) throw new Error('Submit failed: ' + res.status);
+                    intakeForm.innerHTML = [
+                        '<div class="intake-success">',
+                        '  <div class="check">&#10003;</div>',
+                        '  <h3>Got it.</h3>',
+                        '  <p>We read every intake form personally. You\\'ll hear back within 24 hours at the email you provided.</p>',
+                        '</div>'
+                    ].join('');
+                } catch (err) {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Send it &rarr;';
+                    const errEl = document.createElement('div');
+                    errEl.className = 'intake-error';
+                    errEl.textContent = 'Something went wrong on our end. Email hello@silverbackai.agency and we\\'ll pick it up from there.';
+                    intakeForm.insertBefore(errEl, btn);
+                }
+            });
+        }
     <\/script>
 
     <script type="application/ld+json">
@@ -1149,7 +1364,7 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Silverback AI",
-        "description": "AI consulting and pre-built solutions for businesses. Legal AI, property management tools, web builders, and custom AI integration.",
+        "description": "Custom AI tools for small business. We build the thing that fixes what keeps you up at night.",
         "url": "https://silverbackai.agency",
         "sameAs": [],
         "contactPoint": {
@@ -1157,23 +1372,175 @@ ${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join(
             "email": "hello@silverbackai.agency",
             "contactType": "sales"
         },
-        "knowsAbout": ["Artificial Intelligence", "AI Consulting", "AI Integration", "Legal Technology", "Property Management Software", "Security AI", "Agentic AI Systems"]
+        "knowsAbout": ["Artificial Intelligence", "AI Consulting", "AI Integration", "Legal Technology", "AI Security", "Agentic AI Systems"]
     }
     <\/script>
 </body>
 </html>`;
-    return new Response(html, {
-      headers: {
-        "Content-Type": "text/html; charset=utf-8",
-        "Cache-Control": "public, max-age=86400, s-maxage=604800",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "Referrer-Policy": "strict-origin-when-cross-origin",
-        "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
-      }
+}
+
+// --- Tool page scaffold (placeholder for future toolkit pages) ---
+// Each toolkit item will eventually live at /tools/:slug as its own page.
+// For now we serve a consistent "coming soon" template so the routing is
+// wired up and shareable links won't 404 once we start building them.
+// Each page can be rebranded (ABC/Acme/whatever) for IP protection the
+// same way NorCal CARB Mobile locations work.
+const TOOL_PAGES = {
+  'legal-ai':     { title: 'Legal AI Suite',         tagline: 'Contract review and case research that runs while you sleep.' },
+  'ai-security':  { title: 'Silverback AI Security', tagline: 'Property security with weirdness detection. Already live at security.silverbackai.agency.' },
+  'web-builder':  { title: 'Web & Content Builder',  tagline: 'AI-assisted sites and copy with SEO baked in.' },
+  'custom':       { title: 'Custom Tool Builder',    tagline: 'If it does not exist yet, we build it. Tell us what hurts.' },
+};
+
+function renderToolPage(slug) {
+  const tool = TOOL_PAGES[slug];
+  if (!tool) return null;
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${tool.title} &mdash; Silverback AI</title>
+  <meta name="description" content="${tool.tagline}">
+  <meta name="robots" content="noindex">
+  <style>
+    body { margin: 0; font-family: -apple-system, 'Inter', system-ui, sans-serif; background: #07070b; color: #fff; display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; }
+    .wrap { max-width: 560px; text-align: center; }
+    .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a78bfa; font-weight: 700; margin-bottom: 12px; }
+    h1 { font-size: clamp(32px, 5vw, 48px); letter-spacing: -1.5px; margin: 0 0 16px; }
+    p { color: #c2c2d0; font-size: 17px; line-height: 1.6; margin: 0 0 32px; }
+    a.cta { display: inline-block; background: #8b5cf6; color: #fff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+    a.cta:hover { background: #a78bfa; }
+    a.home { color: #86868f; font-size: 13px; margin-top: 24px; text-decoration: none; display: inline-block; }
+    a.home:hover { color: #c2c2d0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Silverback AI &middot; Toolkit</div>
+    <h1>${tool.title}</h1>
+    <p>${tool.tagline}</p>
+    <p style="color:#86868f; font-size:14px;">This page is being built. If you want to be first in line when it ships, drop us a note.</p>
+    <a class="cta" href="/#intake-form">Tell us what you need &rarr;</a>
+    <br><a class="home" href="/">&larr; Back to silverbackai.agency</a>
+  </div>
+</body>
+</html>`;
+}
+
+function render404() {
+  return `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Not Found &mdash; Silverback AI</title>
+<style>body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:#07070b;color:#fff;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:24px;}h1{font-size:64px;margin:0 0 8px;letter-spacing:-2px;}p{color:#c2c2d0;margin:0 0 24px;}a{color:#a78bfa;text-decoration:none;font-weight:600;}</style>
+</head><body><div><h1>404</h1><p>That page doesn't exist (yet).</p><a href="/">&larr; silverbackai.agency</a></div></body></html>`;
+}
+
+async function handleIntake(request) {
+  // Validation + logging. Submissions show up in 'wrangler tail silverbackai'.
+  // When a delivery channel is chosen (email, Slack, Make.com webhook, KV,
+  // D1, etc.), swap the console.log for the delivery call -- no frontend
+  // changes needed.
+  try {
+    const body = await request.json();
+    const name = (body.name || '').toString().trim().slice(0, 200);
+    const email = (body.email || '').toString().trim().slice(0, 200);
+    const message = (body.message || '').toString().trim().slice(0, 5000);
+    const budget = (body.budget || '').toString().trim().slice(0, 50);
+
+    if (!name || !email || !message) {
+      return new Response(JSON.stringify({ ok: false, error: 'missing_fields' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_email' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    console.log('[intake]', JSON.stringify({
+      ts: new Date().toISOString(),
+      name, email, budget, message,
+      ua: request.headers.get('user-agent') || '',
+      ip: request.headers.get('cf-connecting-ip') || '',
+      country: request.headers.get('cf-ipcountry') || '',
+    }));
+
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (err) {
+    console.error('[intake] error', err && err.message);
+    return new Response(JSON.stringify({ ok: false, error: 'server_error' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
     });
   }
+}
+
+const HTML_HEADERS = {
+  'Content-Type': 'text/html; charset=utf-8',
+  'Cache-Control': 'public, max-age=3600, s-maxage=86400',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 };
+
+var worker_default = {
+  async fetch(request) {
+    const url = new URL(request.url);
+    const { pathname } = url;
+
+    // robots.txt
+    if (pathname === '/robots.txt') {
+      return new Response(
+        'User-agent: *\nAllow: /\nSitemap: https://silverbackai.agency/sitemap.xml\n',
+        { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' } }
+      );
+    }
+
+    // sitemap.xml
+    if (pathname === '/sitemap.xml') {
+      const urls = ['/', ...Object.keys(TOOL_PAGES).map(s => `/tools/${s}`)];
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u => `  <url><loc>https://silverbackai.agency${u}</loc></url>`).join('\n')}
+</urlset>`;
+      return new Response(xml, {
+        headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=86400' },
+      });
+    }
+
+    // Intake form submission
+    if (pathname === '/api/intake') {
+      if (request.method !== 'POST') {
+        return new Response('Method Not Allowed', { status: 405, headers: { Allow: 'POST' } });
+      }
+      return handleIntake(request);
+    }
+
+    // Tool pages (scaffolded, coming soon)
+    if (pathname.startsWith('/tools/')) {
+      const slug = pathname.replace(/^\/tools\//, '').replace(/\/$/, '');
+      const body = renderToolPage(slug);
+      if (body) return new Response(body, { headers: HTML_HEADERS });
+      return new Response(render404(), { status: 404, headers: HTML_HEADERS });
+    }
+
+    // Homepage
+    if (pathname === '/' || pathname === '') {
+      return new Response(renderHomepage(), { headers: HTML_HEADERS });
+    }
+
+    // 404
+    return new Response(render404(), { status: 404, headers: HTML_HEADERS });
+  },
+};
+
 export {
   worker_default as default
 };

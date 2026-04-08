@@ -3,10 +3,9 @@ main = "worker.js"
 compatibility_date = "2026-03-01"
 account_id = "bafa242dd95d3fdce72540d20accd0a2"
 
+# Custom domains bind silverbackai.agency directly to this worker.
+# Wrangler auto-creates the DNS records and provisions SSL on deploy.
 routes = [
-  { pattern = "silverbackai.agency/*", zone_name = "silverbackai.agency" },
-  { pattern = "www.silverbackai.agency/*", zone_name = "silverbackai.agency" }
+  { pattern = "silverbackai.agency", custom_domain = true },
+  { pattern = "www.silverbackai.agency", custom_domain = true }
 ]
-
-[env.production]
-name = "silverbackai"
