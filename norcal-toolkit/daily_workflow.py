@@ -16,6 +16,7 @@ THE DAILY LOOP:
     6. Generate a social media post
     7. Check overdue invoices
     8. Batch review requests for yesterday's tested jobs
+    9. Show next short to upload to YouTube/TikTok
 """
 import os
 import sys
@@ -23,11 +24,13 @@ import subprocess
 from datetime import datetime
 
 TOOLKIT_DIR = os.path.dirname(os.path.abspath(__file__))
+YOUTUBE_PUSH_DIR = os.path.normpath(os.path.join(TOOLKIT_DIR, "..", "youtube-push"))
 
 
-def run_step(script, args=None, description=""):
+def run_step(script, args=None, description="", cwd=None):
     """Run a toolkit script as a subprocess."""
-    cmd = [sys.executable, os.path.join(TOOLKIT_DIR, script)]
+    work_dir = cwd or TOOLKIT_DIR
+    cmd = [sys.executable, os.path.join(work_dir, script)]
     if args:
         cmd.extend(args)
 
@@ -36,7 +39,7 @@ def run_step(script, args=None, description=""):
     print(f"  CMD:  {' '.join(cmd)}")
     print(f"{'='*60}\n")
 
-    result = subprocess.run(cmd, cwd=TOOLKIT_DIR, capture_output=False)
+    result = subprocess.run(cmd, cwd=work_dir, capture_output=False)
     return result.returncode == 0
 
 
@@ -102,6 +105,14 @@ def daily_workflow(step=None, dry_run=False):
             "args": ["batch-review"],
             "condition": True,
         },
+        9: {
+            "desc": "Next Short to Upload (YouTube/TikTok)",
+            "script": "05_upload_queue.py",
+            "args": ["next"],
+            "cwd": YOUTUBE_PUSH_DIR,
+            "condition": os.path.isdir(YOUTUBE_PUSH_DIR),
+            "skip_msg": "youtube-push project not found — run push.py on an explainer video first.",
+        },
     }
 
     for num, s in steps.items():
@@ -112,7 +123,7 @@ def daily_workflow(step=None, dry_run=False):
             print(f"\n  [SKIP] Step {num}: {s.get('skip_msg', 'Condition not met')}")
             continue
 
-        run_step(s["script"], s["args"], f"Step {num}: {s['desc']}")
+        run_step(s["script"], s["args"], f"Step {num}: {s['desc']}", cwd=s.get("cwd"))
 
     print(f"\n{'#'*60}")
     print(f"  DAILY WORKFLOW COMPLETE — {datetime.now().strftime('%H:%M')}")
@@ -123,7 +134,7 @@ def daily_workflow(step=None, dry_run=False):
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="NorCal Daily Workflow")
-    parser.add_argument("--step", type=int, help="Run specific step only (1-8)")
+    parser.add_argument("--step", type=int, help="Run specific step only (1-9)")
     parser.add_argument("--dry-run", action="store_true", help="Preview mode, no changes")
     args = parser.parse_args()
 

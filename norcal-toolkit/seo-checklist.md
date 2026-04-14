@@ -3,8 +3,18 @@
 > **Site:** norcalcarbmobile.com (Squarespace)
 > **Satellite sites:** carbteststockton.com, mobilecarbsmoketest.com (Cloudflare Workers)
 > **CARB Tester ID:** IF530523
-> **Generated:** 2026-03-19
-> **Goal:** Dominate local search for mobile CARB emissions testing in NorCal
+> **Generated:** 2026-03-19 (V2) · Updated 2026-04-14 (V3: video shorts)
+> **Goal:** Dominate local search + LLM/AI search for mobile CARB emissions testing in NorCal
+
+---
+
+## 0. Progress Summary — V1 → V2 → V3
+
+- **V1 (OG plan, prior session):** General SEO foundation — mostly done ✓
+- **V2 (this file, sections 1–13):** Checklist expansion — **mostly done, maintain it**
+- **V3 (new, section 14):** Video shorts pipeline for LLM/AI search — **focus here**
+
+> **👉 If V1/V2 items are complete, jump straight to [Section 14: Video Shorts for LLM/AI Search](#14-video-shorts-for-llmai-search).**
 
 ---
 
@@ -286,17 +296,60 @@ You already have city-specific microsites deployed as Cloudflare Workers. These 
 
 ---
 
+## 14. Video Shorts for LLM/AI Search
+
+**Goal:** Get NorCal Carb Mobile cited by Google AI Overviews, Perplexity, Bing Copilot, and ChatGPT search when users ask CARB-related questions. Long explainer videos are invisible to LLMs; question-focused 30–60 sec shorts with full transcripts are citation gold.
+
+**Prereq (one-time Mac setup):**
+```bash
+brew install ffmpeg
+pip3 install openai-whisper
+```
+
+**Run the pipeline on your big explainer video:**
+- [ ] Put the long explainer video somewhere on your Mac (e.g. `~/Movies/carb-explainer.mp4`)
+- [ ] From repo root:
+  ```
+  python3 youtube-push/push.py ~/Movies/carb-explainer.mp4
+  ```
+  (add `--srt captions.srt` if you already exported captions from Squarespace — much faster)
+- [ ] Review generated clips in `youtube-push/data/<video_name>/`:
+  - 1080×1920 vertical MP4s with burned-in captions
+  - Per-clip `*_metadata.json` with question-style title + YouTube description + TikTok caption + VideoObject JSON-LD schema
+
+**Posting cadence:**
+- [ ] YouTube Shorts: **3/week** (Mon, Wed, Fri) — run `python3 youtube-push/05_upload_queue.py next` for the next one
+- [ ] TikTok: same clip **24 hours after** YouTube (stagger — algorithms penalize simultaneous cross-post)
+- [ ] After each post: `python3 youtube-push/05_upload_queue.py mark <clip_id> --platform youtube --url <url>`
+
+**Squarespace integration:**
+- [ ] For each short embedded on a service/blog page, paste the `video_schema` JSON-LD into the page's Code Injection (header) — tells Google it's a `VideoObject` with full transcript
+- [ ] Link each YouTube Shorts description to the matching norcalcarbmobile.com blog post
+- [ ] Add YouTube channel + TikTok profile links to GBP and site footer
+
+**Measure LLM citations (every 2 weeks):**
+- [ ] Ask Perplexity: *"Who does mobile CARB testing in Sacramento?"*
+- [ ] Ask ChatGPT (with web search): *"What is the CARB 2027 quarterly testing rule?"*
+- [ ] Check Google AI Overviews for: *"mobile OBD test California"*, *"OVI vs OBD test"*
+- [ ] Screenshot any NorCal Carb Mobile citations; track in `youtube-push/data/llm_citations_log.md`
+
+---
+
 ## Bot Command Reference
 
 | Task | Command |
 |------|---------|
-| Daily full workflow | `python3 daily_workflow.py` |
-| Generate social post | `python3 05_review_request.py social --type tip` |
-| Generate blog outline | `python3 05_review_request.py blog --topic "topic"` |
-| Send review request | `python3 05_review_request.py review "Company" --email "x" --phone "x"` |
-| Batch review requests | `python3 05_review_request.py batch-review` |
-| Scrape new leads | `python3 01_lead_scraper.py` |
-| Send cold emails | `python3 02_cold_emailer.py --send --tier 1 --sequence 1` |
-| Check CRM pipeline | `python3 03_crm_tracker.py status` |
-| Today's follow-ups | `python3 03_crm_tracker.py due` |
-| Check overdue invoices | `python3 04_invoice_generator.py overdue` |
+| Daily full workflow | `python3 norcal-toolkit/daily_workflow.py` |
+| Generate social post | `python3 norcal-toolkit/05_review_request.py social --type tip` |
+| Generate blog outline | `python3 norcal-toolkit/05_review_request.py blog --topic "topic"` |
+| Send review request | `python3 norcal-toolkit/05_review_request.py review "Company" --email "x" --phone "x"` |
+| Batch review requests | `python3 norcal-toolkit/05_review_request.py batch-review` |
+| Scrape new leads | `python3 norcal-toolkit/01_lead_scraper.py` |
+| Send cold emails | `python3 norcal-toolkit/02_cold_emailer.py --send --tier 1 --sequence 1` |
+| Check CRM pipeline | `python3 norcal-toolkit/03_crm_tracker.py status` |
+| Today's follow-ups | `python3 norcal-toolkit/03_crm_tracker.py due` |
+| Check overdue invoices | `python3 norcal-toolkit/04_invoice_generator.py overdue` |
+| **Chop video into shorts** | `python3 youtube-push/push.py ~/Movies/video.mp4` |
+| **Next clip to post** | `python3 youtube-push/05_upload_queue.py next` |
+| **Mark clip posted** | `python3 youtube-push/05_upload_queue.py mark clip_01 --platform youtube --url <url>` |
+| **List all clips + status** | `python3 youtube-push/05_upload_queue.py list` |
