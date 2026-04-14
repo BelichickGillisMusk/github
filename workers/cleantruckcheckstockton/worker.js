@@ -220,7 +220,7 @@ const CONTRACTORS = [
   { id:'C025', company:'Stanislaus Tank Liners',          city:'Modesto',     type:'HD-OBD Only', vehicles:2,  lastTest:'2026-03-08', revenue:150,  ytd:2,  status:'active'   },
   { id:'C026', company:'Central Valley RV Fleet',         city:'Stockton',    type:'RV Testing',  vehicles:4,  lastTest:'2026-02-05', revenue:1200, ytd:4,  status:'active'   },
   { id:'C027', company:'Coastal Crane Rentals',           city:'Lathrop',     type:'Fleet HD-OBD', vehicles:7,  lastTest:'2026-04-06', revenue:1043, ytd:7,  status:'active'   },
-  { id:'C028', company:'Gold Rush Gravel & Sand',         city:'lone',        type:'Opacity Test', vehicles:3,  lastTest:'2026-03-03', revenue:597,  ytd:3,  status:'active'   },
+  { id:'C028', company:'Gold Rush Gravel & Sand',         city:'Ione',        type:'Opacity Test', vehicles:3,  lastTest:'2026-03-03', revenue:597,  ytd:3,  status:'active'   },
   { id:'C029', company:'Modesto Ice & Cold Chain',        city:'Modesto',     type:'HD-OBD Only', vehicles:5,  lastTest:'2026-03-14', revenue:375,  ytd:5,  status:'active'   },
   { id:'C030', company:'Apex Auto Transport',             city:'Stockton',    type:'Fleet HD-OBD', vehicles:9,  lastTest:'2026-04-09', revenue:1341, ytd:9,  status:'active'   },
   { id:'C031', company:'Heritage Lumber Transport',       city:'Sonora',      type:'Opacity Test', vehicles:4,  lastTest:'2026-01-22', revenue:796,  ytd:4,  status:'pending'  },
