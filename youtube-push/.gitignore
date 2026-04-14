@@ -1,0 +1,22 @@
+# Video files and generated clips are huge — never commit
+data/
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.m4a
+*.wav
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Whisper model cache
+.cache/
+models/
+
+# OS
+.DS_Store
