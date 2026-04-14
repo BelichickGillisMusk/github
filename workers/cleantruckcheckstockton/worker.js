@@ -1,6 +1,378 @@
 // worker.js - Clean Truck Check Stockton
+//
+// Routes:
+//   GET /             -> marketing homepage
+//   GET /contractors  -> contractor revenue dashboard
+//   *                 -> homepage (fallthrough)
+
+function renderContractorsPage() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contractor Accounts | Clean Truck Check Stockton</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --navy:#0f1b2e;--navy2:#162338;--green:#1a8c4a;--green-lt:#22b35e;--green-bg:rgba(26,140,74,0.12);
+      --amber:#e6a817;--amber-bg:rgba(230,168,23,0.12);
+      --red:#e05555;--red-bg:rgba(224,85,85,0.1);
+      --txt:#e8edf5;--txt2:#9baabb;--txt3:#6b7d90;
+      --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+      --card:#1a2840;--card2:#1f3050;
+      --mono:'JetBrains Mono',monospace;
+    }
+    html{scroll-behavior:smooth;}
+    body{background:var(--navy);color:var(--txt);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+
+    /* TOP BAR */
+    .topbar{
+      background:var(--navy2);border-bottom:2px solid var(--green);
+      padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.4);
+    }
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+    .brand-icon{width:36px;height:36px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .brand-name{font-size:17px;font-weight:800;color:#fff;letter-spacing:-0.3px;}
+    .brand-sub{font-size:11px;font-weight:600;color:var(--green-lt);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px;}
+    .topbar-right{display:flex;align-items:center;gap:12px;}
+    .badge-tester{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--green-lt);background:var(--green-bg);border:1px solid var(--green);padding:5px 12px;letter-spacing:1px;}
+    .btn-export{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;background:var(--green);color:#fff;border:none;cursor:pointer;transition:background 0.2s;}
+    .btn-export:hover{background:var(--green-lt);}
+
+    /* SHELL */
+    .shell{max-width:1400px;margin:0 auto;padding:32px 32px 80px;}
+
+    /* PAGE HEADER */
+    .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
+    .page-title{font-size:32px;font-weight:800;color:#fff;letter-spacing:-0.5px;}
+    .page-sub{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--txt3);letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;}
+    .period-badge{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber);background:var(--amber-bg);border:1.5px solid var(--amber);padding:8px 18px;letter-spacing:0.5px;}
+
+    /* KPI CARDS */
+    .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px;}
+    .kpi{background:var(--card);border:1.5px solid var(--border2);border-radius:10px;padding:22px 24px;position:relative;overflow:hidden;}
+    .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+    .kpi.g::before{background:linear-gradient(90deg,#0d5c30,var(--green-lt));}
+    .kpi.a::before{background:linear-gradient(90deg,#8a6010,var(--amber));}
+    .kpi.r::before{background:linear-gradient(90deg,#8b2020,var(--red));}
+    .kpi.b::before{background:linear-gradient(90deg,#1e3a8a,#3b82f6);}
+    .kpi.w::before{background:linear-gradient(90deg,#374151,#6b7280);}
+    .kpi-label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:8px;}
+    .kpi-val{font-family:var(--mono);font-size:30px;font-weight:700;line-height:1;color:#fff;}
+    .kpi.g .kpi-val{color:var(--green-lt);}
+    .kpi.a .kpi-val{color:var(--amber);}
+    .kpi.r .kpi-val{color:var(--red);}
+    .kpi-sub{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--txt3);margin-top:6px;}
+
+    /* FILTER BAR */
+    .filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+    .filter-label{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--txt3);margin-right:4px;}
+    .fbtn{font-family:var(--mono);font-size:12px;font-weight:700;padding:7px 16px;border:1.5px solid var(--border2);background:transparent;color:var(--txt2);cursor:pointer;transition:all 0.15s;border-radius:4px;}
+    .fbtn:hover{border-color:var(--green);color:var(--green-lt);}
+    .fbtn.active{background:var(--green);border-color:var(--green);color:#fff;}
+    .search-box{font-family:var(--mono);font-size:13px;padding:7px 14px;background:var(--card);border:1.5px solid var(--border2);color:var(--txt);outline:none;border-radius:4px;width:220px;margin-left:auto;}
+    .search-box:focus{border-color:var(--green);}
+    .search-box::placeholder{color:var(--txt3);}
+
+    /* TABLE */
+    .table-wrap{overflow-x:auto;border:1.5px solid var(--border2);border-radius:10px;background:var(--card);}
+    table{width:100%;border-collapse:collapse;min-width:1050px;}
+    thead tr{background:linear-gradient(90deg,#0d1e33,#162b44);}
+    th{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);padding:16px 16px;text-align:left;white-space:nowrap;border-bottom:1.5px solid var(--border2);}
+    tbody tr{border-bottom:1px solid rgba(255,255,255,0.05);transition:background 0.1s;}
+    tbody tr:hover{background:rgba(26,140,74,0.07);}
+    td{padding:14px 16px;font-size:14px;vertical-align:middle;}
+    .company-name{font-weight:700;color:#fff;font-size:15px;}
+    .company-city{font-family:var(--mono);font-size:11px;color:var(--txt3);margin-top:2px;}
+    .mono{font-family:var(--mono);}
+    .amt{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--green-lt);}
+    .cnt{font-family:var(--mono);font-size:14px;font-weight:700;color:#fff;}
+    .date-cell{font-family:var(--mono);font-size:13px;color:var(--txt2);}
+    .status-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:0.3px;text-transform:uppercase;}
+    .status-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;}
+    .s-active{background:rgba(26,140,74,0.2);color:var(--green-lt);border:1.5px solid rgba(26,140,74,0.35);}
+    .s-pending{background:var(--amber-bg);color:var(--amber);border:1.5px solid rgba(230,168,23,0.35);}
+    .s-inactive{background:rgba(107,125,144,0.15);color:var(--txt3);border:1.5px solid rgba(107,125,144,0.25);}
+    .type-pill{font-family:var(--mono);font-size:11px;font-weight:700;padding:4px 10px;background:rgba(255,255,255,0.06);color:var(--txt2);border-radius:4px;display:inline-block;}
+    .action-btn{font-family:var(--mono);font-size:11px;font-weight:700;padding:6px 12px;border:1.5px solid var(--border2);background:transparent;color:var(--txt2);cursor:pointer;transition:all 0.15s;border-radius:4px;white-space:nowrap;}
+    .action-btn:hover{border-color:var(--green);color:var(--green-lt);}
+
+    /* TOTALS ROW */
+    .totals-row{display:flex;justify-content:flex-end;background:rgba(255,255,255,0.03);border-top:1.5px solid var(--border2);border-radius:0 0 10px 10px;}
+    .total-cell{font-family:var(--mono);padding:18px 22px;border-left:1px solid var(--border);text-align:right;}
+    .tc-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--txt3);margin-bottom:4px;}
+    .tc-val{font-size:20px;font-weight:800;color:#fff;}
+    .tc-green .tc-val{color:var(--green-lt);}
+
+    /* REVENUE BREAKDOWN */
+    .breakdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;}
+    .breakdown-card{background:var(--card);border:1.5px solid var(--border2);border-radius:10px;overflow:hidden;}
+    .bc-head{padding:14px 20px;font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.03);border-bottom:1px solid var(--border);}
+    .bc-body{padding:16px 20px;}
+    .bc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+    .bc-row:last-child{border-bottom:none;}
+    .bc-label{font-size:14px;font-weight:600;color:var(--txt2);}
+    .bc-val{font-family:var(--mono);font-size:15px;font-weight:700;color:#fff;}
+    .bc-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;margin:0 16px;overflow:hidden;}
+    .bc-bar{height:100%;border-radius:3px;background:linear-gradient(90deg,#0d5c30,var(--green-lt));transition:width 0.6s ease;}
+
+    @media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr);}.breakdown-grid{grid-template-columns:1fr;}.shell{padding:20px 16px 60px;}}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="brand">
+    <div class="brand-icon">🚛</div>
+    <div>
+      <div class="brand-name">Clean Truck Check</div>
+      <div class="brand-sub">Stockton · CARB Certified</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <div class="badge-tester">TESTER ID: IF530523</div>
+    <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
+  </div>
+</div>
+
+<div class="shell">
+
+  <div class="page-header">
+    <div>
+      <div class="page-title">Contractor Accounts</div>
+      <div class="page-sub">Revenue Tracker · Fleet Clients · Central Valley</div>
+    </div>
+    <div class="period-badge">2025–2026 YTD</div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-row" id="kpi-row"></div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <span class="filter-label">Filter:</span>
+    <button class="fbtn active" onclick="filterRows('all',this)">All</button>
+    <button class="fbtn" onclick="filterRows('active',this)">Active</button>
+    <button class="fbtn" onclick="filterRows('pending',this)">Pending</button>
+    <button class="fbtn" onclick="filterRows('inactive',this)">Inactive</button>
+    <button class="fbtn" onclick="filterRows('fleet',this)">Fleet 5+</button>
+    <input class="search-box" type="text" placeholder="Search company…" oninput="searchRows(this.value)" id="search-input">
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Company</th><th>Service Type</th><th>Vehicles Tested</th>
+          <th>Last Test</th><th>Total Revenue</th><th>YTD Tests</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="contractor-tbody"></tbody>
+    </table>
+    <div class="totals-row" id="totals-row"></div>
+  </div>
+
+  <!-- REVENUE BREAKDOWN -->
+  <div class="breakdown-grid">
+    <div class="breakdown-card">
+      <div class="bc-head">📊 Revenue by Service Type</div>
+      <div class="bc-body" id="service-breakdown"></div>
+    </div>
+    <div class="breakdown-card">
+      <div class="bc-head">🏆 Top 5 Accounts by Revenue</div>
+      <div class="bc-body" id="top-accounts"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const CONTRACTORS = [
+  { id:'C001', company:'Pacific Coast Freight LLC',       city:'Stockton',    type:'Fleet HD-OBD', vehicles:12, lastTest:'2026-03-28', revenue:1800, ytd:12, status:'active'   },
+  { id:'C002', company:'Central Valley Trucking Co.',     city:'Modesto',     type:'Opacity + HD-OBD', vehicles:8, lastTest:'2026-04-02', revenue:2120, ytd:8, status:'active'   },
+  { id:'C003', company:'Delta Transport Inc.',            city:'Stockton',    type:'Fleet HD-OBD', vehicles:15, lastTest:'2026-03-15', revenue:2250, ytd:15, status:'active'   },
+  { id:'C004', company:'San Joaquin Logistics',           city:'Tracy',       type:'HD-OBD Only', vehicles:6,  lastTest:'2026-04-05', revenue:450,  ytd:6,  status:'active'   },
+  { id:'C005', company:'Valley Farm Transport',           city:'Lodi',        type:'Opacity Test', vehicles:4,  lastTest:'2026-02-20', revenue:796,  ytd:4,  status:'active'   },
+  { id:'C006', company:'Stockton Steel & Iron',           city:'Stockton',    type:'Fleet HD-OBD', vehicles:9,  lastTest:'2026-03-22', revenue:1350, ytd:9,  status:'active'   },
+  { id:'C007', company:'Big Rig Ready Inc.',              city:'Manteca',     type:'HD-OBD Only', vehicles:7,  lastTest:'2026-04-01', revenue:525,  ytd:7,  status:'active'   },
+  { id:'C008', company:'Sunrise Haulers',                 city:'Stockton',    type:'Opacity + HD-OBD', vehicles:5,  lastTest:'2026-03-10', revenue:1500, ytd:5,  status:'active'   },
+  { id:'C009', company:'Interstate Cargo Partners',       city:'Lathrop',     type:'Fleet HD-OBD', vehicles:11, lastTest:'2026-04-08', revenue:1650, ytd:11, status:'active'   },
+  { id:'C010', company:'Golden State Refrigerated',       city:'Stockton',    type:'HD-OBD Only', vehicles:3,  lastTest:'2026-03-05', revenue:225,  ytd:3,  status:'pending'  },
+  { id:'C011', company:'Manteca Moving & Storage',        city:'Manteca',     type:'HD-OBD Only', vehicles:2,  lastTest:'2026-01-18', revenue:150,  ytd:2,  status:'active'   },
+  { id:'C012', company:'Turlock Ag Transport',            city:'Turlock',     type:'Opacity Test', vehicles:6,  lastTest:'2026-02-14', revenue:1194, ytd:6,  status:'active'   },
+  { id:'C013', company:'Crossroads Cement Co.',           city:'Stockton',    type:'Fleet HD-OBD', vehicles:10, lastTest:'2026-03-29', revenue:1490, ytd:10, status:'active'   },
+  { id:'C014', company:'West Valley Waste Solutions',     city:'Modesto',     type:'Opacity + HD-OBD', vehicles:7,  lastTest:'2026-04-03', revenue:1960, ytd:7,  status:'active'   },
+  { id:'C015', company:'Port of Stockton Contractors',    city:'Stockton',    type:'Fleet HD-OBD', vehicles:20, lastTest:'2026-04-07', revenue:2980, ytd:20, status:'active'   },
+  { id:'C016', company:'NorCal Box Trucking',             city:'Sacramento',  type:'HD-OBD Only', vehicles:5,  lastTest:'2026-03-17', revenue:375,  ytd:5,  status:'active'   },
+  { id:'C017', company:'Sierra Pacific Timber Haul',      city:'Angels Camp', type:'Opacity Test', vehicles:3,  lastTest:'2026-02-28', revenue:597,  ytd:3,  status:'active'   },
+  { id:'C018', company:'Lodi Nursery & Landscape',        city:'Lodi',        type:'HD-OBD Only', vehicles:2,  lastTest:'2025-12-10', revenue:150,  ytd:2,  status:'inactive' },
+  { id:'C019', company:'Tracy Distribution Center',       city:'Tracy',       type:'Fleet HD-OBD', vehicles:14, lastTest:'2026-04-04', revenue:2086, ytd:14, status:'active'   },
+  { id:'C020', company:'Valley Propane & Gas',            city:'Stockton',    type:'HD-OBD Only', vehicles:4,  lastTest:'2026-03-20', revenue:300,  ytd:4,  status:'active'   },
+  { id:'C021', company:'SJV Excavating LLC',              city:'Fresno',      type:'Opacity + HD-OBD', vehicles:6,  lastTest:'2026-03-12', revenue:1680, ytd:6,  status:'active'   },
+  { id:'C022', company:'Riverbend Concrete Pumping',      city:'Stockton',    type:'Fleet HD-OBD', vehicles:8,  lastTest:'2026-03-25', revenue:1192, ytd:8,  status:'active'   },
+  { id:'C023', company:'Bay Area Flatbed Express',        city:'Oakland',     type:'HD-OBD Only', vehicles:3,  lastTest:'2026-01-30', revenue:225,  ytd:3,  status:'pending'  },
+  { id:'C024', company:'Diablo Asphalt Services',         city:'Antioch',     type:'Opacity Test', vehicles:5,  lastTest:'2026-02-22', revenue:995,  ytd:5,  status:'active'   },
+  { id:'C025', company:'Stanislaus Tank Liners',          city:'Modesto',     type:'HD-OBD Only', vehicles:2,  lastTest:'2026-03-08', revenue:150,  ytd:2,  status:'active'   },
+  { id:'C026', company:'Central Valley RV Fleet',         city:'Stockton',    type:'RV Testing',  vehicles:4,  lastTest:'2026-02-05', revenue:1200, ytd:4,  status:'active'   },
+  { id:'C027', company:'Coastal Crane Rentals',           city:'Lathrop',     type:'Fleet HD-OBD', vehicles:7,  lastTest:'2026-04-06', revenue:1043, ytd:7,  status:'active'   },
+  { id:'C028', company:'Gold Rush Gravel & Sand',         city:'lone',        type:'Opacity Test', vehicles:3,  lastTest:'2026-03-03', revenue:597,  ytd:3,  status:'active'   },
+  { id:'C029', company:'Modesto Ice & Cold Chain',        city:'Modesto',     type:'HD-OBD Only', vehicles:5,  lastTest:'2026-03-14', revenue:375,  ytd:5,  status:'active'   },
+  { id:'C030', company:'Apex Auto Transport',             city:'Stockton',    type:'Fleet HD-OBD', vehicles:9,  lastTest:'2026-04-09', revenue:1341, ytd:9,  status:'active'   },
+  { id:'C031', company:'Heritage Lumber Transport',       city:'Sonora',      type:'Opacity Test', vehicles:4,  lastTest:'2026-01-22', revenue:796,  ytd:4,  status:'pending'  },
+  { id:'C032', company:'Crossroads Food Distribution',    city:'Stockton',    type:'Fleet HD-OBD', vehicles:11, lastTest:'2026-03-31', revenue:1639, ytd:11, status:'active'   },
+  { id:'C033', company:'Mission Ready Mechanical',        city:'Tracy',       type:'HD-OBD Only', vehicles:3,  lastTest:'2026-02-18', revenue:225,  ytd:3,  status:'active'   },
+  { id:'C034', company:'Valley Visions Recycling',        city:'Stockton',    type:'Opacity + HD-OBD', vehicles:5,  lastTest:'2026-03-19', revenue:1400, ytd:5,  status:'active'   },
+  { id:'C035', company:'Pacific Rim Containers',          city:'Stockton',    type:'Fleet HD-OBD', vehicles:16, lastTest:'2026-04-10', revenue:2384, ytd:16, status:'active'   },
+  { id:'C036', company:'North Valley Fire Protection',    city:'Chico',       type:'HD-OBD Only', vehicles:2,  lastTest:'2025-11-14', revenue:150,  ytd:2,  status:'inactive' },
+  { id:'C037', company:'San Joaquin Crane Service',       city:'Stockton',    type:'Fleet HD-OBD', vehicles:6,  lastTest:'2026-03-26', revenue:894,  ytd:6,  status:'active'   },
+  { id:'C038', company:'Delta Ag Spraying LLC',           city:'Lodi',        type:'HD-OBD Only', vehicles:4,  lastTest:'2026-02-10', revenue:300,  ytd:4,  status:'active'   },
+  { id:'C039', company:'I-5 Corridor Express',            city:'Stockton',    type:'Fleet HD-OBD', vehicles:13, lastTest:'2026-04-02', revenue:1937, ytd:13, status:'active'   },
+  { id:'C040', company:'Sunrise Septic & Drain',          city:'Manteca',     type:'Opacity Test', vehicles:3,  lastTest:'2026-03-07', revenue:597,  ytd:3,  status:'active'   },
+  { id:'C041', company:'Big Valley Beverage Dist.',       city:'Fresno',      type:'Fleet HD-OBD', vehicles:8,  lastTest:'2026-03-21', revenue:1192, ytd:8,  status:'active'   },
+  { id:'C042', company:'Turlock Towing & Recovery',       city:'Turlock',     type:'HD-OBD Only', vehicles:5,  lastTest:'2026-01-28', revenue:375,  ytd:5,  status:'pending'  },
+  { id:'C043', company:'Sutter Crane & Rigging',          city:'Sacramento',  type:'Fleet HD-OBD', vehicles:7,  lastTest:'2026-04-01', revenue:1043, ytd:7,  status:'active'   },
+  { id:'C044', company:'West Side Produce Inc.',          city:'Fresno',      type:'Opacity + HD-OBD', vehicles:9,  lastTest:'2026-03-16', revenue:2520, ytd:9,  status:'active'   },
+  { id:'C045', company:'Capitol City Flatbed',            city:'Sacramento',  type:'HD-OBD Only', vehicles:4,  lastTest:'2026-02-25', revenue:300,  ytd:4,  status:'active'   },
+  { id:'C046', company:'Mountain Pass Logging',           city:'Sonora',      type:'Opacity Test', vehicles:5,  lastTest:'2025-12-20', revenue:995,  ytd:5,  status:'inactive' },
+  { id:'C047', company:'Eastside Iron & Metal',           city:'Stockton',    type:'Fleet HD-OBD', vehicles:6,  lastTest:'2026-04-07', revenue:894,  ytd:6,  status:'active'   },
+  { id:'C048', company:'Valley Air Freight',              city:'Fresno',      type:'HD-OBD Only', vehicles:3,  lastTest:'2026-03-11', revenue:225,  ytd:3,  status:'active'   },
+  { id:'C049', company:'Horizon Tank Transport',          city:'Stockton',    type:'Fleet HD-OBD', vehicles:10, lastTest:'2026-04-08', revenue:1490, ytd:10, status:'active'   },
+  { id:'C050', company:'Sierra Nevada Brewing Dist.',     city:'Chico',       type:'HD-OBD Only', vehicles:6,  lastTest:'2026-03-04', revenue:450,  ytd:6,  status:'active'   },
+  { id:'C051', company:'Central Valley Hay & Feed',       city:'Tulare',      type:'Opacity Test', vehicles:4,  lastTest:'2026-02-08', revenue:796,  ytd:4,  status:'active'   },
+  { id:'C052', company:'Gold Hills Aggregate',            city:'Stockton',    type:'Fleet HD-OBD', vehicles:12, lastTest:'2026-04-03', revenue:1788, ytd:12, status:'active'   },
+  { id:'C053', company:'Triton Marine Transport',         city:'Stockton',    type:'HD-OBD Only', vehicles:2,  lastTest:'2026-01-15', revenue:150,  ytd:2,  status:'pending'  },
+  { id:'C054', company:'Sunrise Demolition LLC',          city:'Modesto',     type:'Opacity + HD-OBD', vehicles:7,  lastTest:'2026-03-27', revenue:1960, ytd:7,  status:'active'   },
+  { id:'C055', company:'NorCal Mobile Crane',             city:'Sacramento',  type:'Fleet HD-OBD', vehicles:5,  lastTest:'2026-04-04', revenue:745,  ytd:5,  status:'active'   },
+  { id:'C056', company:'Valley Vines Vineyard Svc.',      city:'Lodi',        type:'HD-OBD Only', vehicles:3,  lastTest:'2026-02-17', revenue:225,  ytd:3,  status:'active'   },
+  { id:'C057', company:'Stockton Ready Mix Concrete',     city:'Stockton',    type:'Fleet HD-OBD', vehicles:18, lastTest:'2026-04-09', revenue:2682, ytd:18, status:'active'   },
+  { id:'C058', company:'Amador County Timber',            city:'Jackson',     type:'Opacity Test', vehicles:3,  lastTest:'2025-10-30', revenue:597,  ytd:3,  status:'inactive' },
+];
+
+function fmt$(n){ return '$' + n.toLocaleString(); }
+function fmtDate(d){ return d ? d.replace(/-/g,'/') : '—'; }
+
+function statusBadge(s){
+  const map = { active:'s-active', pending:'s-pending', inactive:'s-inactive' };
+  const lbl = { active:'Active', pending:'Pending', inactive:'Inactive' };
+  return \`<span class="status-badge \${map[s]||'s-inactive'}">\${lbl[s]||s}</span>\`;
+}
+
+let filtered = [...CONTRACTORS];
+
+function renderKPIs(){
+  const total = CONTRACTORS.length;
+  const active = CONTRACTORS.filter(c=>c.status==='active').length;
+  const totalRev = CONTRACTORS.reduce((s,c)=>s+c.revenue,0);
+  const totalTests = CONTRACTORS.reduce((s,c)=>s+c.ytd,0);
+  const avgRev = Math.round(totalRev / total);
+  document.getElementById('kpi-row').innerHTML = \`
+    <div class="kpi g"><div class="kpi-label">Total Revenue YTD</div><div class="kpi-val">\${fmt$(totalRev)}</div><div class="kpi-sub">\${total} accounts</div></div>
+    <div class="kpi b"><div class="kpi-label">Tests Completed</div><div class="kpi-val">\${totalTests}</div><div class="kpi-sub">YTD 2025–2026</div></div>
+    <div class="kpi a"><div class="kpi-label">Active Accounts</div><div class="kpi-val">\${active}</div><div class="kpi-sub">of \${total} total</div></div>
+    <div class="kpi w"><div class="kpi-label">Avg Rev / Account</div><div class="kpi-val">\${fmt$(avgRev)}</div><div class="kpi-sub">across all accounts</div></div>
+    <div class="kpi g"><div class="kpi-label">Vehicles Tracked</div><div class="kpi-val">\${CONTRACTORS.reduce((s,c)=>s+c.vehicles,0)}</div><div class="kpi-sub">fleet units served</div></div>\`;
+}
+
+function renderTable(data){
+  const tbody = document.getElementById('contractor-tbody');
+  tbody.innerHTML = data.map((c,i) => \`
+    <tr data-status="\${c.status}" data-company="\${c.company.toLowerCase()}">
+      <td class="mono" style="color:var(--txt3);font-size:12px;">\${c.id}</td>
+      <td><div class="company-name">\${c.company}</div><div class="company-city">\${c.city}, CA</div></td>
+      <td><span class="type-pill">\${c.type}</span></td>
+      <td class="cnt">\${c.vehicles}</td>
+      <td class="date-cell">\${fmtDate(c.lastTest)}</td>
+      <td class="amt">\${fmt$(c.revenue)}</td>
+      <td class="cnt">\${c.ytd}</td>
+      <td>\${statusBadge(c.status)}</td>
+      <td><button class="action-btn">📋 View</button></td>
+    </tr>\`).join('');
+
+  const totRev = data.reduce((s,c)=>s+c.revenue,0);
+  const totTests = data.reduce((s,c)=>s+c.ytd,0);
+  const totVeh = data.reduce((s,c)=>s+c.vehicles,0);
+  document.getElementById('totals-row').innerHTML = \`
+    <div class="total-cell"><div class="tc-label">Showing</div><div class="tc-val">\${data.length} accounts</div></div>
+    <div class="total-cell"><div class="tc-label">Vehicles</div><div class="tc-val">\${totVeh}</div></div>
+    <div class="total-cell tc-green"><div class="tc-label">Revenue</div><div class="tc-val">\${fmt$(totRev)}</div></div>
+    <div class="total-cell"><div class="tc-label">Tests</div><div class="tc-val">\${totTests}</div></div>\`;
+}
+
+function renderBreakdown(){
+  const byType = {};
+  CONTRACTORS.forEach(c => { byType[c.type] = (byType[c.type]||0) + c.revenue; });
+  const sorted = Object.entries(byType).sort((a,b)=>b[1]-a[1]);
+  const maxVal = sorted[0][1];
+  document.getElementById('service-breakdown').innerHTML = sorted.map(([t,v]) => \`
+    <div class="bc-row">
+      <span class="bc-label">\${t}</span>
+      <div class="bc-bar-wrap"><div class="bc-bar" style="width:\${Math.round(v/maxVal*100)}%"></div></div>
+      <span class="bc-val">\${fmt$(v)}</span>
+    </div>\`).join('');
+
+  const top5 = [...CONTRACTORS].sort((a,b)=>b.revenue-a.revenue).slice(0,5);
+  const maxTop = top5[0].revenue;
+  document.getElementById('top-accounts').innerHTML = top5.map((c,i) => \`
+    <div class="bc-row">
+      <span class="bc-label" style="min-width:0;flex:1;">\${c.company.length>32?c.company.substring(0,32)+'…':c.company}</span>
+      <div class="bc-bar-wrap"><div class="bc-bar" style="width:\${Math.round(c.revenue/maxTop*100)}%"></div></div>
+      <span class="bc-val">\${fmt$(c.revenue)}</span>
+    </div>\`).join('');
+}
+
+function filterRows(filter, btn){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('search-input').value = '';
+  if(filter === 'all') filtered = [...CONTRACTORS];
+  else if(filter === 'fleet') filtered = CONTRACTORS.filter(c=>c.vehicles>=5);
+  else filtered = CONTRACTORS.filter(c=>c.status===filter);
+  renderTable(filtered);
+}
+
+function searchRows(query){
+  const q = query.toLowerCase().trim();
+  filtered = q ? CONTRACTORS.filter(c=>c.company.toLowerCase().includes(q)||c.city.toLowerCase().includes(q)) : [...CONTRACTORS];
+  renderTable(filtered);
+}
+
+function exportCSV(){
+  let csv = 'ID,Company,City,Service Type,Vehicles,Last Test,Revenue,YTD Tests,Status\\n';
+  CONTRACTORS.forEach(c=>{
+    csv += \`"\${c.id}","\${c.company}","\${c.city}","\${c.type}",\${c.vehicles},"\${c.lastTest}",\${c.revenue},\${c.ytd},"\${c.status}"\\n\`;
+  });
+  const blob = new Blob([csv],{type:'text/csv'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='CleanTruckCheck_Contractors_YTD.csv'; a.click();
+}
+
+renderKPIs();
+renderTable(CONTRACTORS);
+renderBreakdown();
+</script>
+</body>
+</html>`;
+}
+
 var worker_default = {
   async fetch(request) {
+    const url = new URL(request.url);
+    const pathname = url.pathname.replace(/\/$/, '') || '/';
+
+    if (pathname === '/contractors') {
+      return new Response(renderContractorsPage(), {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "public, max-age=300"
+        }
+      });
+    }
+
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
