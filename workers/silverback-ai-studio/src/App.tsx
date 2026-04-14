@@ -675,6 +675,15 @@ export default function App() {
     window.location.pathname === '/contractors' ? 'contractors' : 'main'
   );
 
+  // Sync page state with browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      setPage(window.location.pathname === '/contractors' ? 'contractors' : 'main');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // --- WebSocket Connection ---
   useEffect(() => {
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -991,7 +1000,7 @@ export default function App() {
     return (
       <ContractorsPage
         onBack={() => {
-          window.history.pushState({}, '', '/');
+          window.history.pushState({ page: 'main' }, '', '/');
           setPage('main');
         }}
       />
@@ -1052,7 +1061,7 @@ export default function App() {
                   </button>
                   <button
                     onClick={() => {
-                      window.history.pushState({}, '', '/contractors');
+                      window.history.pushState({ page: 'contractors' }, '', '/contractors');
                       setPage('contractors');
                     }}
                     className="hidden md:flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
