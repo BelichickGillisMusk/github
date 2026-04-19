@@ -1,0 +1,91 @@
+name: Scrape live norcalcarbmobile.com
+
+# Runs from GitHub's servers (which can reach Squarespace). Mirrors the live
+# site and commits the result to the migration branch so Claude can read the
+# real pages. Manual trigger only.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/migrate-squarespace-cloudflare-gqs2e
+
+      - name: Mirror the site with wget
+        run: |
+          set -euxo pipefail
+          mkdir -p workers/norcalcarbmobile/scraped
+          cd workers/norcalcarbmobile/scraped
+          rm -rf norcalcarbmobile.com _manifest.txt || true
+          wget \
+            --mirror \
+            --convert-links \
+            --adjust-extension \
+            --page-requisites \
+            --no-parent \
+            --tries=3 \
+            --timeout=45 \
+            --wait=1 \
+            --random-wait \
+            --user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15" \
+            https://norcalcarbmobile.com/ || true
+
+      - name: Also try sitemap + robots
+        run: |
+          set -euxo pipefail
+          cd workers/norcalcarbmobile/scraped
+          curl -sS -A "Mozilla/5.0 Safari/605.1.15" --max-time 30 \
+            https://norcalcarbmobile.com/sitemap.xml -o sitemap.xml || true
+          curl -sS -A "Mozilla/5.0 Safari/605.1.15" --max-time 30 \
+            https://norcalcarbmobile.com/robots.txt -o robots.txt || true
+
+      - name: Try the ?format=json trick
+        run: |
+          set -euxo pipefail
+          cd workers/norcalcarbmobile/scraped
+          curl -sS -A "Mozilla/5.0 Safari/605.1.15" --max-time 30 \
+            "https://norcalcarbmobile.com/?format=json" -o homepage.json || true
+
+      - name: Manifest
+        run: |
+          set -euxo pipefail
+          cd workers/norcalcarbmobile/scraped
+          {
+            echo "Scrape run at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            echo "== File tree =="
+            find . -type f | sort
+            echo
+            echo "== File sizes =="
+            find . -type f -printf "%s\t%p\n" | sort -n
+            echo
+            echo "== sitemap.xml head =="
+            head -n 40 sitemap.xml 2>/dev/null || echo "(not fetched)"
+            echo
+            echo "== robots.txt =="
+            cat robots.txt 2>/dev/null || echo "(not fetched)"
+            echo
+            echo "== homepage.json size =="
+            wc -c homepage.json 2>/dev/null || echo "(not fetched)"
+          } > _manifest.txt
+          cat _manifest.txt
+
+      - name: Commit mirror back to migration branch
+        run: |
+          set -euxo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add workers/norcalcarbmobile/scraped/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Scrape live norcalcarbmobile.com for migration reference"
+          git push origin claude/migrate-squarespace-cloudflare-gqs2e
