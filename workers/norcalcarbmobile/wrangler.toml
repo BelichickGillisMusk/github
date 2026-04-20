@@ -1,0 +1,21 @@
+name = "norcalcarbmobile"
+main = "worker.js"
+compatibility_date = "2026-03-01"
+account_id = "bafa242dd95d3fdce72540d20accd0a2"
+
+# Workers Static Assets — serves /public/ directly and falls through to worker.js
+# for anything not matched by a file.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"
+
+# Production custom domains. Wrangler auto-creates DNS + SSL on deploy.
+# IMPORTANT: do not attach these until the preview (*.workers.dev) is approved.
+# To cut over, uncomment the routes below and push.
+#
+# routes = [
+#   { pattern = "norcalcarbmobile.com", custom_domain = true },
+#   { pattern = "www.norcalcarbmobile.com", custom_domain = true }
+# ]
