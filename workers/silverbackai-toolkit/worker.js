@@ -17,8 +17,13 @@ var worker_default = {
     <meta name="theme-color" content="#0a0a0f">
     <title>Silverback AI Toolkit — AI Tools Ready to Deploy</title>
 
+    <link rel="canonical" href="https://toolkit.silverbackai.agency/">
+    <meta property="og:url" content="https://toolkit.silverbackai.agency/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
         * {
             margin: 0;
@@ -555,7 +560,7 @@ var worker_default = {
                             <span class="tool-tag">Legal</span>
                             <span class="tool-tag">Documents</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -571,7 +576,7 @@ var worker_default = {
                             <span class="tool-tag">Legal</span>
                             <span class="tool-tag">Research</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -587,7 +592,7 @@ var worker_default = {
                             <span class="tool-tag">Property</span>
                             <span class="tool-tag">Comms</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -603,7 +608,7 @@ var worker_default = {
                             <span class="tool-tag">Property</span>
                             <span class="tool-tag">Documents</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -619,7 +624,7 @@ var worker_default = {
                             <span class="tool-tag">Property</span>
                             <span class="tool-tag">Ops</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -635,7 +640,7 @@ var worker_default = {
                             <span class="tool-tag">Web</span>
                             <span class="tool-tag">Content</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -651,7 +656,7 @@ var worker_default = {
                             <span class="tool-tag">Web</span>
                             <span class="tool-tag">Marketing</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -667,7 +672,7 @@ var worker_default = {
                             <span class="tool-tag">Automation</span>
                             <span class="tool-tag">Integration</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -683,7 +688,7 @@ var worker_default = {
                             <span class="tool-tag">Automation</span>
                             <span class="tool-tag">Email</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -699,7 +704,7 @@ var worker_default = {
                             <span class="tool-tag">Data</span>
                             <span class="tool-tag">Analytics</span>
                         </div>
-                        <a href="#contact" class="tool-action">Learn More &#x2192;</a>
+                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>
                 </div>
 
@@ -715,7 +720,7 @@ var worker_default = {
                             <span class="tool-tag">Data</span>
                             <span class="tool-tag">Documents</span>
                         </div>
-                        <a href="#contact" class="tool-action">Notify Me &#x2192;</a>
+                        <a href="#request" class="tool-action">Notify Me &#x2192;</a>
                     </div>
                 </div>
 
@@ -731,7 +736,7 @@ var worker_default = {
                             <span class="tool-tag">Automation</span>
                             <span class="tool-tag">Dev</span>
                         </div>
-                        <a href="#contact" class="tool-action">Notify Me &#x2192;</a>
+                        <a href="#request" class="tool-action">Notify Me &#x2192;</a>
                     </div>
                 </div>
 
@@ -743,7 +748,7 @@ var worker_default = {
                     Don&#39;t see what you need? We build custom AI tools for your
                     exact workflow. Tell us what you&#39;re trying to solve.
                 </p>
-                <a href="mailto:hello@silverbackai.com" class="btn-primary">Request a Custom Tool</a>
+                <a href="mailto:hello@silverbackai.agency" class="btn-primary">Request a Custom Tool</a>
             </div>
         </div>
     </section>
@@ -752,7 +757,7 @@ var worker_default = {
         <div class="container">
             <div class="footer-content">
                 <p>&copy; 2026 Silverback AI. All rights reserved.</p>
-                <p><a href="/">Back to SilverbackAI.com</a></p>
+                <p><a href="https://silverbackai.agency">Back to SilverbackAI.agency</a></p>
             </div>
         </div>
     </footer>
@@ -811,7 +816,11 @@ var worker_default = {
     return new Response(html, {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
-        "Cache-Control": "public, max-age=3600"
+        "Cache-Control": "public, max-age=86400, s-maxage=604800",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
       }
     });
   }
