@@ -1,0 +1,921 @@
+{
+  "$schema": "./sites.schema.json",
+  "_comment": "SINGLE SOURCE OF TRUTH for every Silverback site. Edit values here and run `node build.mjs` to regenerate every site. Never edit generated index.html directly.",
+  "verticalDefaults": {
+    "law": {
+      "businessName": "Chigbu Law Firm",
+      "chatbot": {
+        "enabled": true,
+        "name": "OBI",
+        "avatar": "⚖️",
+        "greeting": "Hi, I'm OBI — Mr. Chigbu's intake assistant. Ask me about bankruptcy, immigration, family law, or personal injury, and I'll get a real human to follow up. Everything is confidential.",
+        "alertWebhook": ""
+      },
+      "disclaimer": "This website is attorney advertising. The information on this site is for general informational purposes only and does not constitute legal advice or create an attorney-client relationship. No attorney-client relationship is formed by visiting this site, by submitting an intake form, or by communicating with the chat assistant — only by signing a written engagement agreement with the Law Offices of Clifford Chigbu. Past results do not guarantee similar outcomes. Statements regarding ratings, awards, and recognition are based on third-party sources and do not constitute a comparison with other attorneys. Clifford Chigbu is licensed in the State of California (Bar #221386) and accepts cases only in jurisdictions where he is admitted to practice."
+    }
+  },
+  "defaults": {
+    "businessName": "Mobile CARB Smoke Test",
+    "tagline": "Mobile CARB testing — we come to your yard, lot, or jobsite — weekends included, fleets our specialty.",
+    "chatbot": {
+      "enabled": true,
+      "name": "VIN",
+      "avatar": "🦍",
+      "greeting": "Hey, I'm VIN. Need a CARB test, pricing, or scheduling help? I'll get you a real human fast.",
+      "alertWebhook": "",
+      "_alertWebhookNote": "Optional. POST destination for new chat messages — e.g. a Make.com / Zapier webhook that texts or emails you. Leave blank to just store in KV."
+    },
+    "faq": [
+      {
+        "q": "How fast can you come out?",
+        "a": "Same-day in most cases. We run 24/7 — call or text any time."
+      },
+      {
+        "q": "Do you do fleets?",
+        "a": "Yes — fleets are our specialty. Volume discounts available."
+      },
+      {
+        "q": "Weekends?",
+        "a": "Yes, weekends and after-hours included at no extra charge."
+      },
+      {
+        "q": "What about motorhomes?",
+        "a": "Same pricing as trucks. New (2013+) is OBD at the lower price; older is OVI smoke."
+      }
+    ],
+    "prices": {
+      "obd": 119,
+      "ovi": 219
+    },
+    "obdLabel": "2013+ OBD Test",
+    "oviLabel": "2012 & Older OVI Smoke Test",
+    "motorhomeNote": "Motorhomes: same pricing — new (2013+) $119, older (2012-) $219.",
+    "hours": "24/7 Call or Text",
+    "bullets": [
+      "All vehicle classes",
+      "24/7 Call or Text",
+      "Fleet discounts available",
+      "Weekends and after-hours OK"
+    ]
+  },
+  "sites": [
+    {
+      "id": "chigbulaws",
+      "vertical": "law",
+      "domain": "chigbulaws.com",
+      "firmName": "Law Offices of Clifford Chigbu",
+      "firmNameAlt": "Clifford Chigbu Attorney at Law",
+      "attorneyName": "Clifford Chigbu",
+      "attorneyTitle": "Attorney at Law",
+      "attorneyShortName": "Clifford",
+      "attorneyHonorific": "Mr. Chigbu",
+      "_firmNameNote": "Official signage reads 'LAW OFFICES OF CLIFFORD CHIGBU' (exterior of 4815 Laguna Park Dr). Google Business Profile uses 'Clifford Chigbu Attorney at Law'. Both are accurate — we use the full 'Law Offices of' as primary since it's on the physical building.",
+      "awards": [
+        {
+          "year": 2025,
+          "title": "Best of BusinessRate",
+          "subtitle": "Family Law Attorney · Elk Grove",
+          "issuer": "BusinessRate"
+        }
+      ],
+      "city": "Elk Grove",
+      "region": "Elk Grove and surrounding areas — Sacramento, Davis, Lodi, Stockton, Jackson, Galt, and the greater Central Valley",
+      "serviceAreas": [
+        "Elk Grove",
+        "Sacramento",
+        "Davis",
+        "Lodi",
+        "Stockton",
+        "Jackson",
+        "Galt",
+        "Wilton",
+        "Rancho Cordova",
+        "Folsom",
+        "Ione",
+        "West Sacramento"
+      ],
+      "_serviceAreasNote": "Wider service area beyond Elk Grove. Clifford is well-known for Family Law and Immigration — and serves clients across the greater Sacramento / Central Valley region. Used for SEO keywords + Service Areas section on the home page.",
+      "phone": "(916) 230-6381",
+      "phoneRaw": "+19162306381",
+      "email": "chigbulaw@sbcglobal.net",
+      "fallbackEmail": "chigbulaw@sbcglobal.net",
+      "_emailNote": "Locked — client cannot change. Do not 'fix' the spelling. This is also the fallback email for ALL form submissions and chat messages — every intake, contact form, and OBI chat message gets emailed here as a backup in case the webhook / agent is down.",
+      "fromEmail": "noreply@chigbulaws.com",
+      "_fromEmailNote": "Sending address for the fallback emails. Must have SPF/DKIM set up in Cloudflare DNS for MailChannels, OR use Resend with this domain verified. Free Resend tier is 100 emails/day — more than enough.",
+      "_domainNote": "Domain is plural 'chigbulaws.com' (inherited from prior webmaster). Do not 'correct' it.",
+      "barNumber": "221386",
+      "address": "4815 Laguna Park Dr, Suite C, Elk Grove, CA 95758",
+      "streetAddress": "4815 Laguna Park Dr, Suite C",
+      "postalCode": "95758",
+      "addressForMaps": "4815 Laguna Park Dr STE C, Elk Grove, CA 95758",
+      "_addressNote": "Replace addressForMaps with the exact street address once confirmed. Get Directions button auto-generates a Google Maps deep link from this.",
+      "googleBusinessUrl": "https://www.google.com/search?q=Chigbu+Law+Firm+Elk+Grove+CA",
+      "googleReviewsUrl": "https://www.google.com/search?q=Chigbu+Law+Firm+Elk+Grove+CA#lrd=reviews",
+      "googlePlaceId": "",
+      "_googleNote": "Once you have the Google Place ID, paste it into googlePlaceId and we'll wire up native review writing. Get the Place ID at https://developers.google.com/maps/documentation/places/web-service/place-id",
+      "cloudflareAnalyticsToken": "",
+      "googleAnalyticsId": "",
+      "plausibleDomain": "",
+      "_analyticsNote": "Cloudflare Web Analytics token (free, no cookies) OR GA4 measurement ID (G-XXXXXXXXXX) OR Plausible domain. Set any/all — they render independently. Cloudflare Web Analytics = Cloudflare dashboard → Analytics → Web Analytics → Add a site → copy the token from the beacon script.",
+      "googleRating": 4.8,
+      "googleReviewCount": 24,
+      "_googleRatingNote": "Real Google Business Profile numbers from user's screenshot (Oct 2026). Used as authoritative aggregateRating in LegalService JSON-LD. The reviews array below is for rendered testimonials on the page — leave empty until user sends screenshots of the GBP Reviews tab with real review text.",
+      "reviews": [],
+      "deskPhotoUrl": "",
+      "officeExteriorPhotoUrl": "",
+      "_photosNote": "Once uploaded: deskPhotoUrl = Clifford at his computer (in vest + shirt at wood desk with files and monitor). officeExteriorPhotoUrl = the building at 4815 Laguna Park Dr with 'LAW OFFICES OF CLIFFORD CHIGBU' signage. Host on Cloudflare R2 or similar, paste URL here.",
+      "knowledgeBase": [
+        { "category": "Family Law", "q": "How long does a divorce take in California?", "a": "Six months minimum from the date the other party is served. Most cases settle before trial. Complex or contested matters can take a year or more." },
+        { "category": "Family Law", "q": "How is child custody decided in California?", "a": "California courts decide custody based on the best interests of the child. Courts prefer arrangements that let both parents stay involved, unless there's evidence one parent would harm the child." },
+        { "category": "Family Law", "q": "How is child support calculated?", "a": "California uses a statewide formula based on both parents' incomes, the amount of time each parent has the child, and certain deductions. The result is what's called 'guideline' support." },
+        { "category": "Family Law", "q": "Do I need grounds to get divorced in California?", "a": "No. California is a no-fault divorce state — 'irreconcilable differences' is the only grounds you need." },
+        { "category": "Family Law", "q": "What is a restraining order and how do I get one?", "a": "A domestic violence restraining order protects you from abuse, harassment, or stalking. You file a request, the court can issue a temporary order right away, and there's a hearing within 21 days." },
+        { "category": "Family Law", "q": "Can I modify child support or custody later?", "a": "Yes — if there's been a significant change in circumstances (income, move, work schedule, etc.), either parent can ask the court to modify the order." },
+        { "category": "Family Law", "q": "Do both spouses need to agree to divorce?", "a": "No. One spouse can file and proceed even if the other objects. The court will still grant the divorce." },
+        { "category": "Family Law", "q": "How is property divided in a California divorce?", "a": "California is a community property state. Assets and debts acquired during the marriage are generally split 50/50. Assets owned before marriage or received by gift/inheritance stay separate." },
+        { "category": "Family Law", "q": "Can I get spousal support (alimony)?", "a": "Possibly. California courts consider the length of the marriage, each spouse's earning capacity, standard of living during the marriage, and several other factors." },
+        { "category": "Family Law", "q": "What is the difference between legal and physical custody?", "a": "Legal custody is the right to make decisions (school, medical, religion). Physical custody is where the child lives. Either can be joint or sole." },
+
+        { "category": "Immigration", "q": "Can I apply for a green card through marriage?", "a": "Yes, if you're married to a U.S. citizen or lawful permanent resident. The process involves a petition (I-130) and an adjustment of status or consular processing, depending on where you are." },
+        { "category": "Immigration", "q": "How long does it take to get a green card?", "a": "It varies dramatically — from months (for immediate relatives of U.S. citizens) to many years (for certain family-based or employment categories with long backlogs)." },
+        { "category": "Immigration", "q": "Can I sponsor my parents for a green card?", "a": "Yes, if you're a U.S. citizen over 21. Parents of U.S. citizens are classified as immediate relatives and there is no annual cap." },
+        { "category": "Immigration", "q": "What is DACA and do I qualify?", "a": "Deferred Action for Childhood Arrivals provides protection and work authorization for certain people brought to the U.S. as children. Eligibility is based on arrival age, continuous residence, and other factors." },
+        { "category": "Immigration", "q": "I'm in deportation proceedings — what do I do?", "a": "Contact an immigration attorney immediately. There are several forms of relief that may apply, but deadlines are strict and missing one can be catastrophic. Call our office right away." },
+        { "category": "Immigration", "q": "How do I become a U.S. citizen?", "a": "Most green card holders can apply for naturalization after 5 years (3 if married to a U.S. citizen). You'll file Form N-400, attend a biometrics appointment, pass an English and civics test, and take an oath." },
+        { "category": "Immigration", "q": "Can I file my own immigration paperwork?", "a": "Yes — but immigration forms are notoriously unforgiving. A small mistake can cause years of delay or a denial. An attorney review is usually worth it." },
+        { "category": "Immigration", "q": "What if I have a criminal record?", "a": "Even minor offenses can cause serious immigration consequences. Do not rely on general advice — consult a lawyer who knows both criminal and immigration law before any filing." },
+        { "category": "Immigration", "q": "Can I work while my green card is pending?", "a": "Usually yes, by filing a separate application (Form I-765) for employment authorization. The EAD card is typically issued within several months." },
+        { "category": "Immigration", "q": "What is asylum?", "a": "Asylum is protection for people who've been persecuted or fear persecution in their home country based on race, religion, nationality, political opinion, or membership in a particular social group. Generally you must apply within one year of arrival." },
+
+        { "category": "Personal Injury", "q": "How much is my personal injury case worth?", "a": "Depends on the severity of injuries, medical bills, lost wages, pain and suffering, and liability. We give honest estimates after reviewing your case — never inflated promises." },
+        { "category": "Personal Injury", "q": "How long do I have to file a personal injury claim in California?", "a": "Generally 2 years from the date of injury for most cases, but it can be much shorter (as little as 6 months) for claims against government entities. Don't wait — call." },
+        { "category": "Personal Injury", "q": "Should I give a statement to the insurance company?", "a": "No. Anything you say can be used to reduce or deny your claim. Talk to us before giving any statement — including your own insurance company." },
+        { "category": "Personal Injury", "q": "What if I was partly at fault?", "a": "California uses 'pure comparative negligence' — even if you were partially at fault, you can still recover damages, reduced by your percentage of fault." },
+        { "category": "Personal Injury", "q": "How much does a personal injury lawyer cost?", "a": "We work on contingency — no fees up front. We only get paid if you recover money, and our fee is a percentage of the recovery." },
+        { "category": "Personal Injury", "q": "Should I see a doctor after an accident even if I feel fine?", "a": "Yes. Some injuries don't show symptoms for days. A prompt medical record also protects your claim — insurance companies argue that gaps in treatment mean you weren't really hurt." },
+        { "category": "Personal Injury", "q": "What if the other driver was uninsured?", "a": "Your own policy may have uninsured motorist coverage. We can file a claim against your own insurance, and there may be other responsible parties to pursue." },
+        { "category": "Personal Injury", "q": "How long does a personal injury case take?", "a": "Simple cases can settle in months. Complex cases or those that go to trial can take 1-2 years. We'll give you a realistic timeline after reviewing your case." },
+
+        { "category": "Bankruptcy", "q": "Will I lose my house if I file bankruptcy?", "a": "Usually no. California's homestead exemption protects a significant amount of home equity for primary residences. We'll review your specific situation." },
+        { "category": "Bankruptcy", "q": "What's the difference between Chapter 7 and Chapter 13?", "a": "Chapter 7 wipes out qualifying debts in a few months but has income limits. Chapter 13 is a 3-5 year repayment plan that lets you catch up on a mortgage or car payment while keeping the asset." },
+        { "category": "Bankruptcy", "q": "Will bankruptcy stop wage garnishment?", "a": "Yes — the automatic stay stops most garnishments the moment we file your case, usually within 24 hours." },
+        { "category": "Bankruptcy", "q": "How bad does bankruptcy hurt my credit?", "a": "Bankruptcy stays on your credit report for 7-10 years, but most clients see their credit score recover faster than expected because they're starting with zero debt." },
+        { "category": "Bankruptcy", "q": "Can I file bankruptcy more than once?", "a": "Yes, but there are time limits. Generally 8 years between Chapter 7 filings, and 2-6 years in other combinations. We'll walk you through your options." },
+        { "category": "Bankruptcy", "q": "What debts can bankruptcy NOT wipe out?", "a": "Most student loans, recent taxes, child support, alimony, and debts from fraud or DUI-related injuries are generally not dischargeable. We'll tell you what applies to your situation." },
+        { "category": "Bankruptcy", "q": "Do I qualify for Chapter 7?", "a": "Chapter 7 has an income means test. If your household income is below the California median for your family size, you automatically qualify. Above that, we do a more detailed analysis." },
+        { "category": "Bankruptcy", "q": "Will my employer find out if I file bankruptcy?", "a": "Usually not, unless you're in a Chapter 13 with wage deductions, or your employer is a creditor. Bankruptcy is public record but nobody is notified automatically." },
+
+        { "category": "Business & Contract", "q": "Do I need a lawyer to form an LLC?", "a": "Not legally — but a DIY filing often misses operating agreement details that matter when disputes come up later. A small upfront investment saves big headaches." },
+        { "category": "Business & Contract", "q": "Should I have a lawyer review a contract before I sign?", "a": "For anything significant, yes. We offer flat-rate contract reviews and can usually turn around a contract in a few days." },
+        { "category": "Business & Contract", "q": "What do I do if someone breached our contract?", "a": "Call us before you send any demand letters or talk to the other side. What you say early can affect the remedies you have later." },
+        { "category": "Business & Contract", "q": "LLC or corporation — which should I choose?", "a": "Depends on taxes, ownership structure, liability, and long-term plans. LLCs are more flexible; corporations are better for certain kinds of investment and growth. We'll walk you through it." },
+        { "category": "Business & Contract", "q": "What goes in a partnership agreement?", "a": "Ownership percentages, responsibilities, profit distribution, decision-making authority, dispute resolution, and exit terms. A well-drafted partnership agreement prevents most partnership disputes." },
+
+        { "category": "General", "q": "How much does a consultation cost?", "a": "Personal injury consultations are free. For other matters, we charge a modest consultation fee that's credited toward your case if you retain us." },
+        { "category": "General", "q": "Where is your office?", "a": "4815 Laguna Park Dr, Suite C, Elk Grove, CA 95758. We also do phone and video consultations." },
+        { "category": "General", "q": "What are your hours?", "a": "Monday through Friday, 8:30 AM to 6:00 PM. After-hours by appointment." },
+        { "category": "General", "q": "Do you speak any languages besides English?", "a": "Yes. We can also arrange interpreters for Spanish and other languages on request." },
+        { "category": "General", "q": "How quickly can I meet with an attorney?", "a": "Same day or next day in most cases. Call (916) 230-6381." },
+        { "category": "General", "q": "Do you take payment plans?", "a": "For most matters, yes. Tell us your situation honestly and we'll work out something reasonable." },
+        { "category": "General", "q": "Is my conversation with you confidential?", "a": "Yes. Attorney-client confidentiality protects everything you tell us from the moment you reach out — even if you don't ultimately hire us." },
+        { "category": "General", "q": "What areas do you serve?", "a": "Elk Grove, Sacramento, Davis, Lodi, Stockton, Jackson, Galt, Wilton, Rancho Cordova, Folsom, Ione, West Sacramento, and the greater Central Valley." }
+      ],
+      "_knowledgeBaseNote": "AI-search / instant-search knowledge base. Used by: (1) client-side search box that filters as user types, (2) expanded FAQ module grouped by category, (3) /llms.txt file for LLM crawlers, (4) QAPage JSON-LD for Google SGE / AI overviews, (5) Workers AI semantic search fallback when bound. Add more Q&As anytime — one commit triggers a rebuild.",
+      "hours": "Monday – Friday · 8:30 AM – 6:00 PM · After-hours by appointment",
+      "languages": [
+        "English",
+        "Igbo"
+      ],
+      "barAdmissions": "State Bar of California",
+      "colors": {
+        "primary": "#0F1B2D",
+        "primaryDark": "#0A1320",
+        "accent": "#D4A24C",
+        "background": "#0A1320",
+        "text": "#F4EFE6",
+        "muted": "#9FA8B8"
+      },
+      "themeName": "law-navy-gold",
+      "_themeNote": "Deep navy + warm gold. Refined, trustworthy, no clichéd lawyer-stock-photo feel. Adjust freely in this object.",
+      "eyebrow": "Top-Rated Family & Immigration Attorney · Elk Grove, CA",
+      "headline": "Proudly serving Elk Grove and surrounding areas as a Top-Rated Family Law & Immigration Attorney.",
+      "subheadline": "Your dedicated legal advocate serving Elk Grove, Sacramento, Davis, Lodi, Stockton, Jackson, and the greater Central Valley. Life's unexpected challenges often demand experienced, compassionate representation — that's what Clifford Chigbu has been providing families for years.",
+      "metaDescription": "Clifford C. Chigbu, Attorney at Law — Top-rated Family Law and Immigration attorney serving Elk Grove, Sacramento, Davis, Lodi, Stockton, and Jackson. Divorce, custody, green cards, citizenship, and more. Call (916) 230-6381.",
+      "keywords": "Clifford Chigbu, Chigbu law, Elk Grove family law attorney, Elk Grove immigration lawyer, divorce lawyer Elk Grove, immigration attorney Sacramento, family law Davis, immigration lawyer Lodi, Stockton family law, Jackson immigration attorney, child custody Sacramento, green card attorney Elk Grove, Nigerian American attorney, Attorney at Law Elk Grove, Central Valley family law",
+      "aboutHtml": "<p>Clifford Chigbu is a California attorney and your dedicated legal advocate in Elk Grove. He's built his solo practice around one idea: families going through hard times deserve a lawyer who answers the phone, tells them the truth, and treats their case like it matters — because it does.</p><p>He doesn't fill the office with photos of himself or walls of diplomas. He fills it with clients who walk in worried and walk out with a plan. Whether you're navigating divorce, custody, or any of life's unexpected legal challenges, you'll get straight answers and experienced representation.</p><p>If a case isn't a fit, he'll tell you. If it is, he'll fight for it like it's his own.</p>",
+      "_aboutHtmlNote": "Placeholder — rewrite with his actual bio text once we have it. Current version synthesized from his site's tagline ('Your Dedicated Legal Advocates in Elk Grove') and what the user has told me about him.",
+      "practiceAreas": [
+        {
+          "id": "family",
+          "name": "Family Law",
+          "blurb": "Top-rated family law attorney in Elk Grove. Divorce, custody, child & spousal support, restraining orders, adoption.",
+          "areaHeadline": "Family decisions are personal. Your lawyer should be too.",
+          "areaSubhead": "Divorce, custody, support, restraining orders, adoption — direct representation from a top-rated Elk Grove attorney who actually knows your name.",
+          "bullets": [
+            "Uncontested and contested divorce",
+            "Child custody and visitation",
+            "Child support and spousal support",
+            "Domestic violence restraining orders",
+            "Adoption (step-parent, relative, agency)",
+            "Premarital and postnuptial agreements"
+          ],
+          "process": [
+            {
+              "step": "1. Quick intake",
+              "text": "6 questions to help us understand what kind of help you need."
+            },
+            {
+              "step": "2. Strategy meeting",
+              "text": "We sit down (or video call) and lay out your options, timelines, and likely outcomes."
+            },
+            {
+              "step": "3. Action",
+              "text": "Filing, negotiation, or trial — whatever protects you and your kids best."
+            }
+          ],
+          "areaFaq": [
+            {
+              "q": "How long does a divorce take in California?",
+              "a": "Six months minimum from the date the other party is served. Most cases settle before trial."
+            },
+            {
+              "q": "Do I need to go to court?",
+              "a": "Often no — many family law matters resolve through negotiation or mediation. But if court is needed, we're ready."
+            },
+            {
+              "q": "What if I can't afford this right now?",
+              "a": "We offer payment plans for most family matters. Tell us your situation honestly and we'll work with you."
+            }
+          ],
+          "intake": [
+            {
+              "name": "matter_type",
+              "label": "Type of family law matter",
+              "type": "select",
+              "options": [
+                "Divorce",
+                "Custody / visitation",
+                "Child support",
+                "Spousal support",
+                "Restraining order",
+                "Adoption",
+                "Other"
+              ],
+              "required": true
+            },
+            {
+              "name": "marriage_date",
+              "label": "Date of marriage (if married)",
+              "type": "text",
+              "required": false
+            },
+            {
+              "name": "separation_date",
+              "label": "Date of separation (if any)",
+              "type": "text",
+              "required": false
+            },
+            {
+              "name": "children",
+              "label": "Children — ages and current custody",
+              "type": "textarea",
+              "required": false
+            },
+            {
+              "name": "domestic_violence",
+              "label": "Any history of domestic violence?",
+              "type": "select",
+              "options": [
+                "No",
+                "Yes — against me",
+                "Yes — against the other party",
+                "Prefer to discuss in person"
+              ],
+              "required": true
+            },
+            {
+              "name": "urgency",
+              "label": "How urgent?",
+              "type": "select",
+              "options": [
+                "Emergency — today",
+                "Within a week",
+                "Within a month",
+                "Just exploring"
+              ],
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "immigration",
+          "name": "Immigration",
+          "blurb": "Family-based petitions, green cards, naturalization, deportation defense, work visas.",
+          "areaHeadline": "An immigrant lawyer for immigrants.",
+          "areaSubhead": "Mr. Chigbu came here from Nigeria. He understands what's at stake — and he treats every client's case like it's his family's.",
+          "bullets": [
+            "Family-based green cards and visa petitions",
+            "Naturalization and citizenship",
+            "Deportation and removal defense",
+            "Work visas (H-1B, L-1, O-1) and PERM",
+            "DACA renewals and adjustment of status",
+            "Asylum and humanitarian relief"
+          ],
+          "process": [
+            {
+              "step": "1. Confidential intake",
+              "text": "6 quick questions. Everything on this page is confidential."
+            },
+            {
+              "step": "2. Honest review",
+              "text": "Mr. Chigbu personally reviews — not a paralegal. He'll tell you what's possible and what's not."
+            },
+            {
+              "step": "3. Filing & follow-through",
+              "text": "We handle the petitions, the agencies, and we keep you informed at every step."
+            }
+          ],
+          "areaFaq": [
+            {
+              "q": "Is it safe to fill out this form if I'm undocumented?",
+              "a": "Yes. Everything you submit is protected by attorney-client confidentiality the moment we receive it."
+            },
+            {
+              "q": "Do you handle deportation cases?",
+              "a": "Yes. If you or a family member is in removal proceedings, contact us today — timing matters."
+            },
+            {
+              "q": "How long does it take to get a green card?",
+              "a": "It depends on the category and country of origin — anywhere from months to years. We'll give you a realistic timeline."
+            }
+          ],
+          "intake": [
+            {
+              "name": "country_of_origin",
+              "label": "Country of origin",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "current_status",
+              "label": "Current immigration status",
+              "type": "select",
+              "options": [
+                "U.S. citizen",
+                "Lawful permanent resident",
+                "Visa holder",
+                "Undocumented",
+                "Asylum seeker",
+                "DACA",
+                "Other / not sure"
+              ],
+              "required": true
+            },
+            {
+              "name": "family_in_us",
+              "label": "Immediate family in the U.S.?",
+              "type": "textarea",
+              "required": false
+            },
+            {
+              "name": "criminal_history",
+              "label": "Any criminal history (even minor)?",
+              "type": "select",
+              "options": [
+                "No",
+                "Yes — minor",
+                "Yes — significant",
+                "Prefer to discuss in person"
+              ],
+              "required": true
+            },
+            {
+              "name": "deportation",
+              "label": "In removal/deportation proceedings?",
+              "type": "select",
+              "options": [
+                "No",
+                "Yes",
+                "Not sure"
+              ],
+              "required": true
+            },
+            {
+              "name": "goal",
+              "label": "What outcome are you hoping for?",
+              "type": "textarea",
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "personal-injury",
+          "name": "Personal Injury",
+          "blurb": "Car accidents, slip and fall, dog bites, workplace injuries. No fee unless we win.",
+          "areaHeadline": "Injured? You pay nothing unless we win.",
+          "areaSubhead": "Free consultation. No fees, no costs, no risk to you. We only get paid if you do.",
+          "bullets": [
+            "Car, truck, and motorcycle accidents",
+            "Slip and fall / premises liability",
+            "Dog bites",
+            "Workplace injuries and third-party claims",
+            "Wrongful death",
+            "We front all costs — you pay nothing out of pocket"
+          ],
+          "process": [
+            {
+              "step": "1. Free consultation",
+              "text": "Tell us what happened. We'll tell you straight whether you have a case."
+            },
+            {
+              "step": "2. Investigation & treatment",
+              "text": "We work with medical providers and gather evidence while you focus on recovery."
+            },
+            {
+              "step": "3. Settlement or trial",
+              "text": "Most cases settle. If insurance won't be reasonable, we go to trial."
+            }
+          ],
+          "areaFaq": [
+            {
+              "q": "How much does this cost me?",
+              "a": "Nothing up front. Our fee is a percentage of the recovery — only if we win."
+            },
+            {
+              "q": "How long do I have to file?",
+              "a": "California's deadline (statute of limitations) is generally 2 years for personal injury, but it can be much shorter in some cases. Don't wait — call."
+            },
+            {
+              "q": "Should I talk to the other side's insurance?",
+              "a": "No. Talk to us first — anything you say to them can be used to lower your settlement."
+            }
+          ],
+          "intake": [
+            {
+              "name": "incident_type",
+              "label": "What kind of incident?",
+              "type": "select",
+              "options": [
+                "Car accident",
+                "Slip and fall",
+                "Workplace injury",
+                "Dog bite",
+                "Medical injury",
+                "Other"
+              ],
+              "required": true
+            },
+            {
+              "name": "incident_date",
+              "label": "Date of incident",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "injuries",
+              "label": "Briefly describe your injuries",
+              "type": "textarea",
+              "required": true
+            },
+            {
+              "name": "treatment",
+              "label": "Currently receiving medical treatment?",
+              "type": "select",
+              "options": [
+                "Yes",
+                "No",
+                "I should be"
+              ],
+              "required": true
+            },
+            {
+              "name": "insurance_contact",
+              "label": "Has any insurance company contacted you?",
+              "type": "select",
+              "options": [
+                "No",
+                "Yes — mine",
+                "Yes — other party's",
+                "Yes — both"
+              ],
+              "required": true
+            },
+            {
+              "name": "police_report",
+              "label": "Was a police report filed?",
+              "type": "select",
+              "options": [
+                "Yes",
+                "No",
+                "Not sure"
+              ],
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "bankruptcy",
+          "name": "Bankruptcy",
+          "blurb": "Chapter 7 and Chapter 13. Stop garnishments, foreclosure, harassment from creditors.",
+          "areaHeadline": "Stop the harassment. Get your life back.",
+          "areaSubhead": "Chapter 7 and Chapter 13 bankruptcy in California. Most clients walk out of the first meeting with a real plan and a real number.",
+          "bullets": [
+            "Stop wage garnishments — usually within 24 hours of filing",
+            "Stop foreclosure and repossession",
+            "End creditor calls and lawsuits",
+            "Wipe out qualifying credit card, medical, and personal-loan debt",
+            "Payment plans available for filing fees and attorney fees"
+          ],
+          "process": [
+            {
+              "step": "1. Quick intake",
+              "text": "6 questions on this page. Takes about 90 seconds."
+            },
+            {
+              "step": "2. Honest assessment",
+              "text": "Mr. Chigbu reviews and tells you straight whether bankruptcy is your best move — and which chapter."
+            },
+            {
+              "step": "3. Filing & relief",
+              "text": "If we move forward, the automatic stay stops creditor action the moment we file."
+            }
+          ],
+          "areaFaq": [
+            {
+              "q": "Will I lose my house?",
+              "a": "Usually no. California's homestead exemption protects most home equity for primary residences. We'll review your specific situation."
+            },
+            {
+              "q": "How long does it take?",
+              "a": "Chapter 7 typically wraps in 3–4 months. Chapter 13 is a 3–5 year plan."
+            },
+            {
+              "q": "Will it ruin my credit?",
+              "a": "Bankruptcy stays on your credit 7–10 years, but most clients see scores recover faster than they expected — and you start from zero debt."
+            }
+          ],
+          "intake": [
+            {
+              "name": "monthly_income",
+              "label": "Approximate monthly household income",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "total_unsecured_debt",
+              "label": "Total unsecured debt (credit cards, medical, personal loans)",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "own_home",
+              "label": "Do you own a home?",
+              "type": "select",
+              "options": [
+                "Yes",
+                "No"
+              ],
+              "required": true
+            },
+            {
+              "name": "garnishment",
+              "label": "Are wages currently being garnished?",
+              "type": "select",
+              "options": [
+                "Yes",
+                "No",
+                "Threatened but not yet"
+              ],
+              "required": true
+            },
+            {
+              "name": "prior_bankruptcy",
+              "label": "Filed bankruptcy before?",
+              "type": "select",
+              "options": [
+                "No",
+                "Yes — within 8 years",
+                "Yes — over 8 years ago"
+              ],
+              "required": true
+            },
+            {
+              "name": "goal",
+              "label": "What's your top priority?",
+              "type": "select",
+              "options": [
+                "Stop creditor harassment",
+                "Save my home",
+                "Wipe out debt and start over",
+                "Stop wage garnishment",
+                "Not sure yet"
+              ],
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "business",
+          "name": "Business & Contract Law",
+          "blurb": "Contract drafting and review, business formation, disputes, and negotiation.",
+          "areaHeadline": "Business decisions that hold up in court.",
+          "areaSubhead": "Contracts, formations, and disputes handled by a California attorney who's been doing this for years.",
+          "bullets": [
+            "Contract drafting, review, and negotiation",
+            "LLC and corporation formation",
+            "Breach of contract disputes",
+            "Partnership agreements",
+            "Vendor and service agreements",
+            "Business purchase and sale"
+          ],
+          "process": [
+            {
+              "step": "1. Quick intake",
+              "text": "6 questions to understand what you're working on."
+            },
+            {
+              "step": "2. Review & strategy",
+              "text": "We look at your contract, situation, or dispute and tell you what's enforceable and what's not."
+            },
+            {
+              "step": "3. Action",
+              "text": "Draft, revise, negotiate, or litigate — whatever the matter needs."
+            }
+          ],
+          "areaFaq": [
+            {
+              "q": "Do I really need a lawyer to form an LLC?",
+              "a": "Not legally — but DIY filings often miss operating agreement details that matter when disputes come up later. A small upfront investment saves big headaches."
+            },
+            {
+              "q": "Someone breached our contract. What now?",
+              "a": "Call us before you send any demand letters. What you say early can affect the remedies you have later."
+            },
+            {
+              "q": "Can you review a contract before I sign it?",
+              "a": "Yes — and we strongly recommend it for anything significant. Flat-rate reviews available."
+            }
+          ],
+          "intake": [
+            {
+              "name": "matter_type",
+              "label": "What kind of business matter?",
+              "type": "select",
+              "options": [
+                "Contract review",
+                "Contract drafting",
+                "Business formation (LLC / corp)",
+                "Breach of contract / dispute",
+                "Partnership issue",
+                "Business sale or purchase",
+                "Other"
+              ],
+              "required": true
+            },
+            {
+              "name": "business_type",
+              "label": "Your business type",
+              "type": "select",
+              "options": [
+                "Sole proprietor",
+                "LLC",
+                "Corporation",
+                "Partnership",
+                "Not yet formed",
+                "Other"
+              ],
+              "required": true
+            },
+            {
+              "name": "other_party",
+              "label": "Who is the other party? (vendor, partner, customer, etc.)",
+              "type": "text",
+              "required": false
+            },
+            {
+              "name": "contract_value",
+              "label": "Approximate dollar value at stake",
+              "type": "text",
+              "required": false
+            },
+            {
+              "name": "deadline",
+              "label": "Any deadline or filing date?",
+              "type": "text",
+              "required": false
+            },
+            {
+              "name": "summary",
+              "label": "Briefly describe the situation",
+              "type": "textarea",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "q": "Is the consultation free?",
+          "a": "Personal injury consultations are free — and PI cases are handled on contingency, meaning no fee unless we win. For other matters, we charge a modest consultation fee that's credited toward your case if you decide to retain us."
+        },
+        {
+          "q": "Do you take cases on a payment plan?",
+          "a": "For most matters, yes. We'll work out something that fits your situation in the first meeting."
+        },
+        {
+          "q": "What languages do you speak?",
+          "a": "English and Igbo. We can also arrange interpreters for Spanish and other languages on request."
+        },
+        {
+          "q": "Where is your office?",
+          "a": "Elk Grove, California — serving the greater Sacramento area. We meet by appointment and also do phone and video consultations."
+        },
+        {
+          "q": "How fast can we meet?",
+          "a": "Same day or next day in most cases. Call the number on this page."
+        },
+        {
+          "q": "Are you really a licensed attorney?",
+          "a": "Yes — Mr. Chigbu is an active member in good standing of the State Bar of California. You can verify any time at calbar.ca.gov."
+        }
+      ]
+    },
+    {
+      "id": "mobilecarbsmoketest",
+      "domain": "mobilecarbsmoketest.com",
+      "city": "San Diego",
+      "region": "All San Diego County",
+      "phone": "(619) 786-4328",
+      "phoneRaw": "+16197864328",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#3D2E1E",
+        "accent": "#FFC107",
+        "background": "#3D2E1E",
+        "text": "#FFFFFF",
+        "muted": "#C9BFB3"
+      },
+      "themeName": "san-diego-amber"
+    },
+    {
+      "id": "cleantruckcheck-roseville",
+      "domain": "cleantruckcheckroseville.com",
+      "city": "Roseville",
+      "region": "Roseville / Placer County",
+      "phone": "(916) 890-0427",
+      "phoneRaw": "+19168900427",
+      "_phoneNote": "User said 916-89-0427 — assumed 916-890-0427. Confirm.",
+      "colors": {
+        "primary": "#FD5A1E",
+        "primaryDark": "#27251F",
+        "accent": "#EFB21E",
+        "background": "#27251F",
+        "text": "#FFFFFF",
+        "muted": "#AE8F6F"
+      },
+      "themeName": "sf-giants",
+      "_themeNote": "San Francisco Giants colors: orange (#FD5A1E), black (#27251F), gold (#EFB21E)"
+    },
+    {
+      "id": "cleantruckcheck-fairfield",
+      "domain": "cleantruckcheckfairfield.com",
+      "city": "Fairfield",
+      "region": "Fairfield / Solano County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#0033A0",
+        "primaryDark": "#0A0F2C",
+        "accent": "#A6A6A6",
+        "background": "#0A0F2C",
+        "text": "#FFFFFF",
+        "muted": "#B8C0D0"
+      },
+      "themeName": "air-force-academy",
+      "_themeNote": "Air Force Academy: royal blue (#0033A0), silver (#A6A6A6)"
+    },
+    {
+      "id": "cleantruckcheck-lodi",
+      "domain": "cleantruckchecklodi.com",
+      "city": "Lodi",
+      "region": "Lodi / San Joaquin County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#782F40",
+        "primaryDark": "#1A0A0F",
+        "accent": "#CEB888",
+        "background": "#1A0A0F",
+        "text": "#FFFFFF",
+        "muted": "#CEB888"
+      },
+      "themeName": "florida-state",
+      "_themeNote": "Florida State Seminoles: garnet (#782F40), gold (#CEB888)"
+    },
+    {
+      "id": "carbteststockton",
+      "domain": "carbteststockton.com",
+      "city": "Stockton",
+      "region": "Stockton / San Joaquin County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#C8102E",
+        "primaryDark": "#000000",
+        "accent": "#F1BE48",
+        "background": "#000000",
+        "text": "#FFFFFF",
+        "muted": "#F1BE48"
+      },
+      "themeName": "stockton-heat",
+      "_themeNote": "Stockton Heat (AHL hockey): red (#C8102E), black (#000000), yellow (#F1BE48)"
+    },
+    {
+      "id": "cleantruckcheck-stockton",
+      "domain": "cleantruckcheckstockton.com",
+      "city": "Stockton",
+      "region": "Stockton / San Joaquin County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#1A1A1A",
+        "accent": "#FFC107",
+        "background": "#1A1A1A",
+        "text": "#FFFFFF",
+        "muted": "#A0A0A0"
+      },
+      "themeName": "default-amber"
+    },
+    {
+      "id": "cleantruckcheck-hayward",
+      "domain": "cleantruckcheckhayward.com",
+      "city": "Hayward",
+      "region": "Hayward / Alameda County",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#A5ACAF",
+        "primaryDark": "#000000",
+        "accent": "#A5ACAF",
+        "background": "#000000",
+        "text": "#FFFFFF",
+        "muted": "#9099A0"
+      },
+      "themeName": "raiders",
+      "_themeNote": "Las Vegas Raiders: silver (#A5ACAF), black (#000000)"
+    },
+    {
+      "id": "carb-clean-truck-check",
+      "domain": "carb-clean-truck-check.com",
+      "city": "California",
+      "region": "Statewide",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#1A1A1A",
+        "accent": "#FFC107",
+        "background": "#1A1A1A",
+        "text": "#FFFFFF",
+        "muted": "#A0A0A0"
+      },
+      "themeName": "default-amber"
+    },
+    {
+      "id": "mobilecarbtest",
+      "domain": "mobilecarbtest.com",
+      "city": "California",
+      "region": "Statewide",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#AA0000",
+        "primaryDark": "#1C1C1C",
+        "accent": "#B3995D",
+        "background": "#1C1C1C",
+        "text": "#FFFFFF",
+        "muted": "#B3995D"
+      },
+      "themeName": "49ers",
+      "_themeNote": "San Francisco 49ers: scarlet (#AA0000), gold (#B3995D)"
+    },
+    {
+      "id": "mobilesmoketest",
+      "domain": "mobilesmoketest.com",
+      "city": "California",
+      "region": "Statewide",
+      "phone": "TBD",
+      "phoneRaw": "TBD",
+      "colors": {
+        "primary": "#FFC107",
+        "primaryDark": "#3D2E1E",
+        "accent": "#FFC107",
+        "background": "#3D2E1E",
+        "text": "#FFFFFF",
+        "muted": "#C9BFB3"
+      },
+      "themeName": "default-amber"
+    }
+  ]
+}

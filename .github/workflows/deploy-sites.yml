@@ -1,0 +1,95 @@
+name: 🚀 Deploy Silverback Sites
+
+# Builds sites/sites.json -> sites/dist/* and deploys every site as its own
+# Cloudflare Worker. Adding a new site to sites.json automatically gets it
+# deployed on the next run — no workflow edits needed.
+#
+# ONE-TAP DEPLOY:
+#   GitHub mobile app → Actions tab → "🚀 Deploy Silverback Sites" → Run workflow
+#   → pick a site from the dropdown (or "ALL") → tap green button. Done.
+
+on:
+  push:
+    branches: [main, master, "claude/**"]
+    paths:
+      - "sites/**"
+      - ".github/workflows/deploy-sites.yml"
+  workflow_dispatch:
+    inputs:
+      site:
+        description: "Which site to deploy"
+        required: true
+        default: "ALL"
+        type: choice
+        options:
+          - ALL
+          - chigbulaws
+          - mobilecarbsmoketest
+          - cleantruckcheck-roseville
+          - cleantruckcheck-fairfield
+          - cleantruckcheck-stockton
+          - cleantruckcheck-hayward
+          - cleantruckcheck-lodi
+          - carbteststockton
+          - carb-clean-truck-check
+          - mobilecarbtest
+          - mobilesmoketest
+
+jobs:
+  build:
+    name: 🔨 Build all sites
+    runs-on: ubuntu-latest
+    outputs:
+      sites: ${{ steps.list.outputs.sites }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Build all sites
+        run: node sites/build.mjs
+      - name: List sites to deploy
+        id: list
+        run: |
+          input="${{ github.event.inputs.site }}"
+          if [ -z "$input" ] || [ "$input" = "ALL" ]; then
+            sites=$(ls sites/dist | jq -R . | jq -sc .)
+          else
+            sites="[\"$input\"]"
+          fi
+          echo "sites=$sites" >> $GITHUB_OUTPUT
+          echo "Will deploy: $sites" >> $GITHUB_STEP_SUMMARY
+      - name: Upload built artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sites-dist
+          path: sites/dist
+          retention-days: 7
+
+  deploy:
+    name: 🚀 Deploy ${{ matrix.site }}
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site: ${{ fromJson(needs.build.outputs.sites) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: sites-dist
+          path: sites/dist
+      - name: Deploy ${{ matrix.site }} to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: bafa242dd95d3fdce72540d20accd0a2
+          workingDirectory: sites/dist/${{ matrix.site }}
+          command: deploy
+      - name: Show deploy URL
+        if: success()
+        run: |
+          echo "## ✅ ${{ matrix.site }} deployed" >> $GITHUB_STEP_SUMMARY
+          echo "Workers.dev URL: https://${{ matrix.site }}.silverbackai.workers.dev" >> $GITHUB_STEP_SUMMARY
+          echo "Custom domain (when DNS is set): check sites.json for the domain" >> $GITHUB_STEP_SUMMARY
