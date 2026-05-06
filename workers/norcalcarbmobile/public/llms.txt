@@ -1,0 +1,24 @@
+# NorCal CARB Mobile
+
+> Licensed mobile CARB emissions testing across Northern California. OBD ($75), OVI-J1667 (smoke/opacity, $250), motorhome/RV, fleet, and agricultural diesel testing. Owner: Bryan Gillis, CARB Tester ID IF530523, recognized by the California Air Resources Board. Two offices: Sacramento and Oakland. Phone: 916-890-4427. Email: sales@norcalcarbmobile.com.
+
+## Pages
+
+- [Home](https://norcalcarbmobile.com/): Mobile CARB testing services overview, pricing, owner credential.
+- [Services](https://norcalcarbmobile.com/services/): OBD $75, OVI-J1667 $250, motorhome/RV, fleet compliance, agricultural.
+- [Service Areas](https://norcalcarbmobile.com/service-areas/): Northern California coverage from two offices — Sacramento and Oakland. Includes Stockton, Modesto, Roseville, Lodi, Tracy, Hayward, Antioch, Fairfield, San Jose, Napa, North Bay, Bay Area, Butte County, plus extended coverage to Orange County and San Diego.
+- [FAQ](https://norcalcarbmobile.com/faq/): CARB Clean Truck Check, OBD vs OVI-J1667, pricing, scheduling, HD-OBD reporting.
+- [About](https://norcalcarbmobile.com/about/): Bryan Gillis, owner and licensed CARB tester (IF530523).
+- [Contact](https://norcalcarbmobile.com/contact/): Phone, email, hours, two-office NAP.
+- [Blog](https://norcalcarbmobile.com/blog/): Articles on CARB testing, Clean Truck Check, compliance deadlines.
+
+## Key facts
+
+- **Phone**: 916-890-4427
+- **Email**: sales@norcalcarbmobile.com
+- **Hours**: Mon–Fri 6am–5pm PT, Saturday 8am–4pm PT, closed Sunday
+- **Owner**: Bryan Gillis
+- **Credential**: CARB Tester ID IF530523, California Air Resources Board
+- **Offices**: Sacramento, Oakland
+- **Pricing**: OBD $75 / OVI-J1667 $250 / Motorhome+RV $75+$250 / Fleet custom
+- **Retest policy**: Free retest within 150 days on a failed test

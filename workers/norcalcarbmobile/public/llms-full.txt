@@ -1,0 +1,95 @@
+# NorCal CARB Mobile — full content for LLM ingestion
+
+Licensed mobile CARB emissions testing across Northern California. Owner: Bryan Gillis. CARB Tester ID IF530523. Two offices: Sacramento and Oakland. Phone: 916-890-4427. Email: sales@norcalcarbmobile.com.
+
+## Owner & credential
+
+NorCal CARB Mobile LLC is owned and operated by Bryan Gillis. Bryan holds CARB Tester ID IF530523, issued by the California Air Resources Board. Every test issued by NorCal CARB Mobile is an official CARB-recognized document accepted for California registration, CARB Clean Truck Check compliance, and HD-OBD reporting.
+
+## Services and pricing
+
+### OBD Testing — $75 per vehicle
+On-board diagnostic testing reads emissions data and fault codes directly from the truck's ECM. Required for 2013 and newer heavy-duty diesel vehicles under the CARB Clean Truck Check program. Test takes 15-20 minutes. Free retest within 150 days on fail.
+
+### OVI-J1667 (Smoke / Opacity Testing) — $250 per vehicle
+Opacity Visible Inspection performed to SAE standard J1667. A snap-acceleration smoke test where exhaust opacity is measured with calibrated equipment. Required for pre-2013 heavy-duty diesel vehicles. "OVI-J1667" and "smoke test" refer to the same procedure. Test takes 20-30 minutes. Free retest within 150 days on fail.
+
+### Motorhome / RV Testing — $75 OBD + $250 OVI-J1667
+Full CARB testing for Class A, B, and C motorhomes and diesel RVs. We come to your storage facility, campsite, or driveway. We handle paperwork and CARB documentation.
+
+### Agricultural Vehicle Testing
+CARB emissions testing for tractors, combines, irrigation engines, and diesel ag equipment 25 hp or greater operating in California. Subject to CARB In-Use Off-Road Diesel Regulation. On-site at your farm or equipment yard.
+
+### Fleet Compliance Testing — custom quote
+Multi-vehicle CARB testing at your yard, depot, or parking lot. Volume scheduling for fleets of 3+ vehicles. Volume pricing for 5+ vehicles. One invoice for all vehicles. Custom quote within 1 business day.
+
+## Service area
+
+We serve all of Northern California from two offices: Sacramento and Oakland. Coverage includes:
+
+- Sacramento metro (Sacramento, Elk Grove, Roseville, Rancho Cordova, Folsom)
+- San Joaquin County (Stockton, Lodi, Galt, Tracy, Manteca)
+- Stanislaus County (Modesto, Turlock, Merced)
+- Alameda County / East Bay (Oakland, Hayward, Fremont, Berkeley, Alameda, San Leandro)
+- Contra Costa County (Antioch, Pittsburg, Brentwood)
+- Solano County (Fairfield, Vacaville, Vallejo)
+- Santa Clara County / South Bay (San Jose, Santa Clara, Sunnyvale)
+- Napa Valley and North Bay (Napa, St. Helena, Calistoga, Marin, Sonoma)
+- Butte County (Chico, Oroville)
+- Extended coverage: Orange County, San Diego
+
+If in California and you need a licensed CARB test, call 916-890-4427.
+
+## CARB Clean Truck Check
+
+The CARB Clean Truck Check is a mandatory emissions testing program from the California Air Resources Board for heavy-duty diesel trucks operating in California. It requires OBD testing for 2013+ trucks and OVI-J1667 (smoke/opacity) testing for older trucks. Phases in by vehicle weight class, model year, and engine family. Penalties for non-compliance start at $1,000 per day.
+
+Vehicles needing CARB testing: heavy-duty diesel trucks and buses with GVWR of 14,001 lbs or more operating in California. 2013+ trucks need OBD. Pre-2013 trucks need OVI-J1667. Some compliance programs require both. Diesel motorhomes/RVs follow the same rules by model year.
+
+## HD-OBD reporting
+
+HD-OBD (Heavy-Duty On-Board Diagnostic) reporting is the electronic submission of OBD test data to CARB. Under the Clean Truck Check program, OBD results must be transmitted to CARB's database. NorCal CARB Mobile handles this submission as part of every OBD test — no extra steps from the customer.
+
+## OBD vs OVI-J1667 — which do I need?
+
+- 2013 or newer heavy-duty diesel: OBD testing ($75)
+- Pre-2013 heavy-duty diesel: OVI-J1667 smoke/opacity testing ($250)
+- Some programs: both tests required
+
+Call with the VIN to confirm exactly what your truck needs.
+
+## How scheduling works
+
+Call 916-890-4427 or email sales@norcalcarbmobile.com. Provide:
+- Number of vehicles
+- Vehicle model years (or VINs)
+- Location (city + ZIP, or address for fleet visit)
+- Preferred time window
+- Phone number
+
+We confirm within the hour during business hours. Fleet visits are scheduled to minimize downtime by testing multiple vehicles in a single appointment.
+
+## What happens if a vehicle fails
+
+The customer receives an official failure report listing the reason for failure. Once the customer repairs the issue, contact us. Free retests are available within 150 days of the original test at no additional charge.
+
+## Why mobile testing
+
+- Zero downtime: we test at your yard, driveway, or job site
+- Same-day results: official pass/fail issued on-site
+- CARB-accepted: results valid for California registration and compliance
+- Free retest: within 150 days on fail
+- Licensed tester: all results issued under CARB Tester ID IF530523
+
+## Hours
+
+- Monday–Friday: 6:00 AM – 5:00 PM PT
+- Saturday: 8:00 AM – 4:00 PM PT
+- Sunday: closed
+
+## Contact
+
+- Phone: 916-890-4427
+- Email: sales@norcalcarbmobile.com
+- Offices: Sacramento, Oakland
+- Website: https://norcalcarbmobile.com/

@@ -1,0 +1,75 @@
+# Squarespace boilerplate → home or contact
+/cart                                /                              301
+/checkout                            /                              301
+/booking                             /contact/                      301
+/book                                /contact/                      301
+/book-now                            /contact/                      301
+/book-near-me                        /contact/                      301
+/contact-us                          /contact/                      301
+/thank-you                           /contact/                      301
+
+# Service / pricing pages from Squarespace
+/mobile-carb-clean-truck-check       /services/                     301
+/obd-and-ovi-mobile                  /services/                     301
+/obd-and-ovi-mobile-1                /services/                     301
+/obd-75-near-me                      /services/#obd                 301
+/j1667-199                           /services/#OVI-J1667           301
+/j1667                               /services/#OVI-J1667           301
+/motorhome-testing-250               /services/#rv                  301
+/motorhome                           /services/#rv                  301
+/carb-agricultural-vehicles          /services/#agricultural        301
+/clean-truck-services                /services/                     301
+/carb-cost-near-me                   /services/                     301
+
+# Educational pages → FAQ + about
+/what-is-clean-truck-check           /faq/#what-is-clean-truck-check 301
+/clean-truck-check                   /faq/#what-is-clean-truck-check 301
+/carb-penalties-deadlines            /faq/                          301
+/carb-penalties                      /faq/                          301
+/compliance-team                     /about/                        301
+/compliance-app                      /faq/                          301
+/account-setup                       /faq/#tester-id                301
+/carb-account-setup                  /faq/#tester-id                301
+/qa-glossary                         /faq/                          301
+/glossary                            /faq/                          301
+/faqs                                /faq/                          301
+
+# City pages from Squarespace → service-areas anchors
+/sacramento                          /service-areas/#sacramento     301
+/stockton                            /service-areas/#stockton       301
+/modesto                             /service-areas/#modesto        301
+/roseville                           /service-areas/#roseville      301
+/lodi                                /service-areas/#lodi           301
+/tracy                               /service-areas/#tracy-livermore 301
+/tracy-livermore                     /service-areas/#tracy-livermore 301
+/hayward                             /service-areas/#hayward        301
+/fairfield                           /service-areas/#fairfield      301
+/antioch                             /service-areas/#antioch        301
+/san-jose                            /service-areas/#san-jose       301
+/napa                                /service-areas/#napa           301
+/napa-valley                         /service-areas/#napa           301
+/oakland                             /service-areas/#oakland        301
+/bay-area                            /service-areas/#bay-area       301
+/east-bay                            /service-areas/#east-bay       301
+/north-bay                           /service-areas/#north-bay      301
+/butte-county                        /service-areas/#butte-county   301
+/orange-county                       /service-areas/#orange-county  301
+/san-diego                           /service-areas/#san-diego      301
+/carb-service-locations              /service-areas/                301
+
+# Reviews / external
+/google-reviews-map                  /                              301
+/reviews                             /                              301
+
+# Legal
+/privacy-policy                      /privacy/                      301
+/terms-and-conditions                /terms/                        301
+/tos                                 /terms/                        301
+
+# Squarespace asset paths
+/s/*                                 /                              301
+
+# Misc Squarespace
+/new-page                            /                              301
+/member-site                         /                              301
+/norcal-carb-mobile-2026             /                              301
