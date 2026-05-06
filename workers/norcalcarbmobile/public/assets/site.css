@@ -49,6 +49,10 @@ img { max-width: 100%; height: auto; display: block; }
 .badges { display: flex; gap: 28px; margin-top: 36px; flex-wrap: wrap; color: #d6e1ef; font-size: 14px; }
 .badges strong { color: #fff; display: block; font-size: 16px; }
 
+.crumbs-hero { font-size: 14px; color: #d6e1ef; margin-bottom: 16px; }
+.crumbs-hero a { color: #ffb3bf; }
+.crumbs-hero a:hover { color: #fff; }
+
 main section { padding: 56px 0; }
 main section.alt { background: var(--soft); }
 h2 { font-size: clamp(24px, 3.5vw, 34px); color: var(--navy); margin-bottom: 12px; font-weight: 800; line-height: 1.2; }
@@ -58,24 +62,41 @@ ul, ol { padding-left: 22px; margin-bottom: 14px; }
 li { margin-bottom: 6px; }
 .sub { color: var(--mute); font-size: 17px; margin-bottom: 32px; max-width: 720px; }
 
+hr { border: none; border-top: 1px solid var(--line); margin: 40px 0; }
+
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-.card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; transition: box-shadow 0.15s, transform 0.15s; }
+.card:hover { box-shadow: 0 4px 16px rgba(0,34,68,0.08); }
 .card.alt { background: var(--soft); }
 .card h3 { margin-bottom: 8px; }
 .card .price { font-size: 24px; color: var(--red); font-weight: 800; margin: 8px 0 4px; }
 .card .price small { color: var(--mute); font-size: 13px; font-weight: 500; }
 
-.faq-item { border: 1px solid var(--line); border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; background: #fff; }
-.faq-item h3 { margin-bottom: 6px; }
-.faq-item p { margin: 0; color: var(--navy-ink); }
+.about-grid { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: start; }
+@media (min-width: 720px) { .about-grid { grid-template-columns: 320px 1fr; gap: 40px; } }
+.about-photo img { border-radius: 12px; width: 100%; max-width: 320px; }
 
-.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 24px; }
+.price-block { margin: 20px 0; padding: 16px 20px; background: var(--soft); border-radius: 8px; display: inline-block; }
+.price-lg { font-size: 32px; font-weight: 800; color: var(--red); }
+.price-unit { font-size: 14px; color: var(--mute); font-weight: 600; }
+
+.faq-list .faq-item { border: 1px solid var(--line); border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; background: #fff; }
+.faq-item h2 { font-size: 20px; color: var(--navy); margin-bottom: 8px; font-weight: 700; }
+.faq-item h3 { margin-bottom: 6px; }
+.faq-item p { margin: 0 0 10px; color: var(--navy-ink); }
+.faq-item p:last-child { margin-bottom: 0; }
+.faq-item ul { margin-bottom: 10px; }
+
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 24px; }
 .info-tile { background: var(--soft); border-left: 4px solid var(--red); padding: 18px 20px; border-radius: 6px; }
 .info-tile h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--mute); margin-bottom: 6px; font-weight: 700; }
 .info-tile p, .info-tile a { font-size: 20px; font-weight: 700; color: var(--navy); text-decoration: none; }
 .info-tile a:hover { color: var(--red); }
 
 .callout { background: #fff4f5; border-left: 4px solid var(--red); padding: 16px 20px; border-radius: 6px; margin: 16px 0; color: var(--navy-ink); }
+.callout dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 0; }
+.callout dt { font-weight: 700; color: var(--navy); font-size: 14px; }
+.callout dd { color: var(--navy-ink); font-size: 14px; margin: 0; }
 
 footer { background: var(--navy); color: #d6e1ef; padding: 48px 0 24px; }
 footer a { color: #fff; text-decoration: none; }
@@ -85,10 +106,6 @@ footer a:hover { text-decoration: underline; }
 .footer-grid ul { list-style: none; padding: 0; }
 .footer-grid li { margin-bottom: 8px; font-size: 15px; }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 20px; font-size: 13px; color: #8ea0b8; line-height: 1.9; }
-
-.crumbs { font-size: 14px; color: var(--mute); margin-bottom: 16px; }
-.crumbs a { color: var(--mute); }
-.crumbs a:hover { color: var(--red); }
 
 .center { text-align: center; }
 .muted { color: var(--mute); }
