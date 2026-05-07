@@ -14,6 +14,7 @@ workers/
 ├── silverbackai-toolkit/      # AI tools catalog (worker.js → HTML)
 ├── security-silverbackai/     # Security dashboard (worker.js → HTML + JSON API)
 ├── cleantruckcheckstockton/   # CARB emissions testing service (worker.js → HTML)
+├── portfolio-showcase/        # 3-tile mosaic (Rent Ruby / Convicts for a Clean CA / Undefeated)
 ├── silverback-ai-studio/      # Full React + Express security app (NOT a CF Worker)
 └── dmc-properties/            # Property management dashboard (static HTML)
 ```
@@ -48,6 +49,7 @@ npm run lint     # TypeScript type check (tsc --noEmit)
 
 - Workers return full HTML as template literals inside `fetch()` handler — all CSS is inlined
 - Dark theme with purple accents (`#8b5cf6`) is the brand standard across all sites
+- The `portfolio-showcase` worker bundles `dmc-properties/rent-roll.html` (copied locally) via wrangler `[[rules]] type = "Text"` and serves it at `/rent-ruby` — use this pattern when a worker needs to inline a large static HTML asset instead of pasting it into a template literal
 - The security-silverbackai worker has `/api/health` and `/api/status` JSON endpoints
 - Firebase admin is hardcoded to `bryan@norcalcarbmobile.com` in studio app
 - Firestore rules enforce auth and role-based access (admin vs viewer)
