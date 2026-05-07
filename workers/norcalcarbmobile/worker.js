@@ -1,4 +1,5 @@
 // worker.js — NorCal CARB Mobile
+// Deployment: 2026-05-07 - PUSH DEPLOY ITERATE DOMINATE
 // Minimal pass-through to Workers Static Assets. All content lives in /public.
 // Reserved hook at /api/* for future form handler (Turnstile + MailChannels).
 

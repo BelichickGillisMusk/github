@@ -1,4 +1,5 @@
 // worker.js - Silverback AI Homepage
+// Deployment: 2026-05-07 - PUSH DEPLOY ITERATE DOMINATE
 //
 // Routes:
 //   GET  /robots.txt     -> robots file
