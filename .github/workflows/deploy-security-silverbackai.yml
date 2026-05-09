@@ -1,0 +1,23 @@
+name: Deploy Security Silverback AI to Cloudflare
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'workers/security-silverbackai/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy security-silverbackai
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: bafa242dd95d3fdce72540d20accd0a2
+          workingDirectory: workers/security-silverbackai
+          command: deploy

@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "bryan@norcalcarbmobile.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidDateString(dateStr) {
+      return dateStr is string && dateStr.matches("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.*Z?$");
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'role']) &&
+             data.uid == request.auth.uid &&
+             isValidEmail(data.email) &&
+             data.role in ['admin', 'viewer'];
+    }
+
+    function isValidEventLog(data) {
+      return data.keys().hasAll(['timestamp', 'type', 'description', 'severity']) &&
+             isValidDateString(data.timestamp) &&
+             data.type in ['theft', 'break-in', 'sublease_violation', 'general_activity', 'weirdness_alert'] &&
+             data.description is string && data.description.size() < 1000 &&
+             data.severity in ['low', 'medium', 'high', 'critical'] &&
+             (!('aiAnalysis' in data) || (data.aiAnalysis is string && data.aiAnalysis.size() < 5000));
+    }
+
+    function isValidWeirdnessConfig(data) {
+      return data.keys().hasAll(['normalHours', 'motionThreshold', 'lingeringThreshold', 'emailTo']) &&
+             data.normalHours is list &&
+             data.motionThreshold is number &&
+             data.lingeringThreshold is int &&
+             isValidEmail(data.emailTo) &&
+             (!('rtspUrl' in data) || data.rtspUrl is string) &&
+             (!('rtspUsername' in data) || data.rtspUsername is string) &&
+             (!('rtspPassword' in data) || data.rtspPassword is string);
+    }
+
+    function isValidSecurityReport(data) {
+      return data.keys().hasAll(['generatedAt', 'period', 'summary', 'eventCount']) &&
+             isValidDateString(data.generatedAt) &&
+             data.period in ['daily', 'weekly', 'monthly'] &&
+             data.summary is string && data.summary.size() < 5000 &&
+             data.eventCount is int;
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId) && isValidUser(request.resource.data) && (request.resource.data.role == 'viewer' || isAdmin());
+      allow update: if isOwner(userId) && isValidUser(request.resource.data) && (request.resource.data.role == resource.data.role || isAdmin());
+    }
+
+    match /event_logs/{logId} {
+      allow read: if isAuthenticated();
+      allow create: if isAdmin() && isValidEventLog(request.resource.data);
+      allow update, delete: if isAdmin();
+    }
+
+    match /security_reports/{reportId} {
+      allow read: if isAuthenticated();
+      allow create: if isAdmin() && isValidSecurityReport(request.resource.data);
+      allow update, delete: if isAdmin();
+    }
+
+    match /config/weirdness {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidWeirdnessConfig(request.resource.data);
+    }
+  }
+}
