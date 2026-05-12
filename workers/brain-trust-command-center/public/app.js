@@ -83,14 +83,33 @@ const initialMessages = [
   },
 ];
 
+const params = new URLSearchParams(window.location.search);
+const requestedView = params.get("view");
+const requestedProvider = params.get("provider");
+const demoMode = params.get("demo");
+
 const state = {
-  view: "hq",
-  provider: "claude",
+  view: channels.some((channel) => channel.id === requestedView) ? requestedView : "hq",
+  provider: providers.some((provider) => provider.id === requestedProvider) ? requestedProvider : "claude",
   search: "",
   prompt: "Draft a handoff for Samantha to finish the GCP launch.",
   messages: loadMessages(),
-  toast: "",
+  toast: params.get("toast") || "",
 };
+
+if (demoMode === "launch") {
+  state.messages = [
+    {
+      id: "demo-launch",
+      channel: "gcp",
+      author: "Samantha",
+      avatar: "🧠",
+      time: "Demo mode",
+      body: "GCP launch note: deploy Cloud Run, verify /api/health, map production domain, then retire Vercel.",
+    },
+    ...state.messages.filter((message) => message.id !== "demo-launch"),
+  ];
+}
 
 function loadMessages() {
   try {

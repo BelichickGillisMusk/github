@@ -7,6 +7,7 @@ Enhanced GCP-ready rebuild of the Vercel app at `https://web-ten-teal-90.vercel.
 - Preserves the Brain Trust dashboard concept: agent roster, AI provider handoff, KPI bar, command stream, invoices, CARB tests, and orphan-work alerts.
 - Adds a GCP launch board for Cloud Run migration work.
 - Adds `/api/health` and `/api/status` endpoints for Cloud Run checks and monitoring.
+- Supports shareable view URLs like `/?view=gcp&demo=launch` for launch reviews.
 - Uses a no-dependency Node static server so the container starts quickly and respects the Cloud Run `PORT`.
 
 ## Run locally
