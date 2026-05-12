@@ -1,3 +1,5 @@
+import "./styles.css";
+
 const providers = [
   { id: "claude", label: "Claude", mark: "C" },
   { id: "chatgpt", label: "ChatGPT", mark: "G" },
@@ -79,7 +81,7 @@ const initialMessages = [
     author: "NemoClaw",
     avatar: "🛡️",
     time: "Today, 10:18 AM",
-    body: "Cloud Run package is now the target: health endpoint, container port, and deploy config are tracked in repo.",
+    body: "Firebase Hosting + Cloud Run split is now the target: static cockpit on CDN, provider keys behind gumption-api.",
   },
 ];
 
@@ -94,6 +96,7 @@ const state = {
   search: "",
   prompt: "Draft a handoff for Samantha to finish the GCP launch.",
   messages: loadMessages(),
+  assistantReply: "Provider keys stay server-side in Cloud Run via Secret Manager.",
   toast: params.get("toast") || "",
 };
 
@@ -105,7 +108,7 @@ if (demoMode === "launch") {
       author: "Samantha",
       avatar: "🧠",
       time: "Demo mode",
-      body: "GCP launch note: deploy Cloud Run, verify /api/health, map production domain, then retire Vercel.",
+      body: "GCP launch note: deploy Firebase Hosting, verify /api/health through Cloud Run, map production domain, then retire Vercel.",
     },
     ...state.messages.filter((message) => message.id !== "demo-launch"),
   ];
@@ -220,7 +223,7 @@ function renderSidebar() {
       </nav>
       <section class="deploy-card">
         <strong>Cloud Run readiness</strong>
-        <p>Container, health check, deploy config, and static fallback are wired for GCP.</p>
+        <p>Firebase Hosting, Cloud Run API rewrites, and Secret Manager-ready provider keys are wired for GCP.</p>
         <div class="progress" style="--value: 94%"><span></span></div>
       </section>
     </aside>
@@ -257,8 +260,8 @@ function renderHero() {
           <div class="eyebrow">Moved from Vercel target to Google Cloud</div>
           <h2>Brain Trust command, invoices, CARB tests, and GCP launch in one cockpit.</h2>
           <p>
-            Enhanced from the live Vercel app with a Cloud Run health API, migration checklist,
-            provider handoff controls, persistent local command stream, and sharper revenue-leakage triage.
+            Enhanced from the live Vercel app with Firebase Hosting for the static cockpit,
+            a Cloud Run provider proxy, Secret Manager-ready keys, and sharper revenue-leakage triage.
           </p>
           <div class="hero-actions">
             <button class="button primary" data-action="deploy-note">Send GCP launch note</button>
@@ -269,10 +272,10 @@ function renderHero() {
         <div class="gcp-panel">
           <span class="status-pill">● Cloud Run target ready</span>
           <div class="checklist">
-            <div class="check done">✓ HTTP server respects <code>PORT</code></div>
-            <div class="check done">✓ <code>/api/health</code> reports service metadata</div>
-            <div class="check done">✓ Dockerfile uses Node 22 Alpine</div>
-            <div class="check done">✓ Cloud Build deploys to Cloud Run</div>
+            <div class="check done">✓ Firebase Hosting serves the Vite <code>dist</code> build</div>
+            <div class="check done">✓ <code>/api/**</code> rewrites to Cloud Run</div>
+            <div class="check done">✓ Provider keys stay in Secret Manager</div>
+            <div class="check done">✓ Vertex Gemini uses project-scoped auth</div>
             <div class="check">□ Add production domain + IAM after GCP project selection</div>
           </div>
         </div>
@@ -383,11 +386,12 @@ function renderTests() {
 
 function renderGcp() {
   const steps = [
-    ["Build container", "ready", "Dockerfile builds a no-dependency Node runtime image."],
-    ["Serve health endpoint", "ready", "/api/health returns revision, service, and timestamp."],
-    ["Deploy via Cloud Build", "ready", "cloudbuild.yaml builds, pushes, and deploys to Cloud Run."],
-    ["Attach domain", "warn", "Map the final production hostname after project and region are confirmed."],
-    ["Lock down IAM", "warn", "Set invoker policy based on whether this stays private or public."],
+    ["Build static web", "ready", "Vite emits dist/ for Firebase Hosting's CDN."],
+    ["Rewrite API calls", "ready", "Firebase Hosting sends /api/** to gumption-api in us-west1."],
+    ["Deploy provider proxy", "ready", "Cloud Run receives AI Assist prompts and reads secrets server-side."],
+    ["Use Vertex Gemini", "ready", "Gemini traffic uses samantha-gumption project auth and GCP credits."],
+    ["Attach domain", "warn", "Map the final production hostname after Firebase Hosting deploy."],
+    ["Lock down IAM", "warn", "Set invoker policy based on whether the proxy stays public or private."],
   ];
   return `
     <section class="panel">
@@ -441,7 +445,7 @@ function renderQuickCards() {
       <div class="quick-grid">
         <article class="quick-card"><strong>Recover leakage</strong><p>Start with 6 orphan tests and the failed VIN follow-up.</p></article>
         <article class="quick-card"><strong>Collect A+ pending</strong><p>Close INV0247 and INV0245 before escalation is needed.</p></article>
-        <article class="quick-card"><strong>Ship GCP</strong><p>Deploy Cloud Run, map domain, then retire the Vercel URL.</p></article>
+        <article class="quick-card"><strong>Ship GCP</strong><p>Deploy Firebase Hosting, verify Cloud Run API, map domain, then retire Vercel.</p></article>
         <article class="quick-card"><strong>SEO blocker</strong><p>Resolve missing og:image on the flagged sites after launch.</p></article>
       </div>
     </section>
@@ -470,7 +474,7 @@ function renderAssistant() {
           <button class="button" data-action="copy-prompt">Copy</button>
         </div>
         <div class="assistant-output">
-          Suggested: ask ${activeProvider.label} for the smallest next step, then post the answer into #hq.
+          ${esc(state.assistantReply)}
         </div>
       </div>
     </aside>
@@ -535,6 +539,29 @@ function exportOpenIssues() {
   URL.revokeObjectURL(link.href);
 }
 
+async function sendPromptToProxy(provider) {
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      provider: provider.id,
+      prompt: state.prompt || "Review current command center state.",
+      context: {
+        view: state.view,
+        pendingInvoices: invoices.filter((invoice) => invoice.status === "pending").length,
+        orphanTests: tests.filter((test) => test.invoice === "orphan").length,
+      },
+    }),
+  });
+
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.error || `Proxy returned ${response.status}`);
+  }
+
+  return payload;
+}
+
 function bindEvents() {
   document.querySelectorAll("[data-view]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -566,7 +593,7 @@ function bindEvents() {
     button.addEventListener("click", async () => {
       const action = button.dataset.action;
       if (action === "deploy-note") {
-        addMessage("gcp", "Samantha", "🧠", "GCP launch note: deploy Cloud Run, verify /api/health, map production domain, then retire Vercel.");
+        addMessage("gcp", "Samantha", "🧠", "GCP launch note: deploy Firebase Hosting, verify /api/health through Cloud Run, map production domain, then retire Vercel.");
         setToast("GCP launch note posted to #gcp");
       }
       if (action === "sync-note") {
@@ -587,8 +614,18 @@ function bindEvents() {
       }
       if (action === "send-prompt") {
         const provider = providers.find((item) => item.id === state.provider);
-        addMessage("hq", provider.label, provider.mark, state.prompt || "Review current command center state.");
-        setToast(`Prompt sent to ${provider.label}`);
+        setToast(`Sending to ${provider.label} via Cloud Run proxy...`);
+        try {
+          const result = await sendPromptToProxy(provider);
+          const reply = result.reply || result.message || "Provider proxy accepted the request.";
+          state.assistantReply = reply;
+          addMessage("hq", provider.label, provider.mark, reply);
+          setToast(`Prompt sent to ${provider.label}`);
+        } catch (error) {
+          state.assistantReply = `Proxy unavailable: ${error.message}`;
+          addMessage("hq", "Samantha", "🧠", `Proxy unavailable for ${provider.label}: ${error.message}`);
+          setToast("Cloud Run proxy needs deployment or secrets");
+        }
       }
     });
   });

@@ -1,0 +1,14 @@
+{
+  "name": "gumption-api",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Cloud Run API proxy for Brain Trust provider calls.",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
