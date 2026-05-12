@@ -1,0 +1,14 @@
+{
+  "name": "brain-trust-command-center",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "GCP-ready Brain Trust command center migrated from Vercel.",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check public/app.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
