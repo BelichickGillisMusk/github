@@ -94,7 +94,7 @@ const state = {
   view: channels.some((channel) => channel.id === requestedView) ? requestedView : "hq",
   provider: providers.some((provider) => provider.id === requestedProvider) ? requestedProvider : "claude",
   search: "",
-  prompt: "Draft a handoff for Samantha to finish the GCP launch.",
+  prompt: "Draft a handoff for Samantha to finish the Google Cloud Platform (GCP) launch.",
   messages: loadMessages(),
   assistantReply: "Provider keys stay server-side in Cloud Run via Secret Manager.",
   toast: params.get("toast") || "",
@@ -443,10 +443,10 @@ function renderQuickCards() {
     <section class="panel">
       <div class="panel-head"><h3>Today’s focus</h3><span>Highest-leverage work</span></div>
       <div class="quick-grid">
-        <article class="quick-card"><strong>Recover leakage</strong><p>Start with 6 orphan tests and the failed VIN follow-up.</p></article>
-        <article class="quick-card"><strong>Collect A+ pending</strong><p>Close INV0247 and INV0245 before escalation is needed.</p></article>
-        <article class="quick-card"><strong>Ship GCP</strong><p>Deploy Firebase Hosting, verify Cloud Run API, map domain, then retire Vercel.</p></article>
-        <article class="quick-card"><strong>SEO blocker</strong><p>Resolve missing og:image on the flagged sites after launch.</p></article>
+        <article class="quick-card"><strong>Recover leakage - 6 orphan tests</strong><p>Start with the failed VIN follow-up.</p></article>
+        <article class="quick-card"><strong>Collect A+ pending - $250</strong><p>Close INV0247 and INV0245 before escalation.</p></article>
+        <article class="quick-card"><strong>Ship GCP - Firebase + Cloud Run</strong><p>Deploy Hosting, verify API, map domain, retire Vercel.</p></article>
+        <article class="quick-card"><strong>SEO blocker - og:image</strong><p>Resolve missing social previews after launch.</p></article>
       </div>
     </section>
   `;
