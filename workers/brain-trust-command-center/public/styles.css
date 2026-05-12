@@ -179,6 +179,11 @@ button {
   background: var(--panel-strong);
 }
 
+.nav button.active {
+  border-color: rgba(94, 183, 255, 0.72);
+  box-shadow: inset 4px 0 0 var(--blue), 0 0 0 1px rgba(94, 183, 255, 0.12);
+}
+
 .deploy-card {
   margin-top: 14px;
   padding: 13px;

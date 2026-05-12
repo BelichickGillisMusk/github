@@ -210,6 +210,7 @@ function renderSidebar() {
           .map(
             (channel) => `
               <button class="${state.view === channel.id ? "active" : ""}" data-view="${channel.id}">
+                ${state.view === channel.id ? '<span aria-hidden="true">▸</span>' : ""}
                 <span>${channel.icon}</span>
                 <span><strong>${channel.label}</strong><br /><small>${channel.helper}</small></span>
               </button>
