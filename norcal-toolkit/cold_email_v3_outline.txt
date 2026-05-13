@@ -1,0 +1,387 @@
+================================================================================
+  COLD EMAIL v3 — OUTLINE  (HUB: HUB CRM AUTOMATION)
+  norcal-toolkit / 02_cold_emailer.py  →  next generation
+  Status: FINAL — ready to implement
+================================================================================
+
+0.  CONTEXT  (why v3 exists)
+--------------------------------------------------------------------------------
+v1 (shipped, 02_cold_emailer.py):
+  - 3-touch sequence, hard-coded templates, per-category hook injection.
+  - SMTP send via single secondary domain.
+  - State tracked in data/emails_sent.csv (place_id + sequence_num).
+  - Preview / send / dry-run modes; tier + limit filters.
+
+v2 (in-flight, daily_workflow.py wiring):
+  - Tier-1-first sequencing called from the daily workflow.
+  - --dry-run flag piped through so cron runs don't blast on misconfig.
+
+v3 (this outline) closes the loop. Concretely it must:
+  (a) actually have an email address to send to (today most leads have phone only),
+  (b) stop sending the moment a human replies or bounces,
+  (c) survive Gmail/Outlook deliverability heuristics at >100 sends/day, and
+  (d) write back to crm.csv so the CRM and the emailer stop drifting apart.
+
+
+1.  GOALS  /  NON-GOALS
+--------------------------------------------------------------------------------
+GOALS
+  G1.  100% of Tier-1 leads enriched with a verified email before the first send.
+  G2.  Zero sends to a lead that has already replied, bounced, or unsubscribed.
+  G3.  Deliverability discipline: SPF + DKIM + DMARC on the secondary domain,
+       warmed sender pool, per-mailbox daily caps, business-hours-only send.
+  G4.  Per-lead personalization that goes beyond {business_name} — a one-line
+       opener grounded in a real fact about the lead (review snippet, website
+       blurb, fleet size, or recent CARB notice).
+  G5.  CRM sync: every send / open / reply / bounce updates crm.csv
+       (status, contact_count, last_contact, next_followup, notes).
+  G6.  CAN-SPAM compliant footer on every send (physical address + 1-click
+       unsubscribe that actually works).
+  G7.  Observable: a daily digest line in daily_workflow.py output —
+       sent / delivered / opens / replies / bounces / unsubs / interested.
+
+NON-GOALS  (explicitly out of scope for v3)
+  N1.  No move off SMTP onto a transactional ESP API (Postmark/Resend/SES).
+       v3 stays SMTP-only; ESP migration is v4.
+  N2.  No LinkedIn or SMS touches inside the sequence engine. The CRM can
+       schedule them manually via 03_crm_tracker.py. Multi-channel = v4.
+  N3.  No web UI. CLI + CSVs only — same shape as the rest of the toolkit.
+  N4.  No paid data providers (Apollo, ZoomInfo, Hunter paid tier).
+       v3 uses free / pay-per-use discovery only; budget capped per run.
+
+
+2.  ARCHITECTURE  (the new pipeline)
+--------------------------------------------------------------------------------
+  01_lead_scraper.py    →  leads.csv          (existing, unchanged)
+                              │
+                              ▼
+  NEW: 02a_email_enrich.py → leads_enriched.csv
+                              │   adds: email, email_source, email_confidence,
+                              │         contact_first_name, contact_title,
+                              │         personalization_snippet
+                              ▼
+  02_cold_emailer.py    →  emails_sent.csv    (v3 — major rewrite)
+                              │   sends from sender pool, logs every touch,
+                              │   skips replied/bounced/unsubbed/quiet-hours
+                              ▼
+  NEW: 02b_reply_watch.py →  replies.csv       (IMAP poll of the cold inbox)
+                              │   classifies: REPLY / BOUNCE / OOO / UNSUB
+                              │   updates emails_sent.csv + crm.csv
+                              ▼
+  03_crm_tracker.py     →  crm.csv            (now auto-fed by 02 + 02b)
+
+All five scripts continue to be runnable standalone and from daily_workflow.py.
+
+
+3.  EMAIL ENRICHMENT  (02a_email_enrich.py)
+--------------------------------------------------------------------------------
+INPUT:   data/leads.csv  (rows missing `email`)
+OUTPUT:  data/leads_enriched.csv  +  in-place email column on leads.csv
+
+Cascade — try cheap sources first, stop on first hit with confidence ≥ 0.7:
+
+  Step 1  Website scrape  (free)
+          - Fetch lead.website + /contact, /about, /team.
+          - Regex mailto: links and obfuscated patterns (name [at] domain).
+          - Prefer role addresses in this order:
+              owner@, ops@, fleet@, dispatch@, info@, contact@, sales@.
+          - confidence: 0.9 if mailto:, 0.7 if regex'd from body text.
+
+  Step 2  Domain pattern guess  (free, verify required)
+          - Derive root domain from website.
+          - Try common patterns against first_name we already know:
+              first.last@, first@, flast@, firstl@.
+          - Verify each via MX + SMTP RCPT-TO probe (catch-all detection).
+          - confidence: 0.6 if accepted, 0.3 if catch-all, 0.0 if rejected.
+
+  Step 3  Hunter.io free tier  (50/mo, pay-per-use cap)
+          - Only if Steps 1–2 fail AND lead.score ≥ 8 (Tier 1).
+          - Respect HUNTER_MONTHLY_BUDGET env var; abort run when exceeded.
+
+  Step 4  Manual queue
+          - Anything still unresolved is written to needs_email.csv with
+            a one-line research prompt for Bryan to fill in by hand.
+
+VALIDATION (always, even on manual entries):
+  - syntactic (email-validator lib),
+  - MX record exists,
+  - not on internal suppression list (suppressions.csv),
+  - not on common-disposable list.
+
+CONTACT NAME:
+  - Drop the broken `business_name.split()[0]` hack from v1.
+  - Pull first name from the email local-part when it looks like first.last@.
+  - Fall back to "there" — never "ABC" or "Joe's".
+
+
+4.  DELIVERABILITY  (mandatory before any v3 send)
+--------------------------------------------------------------------------------
+DOMAIN
+  - Cold sending ONLY from a secondary domain (e.g. norcalcarb.co).
+  - Primary norcalcarbmobile.com is reserved for transactional + replies.
+  - SPF, DKIM, DMARC (p=none → p=quarantine after 30 days clean).
+  - Custom tracking domain (track.norcalcarb.co) CNAME'd to whatever
+    open-tracking we use, so click links don't dilute the apex.
+
+SENDER POOL
+  - 2–3 mailboxes on the secondary domain: bryan@, ops@, dispatch@.
+  - Each mailbox warmed 2 weeks before production sending
+    (Mailwarm / Lemwarm / Instantly — pick one, document in README).
+  - Per-mailbox cap: 40 sends/day for the first 30 days, 80/day after.
+  - Round-robin across the pool; never two consecutive sends from the same box.
+
+SEND HYGIENE
+  - Plain-text only on touch 1 and 2; touch 3 can be light HTML.
+  - No tracking pixel on touch 1 (kills inbox placement on cold opens).
+  - Add Message-ID, In-Reply-To, References headers on touches 2/3 so they
+    thread under touch 1 (the "Re:" subject must match a real prior send).
+  - One link max per email; no shorteners.
+  - List-Unsubscribe header (RFC 8058 one-click) + visible footer link.
+
+QUIET HOURS  (enforced in code, not just docs)
+  - Send window: Tue–Thu 08:30–11:00 local (America/Los_Angeles).
+  - Never Mon AM, Fri PM, US federal holidays, or the day after a holiday.
+  - Random jitter 30–180s between sends inside the window.
+
+
+5.  REPLY / BOUNCE / UNSUB HANDLING  (02b_reply_watch.py)
+--------------------------------------------------------------------------------
+TRIGGER:  cron every 15 min during business hours, IMAP poll of cold inbox.
+
+CLASSIFICATION
+  - BOUNCE   :  DSN headers (Return-Path mailer-daemon / status 5.x.x).
+  - OOO      :  Auto-Submitted: auto-replied | header pattern match.
+  - UNSUB    :  body contains "unsubscribe" / "remove me" / "stop emailing".
+  - REPLY    :  anything else from a known lead address (matched on Message-ID
+                of our outbound touch, fallback: From: header → place_id lookup).
+
+ACTIONS  (always, atomically)
+  - Mark all future touches in emails_sent.csv as SUPPRESSED for that place_id.
+  - Append a row to replies.csv with classification + raw snippet.
+  - Update crm.csv:
+        BOUNCE → status=LOST, note "bounced: <reason>".
+        UNSUB  → status=LOST, suppression list, note "unsubscribed".
+        OOO    → push next_followup by the OOO return-date if parseable.
+        REPLY  → status=RESPONDED, next_followup=tomorrow, alert Bryan.
+  - Send Bryan a Telegram ping (reuse workflows/telegram-webhook.yml) on
+    any REPLY classified as "interested" (positive sentiment LLM pass).
+
+
+6.  PERSONALIZATION  (the one-line opener)
+--------------------------------------------------------------------------------
+DROP from v1:  the static CATEGORY_HOOKS dict only fires off lead.category,
+               which is the scraper's query string — too generic.
+
+ADD in v3:  a `personalization_snippet` column on leads_enriched.csv,
+            populated during enrichment in this order:
+
+  1.  Top Google review snippet that mentions fleet / trucks / service.
+      → "Saw the review where someone called you the only shop in
+         Stockton that turns trucks in same-day — that's the kind of
+         operation that gets hammered when CARB doubles inspections."
+  2.  Website headline / about-page sentence.
+      → "Noticed you've been hauling NorCal aggregate since '98."
+  3.  Fleet size hint from website ("our 40-truck fleet").
+      → "A 40-truck fleet is in the bullseye for CARB's HD I/M program."
+  4.  Recent news / press hit from a Google CSE query (optional, capped).
+  5.  Fallback: keep the existing CATEGORY_HOOKS line (v1 behavior).
+
+LLM USAGE  (optional, gated by env var OPENAI_API_KEY)
+  - One call per lead, max 80 tokens out, temperature 0.4.
+  - Strict system prompt: "Rewrite this one factual snippet into a
+    single sentence opener that sounds like Bryan wrote it. No emoji.
+    No exclamation marks. No claims that aren't in the snippet."
+  - Output is cached in leads_enriched.csv so reruns don't re-spend.
+  - If the API is unavailable, fall through to step 5 silently.
+
+GUARDRAILS
+  - Never claim a fact the snippet doesn't support.
+  - Strip / refuse generated openers that contain numbers not in source.
+  - Bryan reviews the first 25 openers in --preview before any --send.
+
+
+7.  TEMPLATES  (sequence stays 3-touch; bodies tightened)
+--------------------------------------------------------------------------------
+Keep the v1 cadence (T+0, T+3, T+7 business days) but rewrite:
+
+  Touch 1 — Opener
+    Subject options (A/B):
+      A. "Quick question about {business_name}"          (v1, control)
+      B. "{business_name} + CARB 2027"                    (variant)
+    Body skeleton:
+      <personalization_snippet>
+      <one-line problem statement tied to HD I/M>
+      <one-line offer: mobile, on-site, BAR-licensed>
+      <one-line soft CTA: "worth a 10-min call?">
+      <signature>
+      <CAN-SPAM footer>
+
+  Touch 2 — Bump  (T+3 business days, threaded as Re:)
+    Subject:  Re: <touch-1 subject>
+    Body:  3 lines max. Reference touch 1. Offer a free first test
+           for fleets of 5+. No new CTA, same one.
+
+  Touch 3 — Breakup  (T+7 business days, threaded as Re:)
+    Subject:  Re: <touch-1 subject>
+    Body:  "Closing the loop — if mobile smog ever makes sense,
+            here's the number. October 2027 is going to be loud."
+    Include the {obd_price} / {ovi_price} / {fleet_discount}% line
+    from v1 — that part tested well.
+
+A/B ROTATION
+  - 50/50 split on subject line at touch 1 only.
+  - Variant id logged to emails_sent.csv (variant column: A | B).
+  - Weekly winner picked on reply-rate, not open-rate.
+
+
+8.  CRM SYNC  (close the loop with 03_crm_tracker.py)
+--------------------------------------------------------------------------------
+Every action 02_cold_emailer.py takes now also calls into a small helper
+crm_sync.py (new) that:
+
+  on SEND        : status NEW → CONTACTED on touch 1.
+                   contact_count += 1.
+                   last_contact = today.
+                   next_followup = today + FOLLOWUP_SCHEDULE[contact_count - 1].
+                   append note "[date] sent touch N (variant X)".
+
+  on REPLY       : status → RESPONDED (handled in 02b_reply_watch.py).
+  on BOUNCE/UNSUB: status → LOST + suppression list entry.
+
+Idempotency:
+  - All writes keyed on (place_id, sequence_num, timestamp).
+  - crm_sync uses an advisory file lock on crm.csv so concurrent runs from
+    cron + manual invocation don't clobber each other.
+
+
+9.  COMPLIANCE  (non-optional)
+--------------------------------------------------------------------------------
+EVERY outbound message must contain:
+
+  - A physical mailing address (NORCAL_ADDRESS in config.py).
+  - A truthful "from" name and address.
+  - A subject line not deceptive about the body.
+  - A working one-click unsubscribe — both:
+      (a) List-Unsubscribe header, AND
+      (b) a plain "Reply STOP or click here to unsubscribe: <link>"
+          line in the footer.
+  - Honor unsubscribes within 10 business days (we do it within minutes —
+    02b_reply_watch.py drops the place_id into suppressions.csv and
+    02_cold_emailer.py reads suppressions.csv on every run).
+
+Suppression list (suppressions.csv) is sacred:
+  - Never removed without explicit owner action.
+  - Checked before enrichment AND before send.
+  - Shared across all sender mailboxes.
+
+CASL note: California businesses contacting California businesses still
+falls under CAN-SPAM; CASL only matters if we ever email Canadian leads.
+Out of scope for v3 — SERVICE_AREAS is California-only.
+
+
+10. CONFIG ADDITIONS  (config.py)
+--------------------------------------------------------------------------------
+New env-driven settings (all with safe defaults):
+
+  COLD_DOMAIN              = "norcalcarb.co"
+  SENDER_POOL              = ["bryan@", "ops@", "dispatch@"]
+  DAILY_CAP_PER_MAILBOX    = 40         # ramp to 80 after 30 days clean
+  SEND_WINDOW_DAYS         = ["Tue","Wed","Thu"]
+  SEND_WINDOW_START        = "08:30"
+  SEND_WINDOW_END          = "11:00"
+  SEND_TZ                  = "America/Los_Angeles"
+  FOLLOWUP_BUSINESS_DAYS   = [3, 7]     # touch 2 / touch 3 spacing
+  PERSONALIZATION_LLM      = "openai:gpt-4o-mini"   # or "" to disable
+  HUNTER_MONTHLY_BUDGET    = 25         # USD cap
+  IMAP_HOST / IMAP_USER / IMAP_PASS     # for 02b_reply_watch.py
+  TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID # interested-reply alerts
+
+
+11. METRICS  (printed by daily_workflow.py step 4)
+--------------------------------------------------------------------------------
+For the trailing 7 days, log:
+
+  Sent          (count)
+  Delivered     (sent - bounces)
+  Bounce rate   (must stay < 3% or pause sending)
+  Open rate     (touch 1 only — pixel is on touches 2/3)
+  Reply rate    (positive replies / delivered)
+  Interested    (LLM-classified positive sentiment)
+  Unsub rate    (must stay < 0.5%)
+  Booked calls  (status=SCHEDULED in crm.csv attributed to email touch)
+
+Hard pause thresholds (auto, no human decision needed):
+  - bounce rate > 5% in a rolling 100 sends  → pause sender mailbox.
+  - reply rate < 1% over 200 sends           → pause sequence, alert Bryan.
+
+
+12. ROLLOUT PLAN
+--------------------------------------------------------------------------------
+  Phase A — Foundations (no behavior change to v1 yet)
+    A1. Acquire + configure secondary domain (norcalcarb.co or chosen).
+    A2. SPF/DKIM/DMARC records published; track. CNAME live.
+    A3. Sender pool mailboxes created; warmup tool wired up.
+    A4. suppressions.csv seeded with hand-curated do-not-contact list.
+
+  Phase B — Enrichment online (still no send)
+    B1. Ship 02a_email_enrich.py behind a feature flag.
+    B2. Backfill leads.csv → leads_enriched.csv for current Tier 1.
+    B3. Manual review of first 50 enriched rows; tune confidence weights.
+
+  Phase C — Reply watcher online (still no send)
+    C1. Ship 02b_reply_watch.py, point at the new cold inbox.
+    C2. Send 5 hand-written test emails from the pool, verify replies/
+        bounces/OOOs all classify and write back to crm.csv correctly.
+
+  Phase D — Sequence engine cutover
+    D1. Ship 02_cold_emailer.py v3 alongside v1 (env flag COLD_EMAIL_V3=1).
+    D2. Run --preview for one full Tier 1 batch; Bryan eyeballs 25 openers.
+    D3. Soft launch: 10 sends/day for 5 business days, one mailbox.
+    D4. Ramp to full pool / full cap; archive v1 path.
+
+  Phase E — Observability
+    E1. Metrics block lands in daily_workflow.py step 4 output.
+    E2. Telegram alert on first interested reply; verify end-to-end.
+
+Each phase is its own PR; no big-bang merge.
+
+
+13. ACCEPTANCE CRITERIA  (definition of done for v3)
+--------------------------------------------------------------------------------
+  [ ] 100% of Tier-1 rows in leads.csv have a non-empty email column.
+  [ ] data/suppressions.csv exists; emailer refuses to send to any row in it.
+  [ ] At least one bounce, one OOO, and one human reply have been processed
+      end-to-end and the corresponding crm.csv row is in the right state.
+  [ ] A dry-run of 02_cold_emailer.py --sequence 1 --tier 1 produces 100%
+      personalized openers (no row falls all the way to the static fallback).
+  [ ] CAN-SPAM footer (address + 1-click unsub) is present in every preview.
+  [ ] Send-window guard rejects an out-of-hours invocation with a clear error.
+  [ ] daily_workflow.py prints the 7-day metrics block on completion.
+  [ ] README in norcal-toolkit/ documents the new scripts + env vars + the
+      warmup / domain setup checklist.
+
+
+14. OPEN DECISIONS  (need Bryan's call before Phase A starts)
+--------------------------------------------------------------------------------
+  Q1.  Cold domain name?  Proposing norcalcarb.co.
+  Q2.  Warmup tool?  Mailwarm / Lemwarm / Instantly — pick one and budget.
+  Q3.  OpenAI key for personalization, or skip the LLM and rely on
+       review-snippet + website-blurb extraction only?
+  Q4.  Telegram chat for interested-reply pings — reuse existing chat from
+       workflows/telegram-webhook.yml, or a new dedicated one?
+  Q5.  Owner of the 02b_reply_watch.py cron — same box that runs
+       daily_workflow.py, or a separate always-on tiny VPS?
+
+
+15. OUT OF SCOPE  (parked for v4+)
+--------------------------------------------------------------------------------
+  - Migration from SMTP to a transactional ESP (Postmark / Resend / SES).
+  - SMS touches via Twilio (would need TCPA opt-in flow).
+  - LinkedIn touches (manual for now via 03_crm_tracker.py).
+  - Web dashboard for replies / metrics (CLI is fine for now).
+  - Per-vertical sequences (currently one sequence for all CARB-adjacent
+    verticals — split when reply data justifies the work).
+
+================================================================================
+  END OF OUTLINE — v3 is APPROVED for implementation in the order above.
+================================================================================
