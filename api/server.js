@@ -32,6 +32,14 @@ const providers = {
   },
 };
 
+const alertConfig = {
+  toPhone: process.env.ALERT_TO_PHONE || "",
+  smsFrom: process.env.TWILIO_SMS_FROM || process.env.TWILIO_FROM || "",
+  voiceFrom: process.env.TWILIO_VOICE_FROM || process.env.TWILIO_FROM || "",
+  accountSid: process.env.TWILIO_ACCOUNT_SID || "",
+  authToken: process.env.TWILIO_AUTH_TOKEN || "",
+};
+
 function writeJson(res, status, payload) {
   res.writeHead(status, {
     "content-type": "application/json; charset=utf-8",
@@ -59,6 +67,113 @@ function fallbackReply(provider, prompt) {
 
   const config = providers[provider];
   return `${config.label} proxy received the prompt, but ${config.env} is not configured yet. Add it in Secret Manager and redeploy gumption-api. Prompt: ${prompt.slice(0, 160)}`;
+}
+
+function maskPhone(phone) {
+  if (!phone) return "not configured";
+  const visible = phone.replace(/\D/g, "").slice(-4);
+  return visible ? `***-***-${visible}` : "configured";
+}
+
+function alertStatus() {
+  const twilioReady = Boolean(alertConfig.accountSid && alertConfig.authToken);
+  return {
+    toPhone: maskPhone(alertConfig.toPhone),
+    smsReady: Boolean(twilioReady && alertConfig.toPhone && alertConfig.smsFrom),
+    voiceReady: Boolean(twilioReady && alertConfig.toPhone && alertConfig.voiceFrom),
+    requiredSecrets: [
+      "ALERT_TO_PHONE",
+      "TWILIO_ACCOUNT_SID",
+      "TWILIO_AUTH_TOKEN",
+      "TWILIO_SMS_FROM or TWILIO_FROM",
+      "TWILIO_VOICE_FROM or TWILIO_FROM",
+    ],
+    googleVoiceNote: "Google Voice can receive these alerts as ALERT_TO_PHONE, but it is not a supported outbound SMS API. Use Twilio for sending.",
+  };
+}
+
+function alertSetupReply(channel, message) {
+  return {
+    mode: "setup-required",
+    channel,
+    message: "SMS/voice alert not sent because Twilio alert secrets are not configured in Cloud Run yet.",
+    requestedAlert: message,
+    status: alertStatus(),
+  };
+}
+
+async function twilioRequest(path, params) {
+  const credentials = Buffer.from(`${alertConfig.accountSid}:${alertConfig.authToken}`).toString("base64");
+  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${alertConfig.accountSid}${path}`, {
+    method: "POST",
+    headers: {
+      authorization: `Basic ${credentials}`,
+      "content-type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams(params),
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.message || `Twilio returned ${response.status}`);
+  }
+  return payload;
+}
+
+async function sendSmsAlert(message) {
+  if (!alertStatus().smsReady) {
+    return alertSetupReply("sms", message);
+  }
+
+  const payload = await twilioRequest(`/Messages.json`, {
+    To: alertConfig.toPhone,
+    From: alertConfig.smsFrom,
+    Body: message,
+  });
+  return { mode: "sent", channel: "sms", sid: payload.sid, toPhone: maskPhone(alertConfig.toPhone) };
+}
+
+async function sendVoiceAlert(message) {
+  if (!alertStatus().voiceReady) {
+    return alertSetupReply("voice", message);
+  }
+
+  const spoken = message.replace(/[<>&]/g, " ");
+  const payload = await twilioRequest(`/Calls.json`, {
+    To: alertConfig.toPhone,
+    From: alertConfig.voiceFrom,
+    Twiml: `<Response><Say voice="alice">${spoken}</Say></Response>`,
+  });
+  return { mode: "sent", channel: "voice", sid: payload.sid, toPhone: maskPhone(alertConfig.toPhone) };
+}
+
+async function routeAlert(body) {
+  const channel = body.channel || "sms";
+  const message = String(body.message || "").trim();
+  if (!message) {
+    return { status: 400, payload: { error: "message is required" } };
+  }
+
+  const alertMessage = `Gumption alert: ${message.slice(0, 420)}`;
+  if (channel === "sms") {
+    return { status: 200, payload: await sendSmsAlert(alertMessage) };
+  }
+  if (channel === "voice") {
+    return { status: 200, payload: await sendVoiceAlert(alertMessage) };
+  }
+  if (channel === "both") {
+    return {
+      status: 200,
+      payload: {
+        mode: "multi",
+        results: [
+          await sendSmsAlert(alertMessage),
+          await sendVoiceAlert(alertMessage),
+        ],
+      },
+    };
+  }
+
+  return { status: 400, payload: { error: `Unknown alert channel: ${channel}` } };
 }
 
 async function openAiCompatible({ apiKey, url, model, prompt }) {
@@ -197,6 +312,7 @@ const server = createServer(async (req, res) => {
         operator: "Samantha",
         projectId,
         vertexLocation,
+        alerts: alertStatus(),
         revision: process.env.K_REVISION || "local",
       });
       return;
@@ -213,8 +329,19 @@ const server = createServer(async (req, res) => {
       return;
     }
 
+    if (url.pathname === "/api/alerts/status") {
+      writeJson(res, 200, alertStatus());
+      return;
+    }
+
     if (url.pathname === "/api/chat" && req.method === "POST") {
       const result = await routeChat(await readJson(req));
+      writeJson(res, result.status, result.payload);
+      return;
+    }
+
+    if (url.pathname === "/api/alerts" && req.method === "POST") {
+      const result = await routeAlert(await readJson(req));
       writeJson(res, result.status, result.payload);
       return;
     }

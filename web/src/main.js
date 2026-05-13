@@ -95,8 +95,10 @@ const state = {
   provider: providers.some((provider) => provider.id === requestedProvider) ? requestedProvider : "claude",
   search: "",
   prompt: "Draft a handoff for Samantha to finish the Google Cloud Platform (GCP) launch.",
+  alertMessage: "Agent progress is blocked. Please check Brain Trust and unblock Samantha.",
   messages: loadMessages(),
   assistantReply: "Provider keys stay server-side in Cloud Run via Secret Manager.",
+  alertReply: "SMS/voice alerts route through Cloud Run so your phone number stays server-side.",
   toast: params.get("toast") || "",
 };
 
@@ -390,6 +392,7 @@ function renderGcp() {
     ["Rewrite API calls", "ready", "Firebase Hosting sends /api/** to gumption-api in us-west1."],
     ["Deploy provider proxy", "ready", "Cloud Run receives AI Assist prompts and reads secrets server-side."],
     ["Use Vertex Gemini", "ready", "Gemini traffic uses samantha-gumption project auth and GCP credits."],
+    ["SMS/voice alerts", "ready", "Blocked agents can text or call Bryan through the Cloud Run alert proxy."],
     ["Attach domain", "warn", "Map the final production hostname after Firebase Hosting deploy."],
     ["Lock down IAM", "warn", "Set invoker policy based on whether the proxy stays public or private."],
   ];
@@ -475,6 +478,15 @@ function renderAssistant() {
         </div>
         <div class="assistant-output">
           ${esc(state.assistantReply)}
+        </div>
+        <div class="alert-box">
+          <label for="alert-message">Progress alert to Bryan</label>
+          <textarea id="alert-message">${esc(state.alertMessage)}</textarea>
+          <div class="assistant-actions">
+            <button class="button" data-action="alert-sms">Text Bryan</button>
+            <button class="button" data-action="alert-voice">Voice call Bryan</button>
+          </div>
+          <div class="assistant-output">${esc(state.alertReply)}</div>
         </div>
       </div>
     </aside>
@@ -562,6 +574,24 @@ async function sendPromptToProxy(provider) {
   return payload;
 }
 
+async function sendProgressAlert(channel) {
+  const response = await fetch("/api/alerts", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      channel,
+      message: state.alertMessage,
+    }),
+  });
+
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.error || `Alert proxy returned ${response.status}`);
+  }
+
+  return payload;
+}
+
 function bindEvents() {
   document.querySelectorAll("[data-view]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -587,6 +617,11 @@ function bindEvents() {
   const prompt = document.getElementById("prompt");
   prompt?.addEventListener("input", (event) => {
     state.prompt = event.target.value;
+  });
+
+  const alertMessage = document.getElementById("alert-message");
+  alertMessage?.addEventListener("input", (event) => {
+    state.alertMessage = event.target.value;
   });
 
   document.querySelectorAll("[data-action]").forEach((button) => {
@@ -625,6 +660,20 @@ function bindEvents() {
           state.assistantReply = `Proxy unavailable: ${error.message}`;
           addMessage("hq", "Samantha", "🧠", `Proxy unavailable for ${provider.label}: ${error.message}`);
           setToast("Cloud Run proxy needs deployment or secrets");
+        }
+      }
+      if (action === "alert-sms" || action === "alert-voice") {
+        const channel = action === "alert-voice" ? "voice" : "sms";
+        setToast(channel === "voice" ? "Calling Bryan via alert proxy..." : "Texting Bryan via alert proxy...");
+        try {
+          const result = await sendProgressAlert(channel);
+          state.alertReply = result.message || `${channel.toUpperCase()} alert ${result.mode || "queued"} for ${result.toPhone || "Bryan"}.`;
+          addMessage("alerts", "Samantha", "🧠", state.alertReply);
+          setToast(result.mode === "setup-required" ? "Alert secrets need setup" : `${channel.toUpperCase()} alert sent`);
+        } catch (error) {
+          state.alertReply = `Alert proxy unavailable: ${error.message}`;
+          addMessage("alerts", "Samantha", "🧠", state.alertReply);
+          setToast("Alert proxy needs deployment");
         }
       }
     });

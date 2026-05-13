@@ -578,6 +578,20 @@ button {
   line-height: 1.5;
 }
 
+.alert-box {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.alert-box label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--bright);
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .toast {
   position: fixed;
   right: 18px;
