@@ -16,7 +16,7 @@ highest-intent operators first.
 
 PRIMARY OFFER
 -------------
-NorCal Carb Mobile provides BAR-licensed mobile Clean Truck Check testing at
+NorCal Carb Mobile provides CARB-certified mobile Clean Truck Check testing at
 the customer's yard. The core value proposition:
 
 - No driving trucks to a station.
@@ -109,8 +109,8 @@ send vehicles out?
 
 {category_hook}
 
-I run {our_business}. We're a BAR-licensed mobile testing unit, and we come
-on-site so trucks do not have to leave the yard. We handle OBD, OVI, and smoke
+I run {our_business}. We're CARB-certified mobile testers, and we come on-site
+so trucks do not have to leave the yard. We handle OBD, OVI, and smoke
 opacity testing for Northern California fleets.
 
 If that would help {business_name}, I can check availability in the {area} area
