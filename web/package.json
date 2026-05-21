@@ -1,0 +1,19 @@
+{
+  "name": "brain-trust-command-center",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Firebase Hosting static Brain Trust command center migrated from Vercel.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "check": "node --check src/main.js && npm run build"
+  },
+  "dependencies": {
+    "vite": "^8.0.12"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
