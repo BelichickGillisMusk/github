@@ -88,7 +88,6 @@ CATEGORY_HOOKS = {
     "school bus service": "School bus fleets need compliance testing. We come to your depot — zero disruption to routes.",
     "freight broker": "Your carriers need clean compliance. We offer fleet testing they can schedule in 60 seconds.",
     "logistics company": "Logistics fleets get hit hard by CARB deadlines. We test at your warehouse — no downtime.",
-    "property management": "If your maintenance fleet includes diesel trucks over 14K lbs, they need CARB testing.",
     "waste management": "Every garbage truck and hauler over 14K lbs needs bi-annual testing. We come to your yard.",
     "delivery service": "Delivery fleets with heavy-duty vehicles are in CARB's crosshairs. $10K/day fines are no joke.",
 }
