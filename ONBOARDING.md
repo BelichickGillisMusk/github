@@ -39,11 +39,13 @@ Source of truth lives in git — **never edit a deployed worker in the Cloudflar
 
 ## Google APIs & cloud services (all in `silverback-ai-studio`)
 
+**All Google APIs are provisioned automatically under the GCP project `Samantha`, owned by `bryan@norcalcarbmobile.com`.** Sign in as that account in the [Google Cloud console](https://console.cloud.google.com/) and select the `Samantha` project to view/manage keys, billing, quotas, and IAM.
+
 The React app at `workers/silverback-ai-studio/` is where Google services are wired:
-- **Gemini** via `@google/genai` — AI analysis. Key: `GEMINI_API_KEY` (injected by Vite, see `vite.config.ts`).
-- **Firebase** v12 — **Auth** + **Firestore** event storage. Firestore rules enforce admin vs viewer roles; admin is hardcoded to `bryan@norcalcarbmobile.com`.
-- **Google Sign-In** — user auth.
-- **Google Cloud Run** — deployment target (via Google AI Studio; no workflow in this repo).
+- **Gemini** via `@google/genai` — AI analysis. Key: `GEMINI_API_KEY` (injected by Vite, see `vite.config.ts`). Issue/rotate keys in the `Samantha` project → APIs & Services → Credentials.
+- **Firebase** v12 — **Auth** + **Firestore** event storage. The Firebase project is linked to the same `Samantha` GCP project. Firestore rules enforce admin vs viewer roles; admin is hardcoded to `bryan@norcalcarbmobile.com`.
+- **Google Sign-In** — OAuth client lives in the `Samantha` project's Credentials page.
+- **Google Cloud Run** — deployment target for `silverback-ai-studio` (deployed via Google AI Studio under the `Samantha` project; no workflow in this repo).
 
 ## Local setup
 
