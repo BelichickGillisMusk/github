@@ -1,0 +1,10 @@
+{
+  "name": "silverback-platform",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Repository-level automation for Silverback web properties.",
+  "scripts": {
+    "setup:hermes": "bash scripts/setup-hermes-agent.sh",
+    "check": "bash -n scripts/setup-hermes-agent.sh"
+  }
+}
