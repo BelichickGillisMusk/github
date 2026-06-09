@@ -760,6 +760,7 @@
     {
       "id": "cleantruckcheck-roseville",
       "domain": "cleantruckcheckroseville.com",
+      "template": "carb-v2",
       "city": "Roseville",
       "region": "Roseville / Placer County",
       "phone": "(916) 890-0427",
@@ -779,6 +780,7 @@
     {
       "id": "cleantruckcheck-fairfield",
       "domain": "cleantruckcheckfairfield.com",
+      "template": "carb-v2",
       "city": "Fairfield",
       "region": "Fairfield / Solano County",
       "phone": "TBD",
@@ -850,6 +852,7 @@
     {
       "id": "cleantruckcheck-hayward",
       "domain": "cleantruckcheckhayward.com",
+      "template": "carb-v2",
       "city": "Hayward",
       "region": "Hayward / Alameda County",
       "phone": "TBD",

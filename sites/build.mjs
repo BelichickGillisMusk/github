@@ -675,7 +675,7 @@ function renderCarbSite(site, allSites) {
     SISTER_LINKS_HTML: sisterLinksHtml(site.id, allSites, 'carb'),
     ANALYTICS_HTML: analyticsHtml(site),
   };
-  const template = pickTemplate('carb');
+  const template = pickTemplate(site.template || 'carb');
   const html = applyTokens(template, tokens);
   const leftover = html.match(/\{\{[A-Z_]+\}\}/g);
   if (leftover) throw new Error(`[${site.id}] unreplaced tokens: ${[...new Set(leftover)].join(', ')}`);

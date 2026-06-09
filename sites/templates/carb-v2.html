@@ -3,30 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
-<title>Mobile CARB Smoke Test Hayward — Mobile CARB Smoke Test | Same-Day, 24/7</title>
-<meta name="description" content="Mobile CARB smoke test in Hayward / Alameda County. 2013+ OBD Test $119. 2012 & Older OVI Smoke Test $219. We come to your yard, lot, or jobsite. Same-day, weekends included, fleets welcome. Call or text TBD 24/7.">
-<meta name="keywords" content="CARB smoke test, mobile smoke test, OBD test, OVI test, diesel smoke opacity, Hayward CARB, Hayward smoke test, fleet emissions, clean truck check, BIT inspection, mobile diesel test">
+<meta name="theme-color" content="{{BACKGROUND}}">
+<title>{{BUSINESS_NAME}} {{CITY}} — Mobile CARB Smoke Test | Same-Day, 24/7</title>
+<meta name="description" content="Mobile CARB smoke test in {{REGION}}. {{OBD_LABEL}} ${{OBD_PRICE}}. {{OVI_LABEL}} ${{OVI_PRICE}}. We come to your yard, lot, or jobsite. Same-day, weekends included, fleets welcome. Call or text {{PHONE}} 24/7.">
+<meta name="keywords" content="CARB smoke test, mobile smoke test, OBD test, OVI test, diesel smoke opacity, {{CITY}} CARB, {{CITY}} smoke test, fleet emissions, clean truck check, BIT inspection, mobile diesel test">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="geo.region" content="US-CA">
-<meta name="geo.placename" content="Hayward">
-<link rel="canonical" href="https://cleantruckcheckhayward.com/">
-<meta property="og:title" content="Mobile CARB Smoke Test — Hayward, CA">
-<meta property="og:description" content="Mobile CARB smoke test, Hayward / Alameda County. Same-day, 24/7. Call/text TBD.">
+<meta name="geo.placename" content="{{CITY}}">
+<link rel="canonical" href="https://{{DOMAIN}}/">
+<meta property="og:title" content="{{BUSINESS_NAME}} — {{CITY}}, CA">
+<meta property="og:description" content="Mobile CARB smoke test, {{REGION}}. Same-day, 24/7. Call/text {{PHONE}}.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://cleantruckcheckhayward.com/">
+<meta property="og:url" content="https://{{DOMAIN}}/">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Mobile CARB Smoke Test — Hayward">
-<meta name="twitter:description" content="Mobile CARB smoke test, Hayward / Alameda County. Call/text TBD.">
+<meta name="twitter:title" content="{{BUSINESS_NAME}} — {{CITY}}">
+<meta name="twitter:description" content="Mobile CARB smoke test, {{REGION}}. Call/text {{PHONE}}.">
 <style>
   :root {
-    --primary: #A5ACAF;
-    --primary-dark: #000000;
-    --accent: #A5ACAF;
-    --bg: #000000;
-    --text: #FFFFFF;
-    --muted: #9099A0;
+    --primary: {{PRIMARY}};
+    --primary-dark: {{PRIMARY_DARK}};
+    --accent: {{ACCENT}};
+    --bg: {{BACKGROUND}};
+    --text: {{TEXT}};
+    --muted: {{MUTED}};
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
@@ -349,49 +349,38 @@
       <a href="#service-area">Service Area</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a href="tel:TBD" class="topphone">TBD</a>
+    <a href="tel:{{PHONE_RAW}}" class="topphone">{{PHONE}}</a>
   </div>
 
   <section class="hero">
     <span class="pill">⚡ CARB-CERTIFIED · MOBILE · WE COME TO YOU</span>
     <h1>Pass Your<br><span class="accent">CARB Clean Truck Check.</span><br>We Come to You.</h1>
-    <p class="sub">Mobile CARB-certified emissions testing for commercial fleets across Hayward / Alameda County. We come to your office, yard, or jobsite — weekends included, fleets our specialty.</p>
+    <p class="sub">Mobile CARB-certified emissions testing for commercial fleets across {{REGION}}. We come to your office, yard, or jobsite — weekends included, fleets our specialty.</p>
     <div class="cta-row">
       <a class="cta-primary" href="#book">Book Your Test</a>
-      <a class="cta-secondary" href="tel:TBD">Call TBD</a>
+      <a class="cta-secondary" href="tel:{{PHONE_RAW}}">Call {{PHONE}}</a>
     </div>
     <div class="stat-strip">
-      <span>2013+ OBD Test — $119</span>
-      <span>2012 & Older OVI Smoke Test — $219</span>
+      <span>{{OBD_LABEL}} — ${{OBD_PRICE}}</span>
+      <span>{{OVI_LABEL}} — ${{OVI_PRICE}}</span>
       <span>Weekends &amp; Fleets Welcome</span>
       <span>24/7 Call or Text</span>
     </div>
   </section>
 
   <main>
-    <div class="motorhome-note">Motorhomes: same pricing — new (2013+) $119, older (2012-) $219.</div>
+    <div class="motorhome-note">{{MOTORHOME_NOTE}}</div>
 
     <section class="faq" id="faq">
       <h2>Frequently asked</h2>
-      <details><summary>How fast can you come out?</summary><p>Same-day in most cases. We run 24/7 — call or text any time.</p></details>
-      <details><summary>Do you do fleets?</summary><p>Yes — fleets are our specialty. Volume discounts available.</p></details>
-      <details><summary>Weekends?</summary><p>Yes, weekends and after-hours included at no extra charge.</p></details>
-      <details><summary>What about motorhomes?</summary><p>Same pricing as trucks. New (2013+) is OBD at the lower price; older is OVI smoke.</p></details>
+      {{FAQ_HTML}}
     </section>
 
     <section class="sister" id="service-area">
       <h2>Need a test in another city?</h2>
       <p style="color: var(--muted); margin-bottom: 14px; font-size: 14px;">We have mobile CARB testing crews across California. Tap any city below.</p>
       <div class="grid">
-        <a href="https://mobilecarbsmoketest.com/" rel="noopener"><strong>San Diego</strong><small>mobilecarbsmoketest.com</small></a>
-        <a href="https://cleantruckcheckroseville.com/" rel="noopener"><strong>Roseville</strong><small>cleantruckcheckroseville.com</small></a>
-        <a href="https://cleantruckcheckfairfield.com/" rel="noopener"><strong>Fairfield</strong><small>cleantruckcheckfairfield.com</small></a>
-        <a href="https://cleantruckchecklodi.com/" rel="noopener"><strong>Lodi</strong><small>cleantruckchecklodi.com</small></a>
-        <a href="https://carbteststockton.com/" rel="noopener"><strong>Stockton</strong><small>carbteststockton.com</small></a>
-        <a href="https://cleantruckcheckstockton.com/" rel="noopener"><strong>Stockton</strong><small>cleantruckcheckstockton.com</small></a>
-        <a href="https://carb-clean-truck-check.com/" rel="noopener"><strong>California</strong><small>carb-clean-truck-check.com</small></a>
-        <a href="https://mobilecarbtest.com/" rel="noopener"><strong>California</strong><small>mobilecarbtest.com</small></a>
-        <a href="https://mobilesmoketest.com/" rel="noopener"><strong>California</strong><small>mobilesmoketest.com</small></a>
+        {{SISTER_LINKS_HTML}}
       </div>
     </section>
 
@@ -407,20 +396,20 @@
       </form>
     </section>
 
-    <footer>Mobile CARB Smoke Test · Serving Hayward / Alameda County ·  · <a href="tel:TBD" style="color:var(--primary)">TBD</a></footer>
+    <footer>{{BUSINESS_NAME}} · Serving {{REGION}} · {{HOURS}} · <a href="tel:{{PHONE_RAW}}" style="color:var(--primary)">{{PHONE}}</a></footer>
   </main>
 
-  <a class="sticky-cta" href="tel:TBD">
-    📞 Tap to Call or Text 24/7 · TBD
-    <span class="url">cleantruckcheckhayward.com</span>
+  <a class="sticky-cta" href="tel:{{PHONE_RAW}}">
+    📞 Tap to Call or Text 24/7 · {{PHONE}}
+    <span class="url">{{DOMAIN}}</span>
   </a>
 
   <!-- Vinny chatbot -->
-  <button id="vinny-fab" aria-label="Chat with Vinny">🦍</button>
+  <button id="vinny-fab" aria-label="Chat with Vinny">{{CHAT_AVATAR}}</button>
   <div id="vinny-panel" role="dialog" aria-label="Chat with Vinny">
     <header>
-      <span>🦍</span>
-      <span>VIN</span>
+      <span>{{CHAT_AVATAR}}</span>
+      <span>{{CHAT_NAME}}</span>
       <button class="close" id="vinny-close" aria-label="Close">×</button>
     </header>
     <div id="vinny-log"></div>
@@ -435,7 +424,7 @@
     document.getElementById('bookForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(this).entries());
-      data.site = "cleantruckcheck-hayward";
+      data.site = "{{ID}}";
       data.timestamp = new Date().toISOString();
       try {
         await fetch('/api/book', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
@@ -463,7 +452,7 @@
     function open() {
       panel.classList.add('open');
       if (!opened) {
-        addMsg("Hey, I'm VIN. Need a CARB test, pricing, or scheduling help? I'll get you a real human fast.", 'bot');
+        addMsg("{{CHAT_GREETING}}", 'bot');
         opened = true;
       }
       input.focus();
@@ -480,12 +469,12 @@
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ site: "cleantruckcheck-hayward", sessionId, message: text, timestamp: new Date().toISOString() })
+          body: JSON.stringify({ site: "{{ID}}", sessionId, message: text, timestamp: new Date().toISOString() })
         });
         const data = await res.json().catch(()=>({}));
-        addMsg(data.reply || "Got it — I'll alert the Hayward crew. Want to leave your phone so we can text you back?", 'bot');
+        addMsg(data.reply || "Got it — I'll alert the {{CITY}} crew. Want to leave your phone so we can text you back?", 'bot');
       } catch (err) {
-        addMsg("Couldn't reach the server, but you can call us directly: TBD", 'bot');
+        addMsg("Couldn't reach the server, but you can call us directly: {{PHONE}}", 'bot');
       }
     });
   </script>
@@ -494,20 +483,20 @@
   {
     "@context": "https://schema.org",
     "@type": "AutomotiveBusiness",
-    "name": "Mobile CARB Smoke Test",
-    "telephone": "TBD",
-    "url": "https://cleantruckcheckhayward.com/",
-    "areaServed": "Hayward / Alameda County",
-    "address": { "@type": "PostalAddress", "addressLocality": "Hayward", "addressRegion": "CA", "addressCountry": "US" },
-    "priceRange": "$119-$219",
+    "name": "{{BUSINESS_NAME}}",
+    "telephone": "{{PHONE}}",
+    "url": "https://{{DOMAIN}}/",
+    "areaServed": "{{REGION}}",
+    "address": { "@type": "PostalAddress", "addressLocality": "{{CITY}}", "addressRegion": "CA", "addressCountry": "US" },
+    "priceRange": "${{OBD_PRICE}}-${{OVI_PRICE}}",
     "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "00:00", "closes": "23:59" }],
     "makesOffer": [
-      {"@type":"Offer","name":"2013+ OBD Test","price":"119","priceCurrency":"USD"},
-      {"@type":"Offer","name":"2012 & Older OVI Smoke Test","price":"219","priceCurrency":"USD"}
+      {"@type":"Offer","name":"{{OBD_LABEL}}","price":"{{OBD_PRICE}}","priceCurrency":"USD"},
+      {"@type":"Offer","name":"{{OVI_LABEL}}","price":"{{OVI_PRICE}}","priceCurrency":"USD"}
     ]
   }
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How fast can you come out?","acceptedAnswer":{"@type":"Answer","text":"Same-day in most cases. We run 24/7 — call or text any time."}},{"@type":"Question","name":"Do you do fleets?","acceptedAnswer":{"@type":"Answer","text":"Yes — fleets are our specialty. Volume discounts available."}},{"@type":"Question","name":"Weekends?","acceptedAnswer":{"@type":"Answer","text":"Yes, weekends and after-hours included at no extra charge."}},{"@type":"Question","name":"What about motorhomes?","acceptedAnswer":{"@type":"Answer","text":"Same pricing as trucks. New (2013+) is OBD at the lower price; older is OVI smoke."}}]}</script>
-  
+  <script type="application/ld+json">{{FAQ_JSONLD}}</script>
+  {{ANALYTICS_HTML}}
 </body>
 </html>
