@@ -15,8 +15,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: bafa242dd95d3fdce72540d20accd0a2
           workingDirectory: workers/norcalcarbmobile
+          wranglerVersion: "4"
           command: deploy

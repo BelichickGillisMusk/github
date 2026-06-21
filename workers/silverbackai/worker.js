@@ -1387,14 +1387,6 @@ function renderHomepage() {
     <\/script>
 </body>
 </html>`;
-    return new Response(html, {
-      headers: {
-        "Content-Type": "text/html; charset=utf-8",
-        "Cache-Control": "public, max-age=3600"
-      }
-    });
-  }
-};
 }
 
 // --- Tool page scaffold (placeholder for future toolkit pages) ---

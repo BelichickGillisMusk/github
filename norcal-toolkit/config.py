@@ -43,7 +43,6 @@ SCRAPE_QUERIES = [
     "freight broker",
     "agricultural hauler",
     "logistics company",
-    "property management",
     "waste management",
     "delivery service",
 ]
