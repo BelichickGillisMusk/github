@@ -48,10 +48,14 @@ geminiRouter.post("/:model\\:generateContent", async (req: AuthedRequest, res) =
       body: JSON.stringify(req.body),
     });
 
-    const text = await upstream.body.text();
-    res.status(upstream.statusCode).type("application/json").send(text);
+    const upstreamContentType =
+      (upstream.headers["content-type"] as string | undefined) ?? "application/json";
+    const isStreaming = upstreamContentType.includes("text/event-stream");
 
-    if (upstream.statusCode >= 200 && upstream.statusCode < 300 && req.uid) {
+    if (!isStreaming && upstream.statusCode >= 200 && upstream.statusCode < 300 && req.uid) {
+      // Buffer only for successful non-streaming responses so we can record token usage.
+      const text = await upstream.body.text();
+      res.status(upstream.statusCode).type(upstreamContentType).send(text);
       try {
         const parsed = JSON.parse(text) as {
           usageMetadata?: {
@@ -69,6 +73,11 @@ geminiRouter.post("/:model\\:generateContent", async (req: AuthedRequest, res) =
       } catch {
         // non-fatal
       }
+    } else {
+      // Pipe the upstream body through, forwarding content-type (handles streaming
+      // and non-JSON error bodies without misrepresenting the content-type).
+      res.status(upstream.statusCode).type(upstreamContentType);
+      upstream.body.pipe(res);
     }
   } catch (err) {
     logger.error({ err: (err as Error).message, model }, "vertex_gemini_failed");
