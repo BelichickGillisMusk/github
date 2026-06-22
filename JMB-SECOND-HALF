@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2nd Test Schedule Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 8px solid #169b62; /* Irish Green */
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #169b62;
+            margin: 0;
+            font-size: 24px;
+        }
+        .logo-placeholder {
+            font-weight: bold;
+            color: #ff883e; /* Irish Orange */
+            font-size: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th {
+            background-color: #169b62;
+            color: white;
+            text-align: left;
+            padding: 12px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        .month-header {
+            background-color: #f9f9f9;
+            font-weight: bold;
+            color: #169b62;
+        }
+        .status-pass {
+            color: #169b62;
+            font-weight: bold;
+        }
+        .status-fail {
+            color: #ff883e;
+            font-weight: bold;
+            background: rgba(255, 136, 62, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        tr:hover {
+            background-color: #f1faf6;
+        }
+        .footer-note {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            background: #fff8f4;
+            padding: 15px;
+            border-left: 4px solid #ff883e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Clean Truck Check: 2nd Test Portal</h1>
+            <p style="margin:5px 0 0 0; color:#666;">Schedule: July – December 2026</p>
+        </div>
+        <div class="logo-placeholder">FLEET PORTAL</div>
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Scheduled Month</th>
+                <th>Truck #</th>
+                <th>VIN</th>
+                <th>Test Type</th>
+                <th>Last Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="month-header"><td colspan="5">JULY 2026</td></tr>
+            <tr><td></td><td>95</td><td>1FVHCYCY8FHGE7317</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>116</td><td>2NPLLZ0X15M874818</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>117</td><td>1NKDX4TX0EJ966975</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>99A</td><td>1FVACWDT2CDBN8881</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+
+            <tr class="month-header"><td colspan="5">AUGUST 2026</td></tr>
+            <tr><td></td><td>109</td><td>1FVACWDT3CHBM2780</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>110</td><td>1FVACWDT5CHBM2781</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>111</td><td>1FVACWDT7CHBM2782</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>39A</td><td>3ALACWDT1EDFK0314</td><td>OBD</td><td class="status-fail">Fail</td></tr>
+            <tr><td></td><td>47A</td><td>3ALACWDT1EDFK0300</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+
+            <tr class="month-header"><td colspan="5">SEPTEMBER 2026</td></tr>
+            <tr><td></td><td>33</td><td>JALE5W16XC7900346</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>113</td><td>1FVACWDU5HHHX6804</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+
+            <tr class="month-header"><td colspan="5">OCTOBER 2026</td></tr>
+            <tr><td></td><td>40A</td><td>1FVACWBS5CDBK0023</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>49A</td><td>1FDWF7DC3GDA02393</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>108A</td><td>3FRWF7FA5FV679560</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+
+            <tr class="month-header"><td colspan="5">NOVEMBER 2026</td></tr>
+            <tr><td></td><td>96</td><td>1XKDD49X0DJ958752</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>100</td><td>1FVACWDT5CHBP7790</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>112</td><td>1FVACWDT2CHBM2785</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>115</td><td>1XPTP4EX5DD181499</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>119</td><td>1XPCD40X1PD859833</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>121</td><td>1NKZX4TX9MJ972021</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>107A</td><td>1FDNF7DC0HDB09172</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+
+            <tr class="month-header"><td colspan="5">DECEMBER 2026</td></tr>
+            <tr><td></td><td>120</td><td>1FVHCYCY4GHGY9831</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>23B</td><td>JALE5W168E7300847</td><td>OBD</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>44A</td><td>3ALACWDT3DDFJ0690</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+            <tr><td></td><td>98A</td><td>1FVACXDT8CDBD8975</td><td>OVI</td><td class="status-pass">Pass</td></tr>
+        </tbody>
+    </table>
+
+    <div class="footer-note">
+        <strong>Logic Summary:</strong> Direct mapping for July-Sept due dates. 6-month extension applied for Feb-June due dates to fulfill the bi-annual testing requirement. Total trucks accounted: 25.
+    </div>
+</div>
+
+</body>
+</html>
+Styling Features:
+Irish Palette: Uses Emerald Green for headers and borders, clean white backgrounds, and a vibrant orange for callouts and warning statuses (like the "Fail" result).
+Interactive Design: Rows feature a subtle hover effect to help users track information visually.
+Clean Hierarchy: Grouped by month with clear, bold headers to separate the schedule phases.
+Client-Ready: Includes a "Logic Summary" at the bottom to explain the bi-annual shift to the client.
