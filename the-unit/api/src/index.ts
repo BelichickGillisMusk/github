@@ -1,6 +1,7 @@
 import express from "express";
 import { pinoHttp } from "pino-http";
 import { requireFirebaseAuth } from "./auth.js";
+import { enforceAllowlist } from "./allowlist.js";
 import { enforceDailyCap } from "./rateLimit.js";
 import { logger } from "./logger.js";
 import { anthropicRouter } from "./providers/anthropic.js";
@@ -18,10 +19,10 @@ export function buildApp(): express.Express {
     res.json({ ok: true, service: "gumption-api" });
   });
 
-  app.use("/v1/anthropic", requireFirebaseAuth, enforceDailyCap, anthropicRouter);
-  app.use("/v1/openai", requireFirebaseAuth, enforceDailyCap, openaiRouter);
-  app.use("/v1/xai", requireFirebaseAuth, enforceDailyCap, xaiRouter);
-  app.use("/v1/gemini", requireFirebaseAuth, enforceDailyCap, geminiRouter);
+  app.use("/v1/anthropic", requireFirebaseAuth, enforceAllowlist, enforceDailyCap, anthropicRouter);
+  app.use("/v1/openai", requireFirebaseAuth, enforceAllowlist, enforceDailyCap, openaiRouter);
+  app.use("/v1/xai", requireFirebaseAuth, enforceAllowlist, enforceDailyCap, xaiRouter);
+  app.use("/v1/gemini", requireFirebaseAuth, enforceAllowlist, enforceDailyCap, geminiRouter);
 
   app.use((_req, res) => {
     res.status(404).json({ error: "not_found" });

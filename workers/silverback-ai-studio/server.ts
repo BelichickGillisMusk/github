@@ -4,9 +4,12 @@ import { WebSocketServer, WebSocket } from "ws";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
+import { GoogleGenAI } from "@google/genai";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const ALERT_SECRET = process.env.ALERT_SECRET || "";
 
 async function startServer() {
   const app = express();
@@ -39,8 +42,48 @@ async function startServer() {
     });
   };
 
-  // API to trigger high-severity alerts (for testing/demo)
+  // Server-side AI analysis — keeps GEMINI_API_KEY off the client
+  app.post("/api/analyze", async (req, res) => {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      res.status(503).json({ error: "gemini_key_not_configured" });
+      return;
+    }
+
+    const { eventType, description, severity } = req.body;
+    if (!eventType || !description) {
+      res.status(400).json({ error: "missing_fields" });
+      return;
+    }
+
+    try {
+      const ai = new GoogleGenAI({ apiKey });
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: `Analyze this security event clip description and provide a more detailed, professional security assessment.
+        Event Type: ${eventType}
+        Initial Description: ${description}
+        Severity: ${severity || "unknown"}
+        
+        Provide a detailed breakdown of what might be happening, potential risks, and recommended actions. Keep it concise but professional.`,
+      });
+
+      const analysis = response.text || "No analysis available.";
+      res.json({ analysis });
+    } catch (err) {
+      console.error("AI analysis failed:", err);
+      res.status(500).json({ error: "analysis_failed" });
+    }
+  });
+
+  // API to trigger high-severity alerts — requires shared secret
   app.post("/api/trigger-alert", (req, res) => {
+    const authHeader = req.header("x-alert-secret") || "";
+    if (!ALERT_SECRET || authHeader !== ALERT_SECRET) {
+      res.status(401).json({ error: "unauthorized" });
+      return;
+    }
+
     const { type, description, severity, location } = req.body;
 
     if (severity === 'high' || severity === 'critical') {
