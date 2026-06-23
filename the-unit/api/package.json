@@ -1,0 +1,35 @@
+{
+  "name": "gumption-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloud Run API proxy for Gumption / The Unit. Holds provider keys server-side, gates every request by Firebase ID token, and meters per-user spend in Firestore.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test:boot": "node --test --import tsx test/boot.test.ts"
+  },
+  "dependencies": {
+    "@google-cloud/aiplatform": "^3.34.0",
+    "@google-cloud/firestore": "^7.10.0",
+    "express": "^4.21.2",
+    "firebase-admin": "^12.7.0",
+    "google-auth-library": "^9.15.0",
+    "pino": "^9.5.0",
+    "pino-http": "^10.3.0",
+    "undici": "^6.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.0",
+    "supertest": "^7.0.0",
+    "@types/supertest": "^6.0.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
