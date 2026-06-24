@@ -3,3 +3,7 @@ node_modules/
 .wrangler/
 .hermes/
 *.log
+.env
+.env.*
+.env.local
+.env.production
