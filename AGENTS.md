@@ -6,14 +6,16 @@ Guidance for AI agents working in this repository.
 
 ### Repository shape
 
-- **No root `package.json`** — dependencies live per-app. The only Node app with `npm install` is `workers/silverback-ai-studio/`.
-- **CARB / law brochure sites** — edit `sites/sites.json` and `sites/template.html`, then run `node sites/build.mjs`. Never hand-edit `sites/dist/` (regenerated output).
-- **Legacy inline workers** — `workers/silverbackai`, `security-silverbackai`, `portfolio-showcase`, etc. each have their own `wrangler.toml`.
+- **Root `package.json`** exists but only holds repo automation scripts (`setup:hermes`, `check`) and has **no dependencies** — `npm install` at the root is a no-op. Real dependencies live per-app.
+- **Two Node apps have real npm dependencies** (need `npm install`): `workers/silverback-ai-studio/` (React + Express + Vite) and `the-unit/api/` (`gumption-api`, a Cloud Run Express/TypeScript proxy with `npm run typecheck` + `npm run test:boot`).
+- **CARB / law brochure sites** — edit `sites/sites.json` and `sites/templates/*.html`, then run `node sites/build.mjs`. Never hand-edit `sites/dist/` (regenerated output, but committed so workers can be previewed without rebuilding).
+- **Legacy inline workers** — `workers/silverbackai`, `security-silverbackai`, `portfolio-showcase`, `norcalcarbmobile`, etc. each have their own `wrangler.toml` and need no `npm install` (run via `npx wrangler@4`).
 
 ### After pulling changes
 
 1. If `sites/**` changed: `node sites/build.mjs`
 2. If `workers/silverback-ai-studio/**` changed: `cd workers/silverback-ai-studio && npm install`
+3. If `the-unit/api/**` changed: `cd the-unit/api && npm install`
 
 ### Lint / build / test
 
@@ -53,6 +55,16 @@ npm run dev
 ```
 
 Copy `.env.example` → `.env.local` and set `GEMINI_API_KEY` for AI analysis features. Firebase/Google Sign-In are cloud services; the UI shell runs without them, but auth and live data need configured Firebase credentials.
+
+Non-obvious: the dashboard's "Trigger Real-time Alert" / "Mock Event" buttons need Firebase login (they early-return when no user). To exercise the WebSocket alerting pipeline **without** auth, POST to the server directly and a toast renders on the landing page (the WS listener mounts regardless of login):
+
+```bash
+curl -s -X POST http://localhost:3000/api/trigger-alert -H 'Content-Type: application/json' \
+  -d '{"type":"weirdness_alert","severity":"high","description":"Lingering stranger","location":"Rear Entrance"}'
+# health: GET http://localhost:3000/api/health -> {"status":"ok","clients":N}
+```
+
+Only `high`/`critical` severities are broadcast.
 
 ### Optional services
 
