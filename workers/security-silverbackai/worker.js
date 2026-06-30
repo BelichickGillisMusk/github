@@ -1,4 +1,5 @@
 // worker.js - Silverback AI Security Dashboard
+// Deployment: 2026-05-07 - PUSH DEPLOY ITERATE DOMINATE
 var worker_default = {
   async fetch(request) {
     const url = new URL(request.url);

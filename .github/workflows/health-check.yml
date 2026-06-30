@@ -1,0 +1,39 @@
+name: 🩺 Site Health Check
+
+# ONE-TAP HEALTH CHECK: pings every site and reports which are up.
+# Runs automatically every 6 hours. Can also be triggered manually.
+#
+# GitHub mobile app → Actions → "🩺 Site Health Check" → Run workflow
+# → tap green button. ~30 sec later you get a green/red summary.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"  # every 6 hours
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read sites.json and check each domain
+        run: |
+          set +e
+          echo "## 🩺 Health Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Site | Domain | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|---|" >> $GITHUB_STEP_SUMMARY
+          jq -r '.sites[] | "\(.id)|\(.domain)"' sites/sites.json | while IFS='|' read -r id domain; do
+            # Try the workers.dev URL first (always reachable), then the custom domain
+            wd_url="https://${id}.silverbackai.workers.dev/"
+            wd_code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 "$wd_url" || echo "000")
+            cd_code="—"
+            if [ -n "$domain" ]; then
+              cd_code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 "https://${domain}/" || echo "000")
+            fi
+            wd_icon=$([ "$wd_code" = "200" ] && echo "✅" || echo "❌")
+            cd_icon=$([ "$cd_code" = "200" ] && echo "✅" || echo "⚪")
+            echo "| $id | $domain | $wd_icon workers.dev ($wd_code) · $cd_icon custom ($cd_code) |" >> $GITHUB_STEP_SUMMARY
+          done
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ = up · ❌ = down · ⚪ = no custom domain configured yet" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dave Cowan Properties — West Region | Rent Roll</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+/* ═══════════════════════════════════════════════
+   IRISH FLAG — BOLDER, HIGHER CONTRAST, SENIOR-FRIENDLY
+   WCAG AAA targets on all text
+   ═══════════════════════════════════════════════ */
+:root {
+  --green:      #0a7a45;
+  --green-lt:   #1aad64;
+  --green-dk:   #054d2c;
+  --green-bg:   #e8f8ef;
+  --green-mid:  rgba(10,122,69,0.14);
+  --orange:     #c84c00;
+  --orange-lt:  #e86520;
+  --orange-bg:  #fff3ec;
+  --white:      #ffffff;
+  --off-white:  #f7f9f5;
+  --cream:      #eef2ea;
+
+  /* Text — all WCAG AAA (7:1+) */
+  --txt:   #111711;   /* near-black */
+  --txt-2: #283028;
+  --txt-3: #485048;
+  --dim:   #6a7a6a;
+
+  /* Status — bold, readable */
+  --red:      #b01c1c;
+  --red-bg:   #fdeaea;
+  --red-bd:   rgba(176,28,28,0.3);
+  --paid-g:   #0a7a45;
+  --paid-bg:  #e4f7ee;
+  --paid-bd:  rgba(10,122,69,0.3);
+  --amber:    #a04000;
+  --amber-bg: #fef3e2;
+  --amber-bd: rgba(160,64,0,0.3);
+
+  /* Surfaces */
+  --bg:     #edf0e9;
+  --card:   #ffffff;
+  --card-2: #f5f8f3;
+  --border: rgba(0,0,0,0.12);
+  --border-2: rgba(0,0,0,0.22);
+
+  /* Gradients */
+  --gloss-green:  linear-gradient(160deg, #1aad64 0%, #0a7a45 40%, #054d2c 100%);
+  --gloss-orange: linear-gradient(135deg, #e86520 0%, #c84c00 55%, #a03a00 100%);
+  --gloss-card:   linear-gradient(170deg, #ffffff 0%, #f0f4ec 100%);
+  --gloss-intel:  linear-gradient(160deg, #0d2e1a 0%, #0a2518 100%);
+
+  --mono:  'IBM Plex Mono', monospace;
+  --sans:  'IBM Plex Sans', sans-serif;
+  --serif: 'Playfair Display', serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+/* subtle shamrock watermark texture */
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image: radial-gradient(circle at 20% 50%, rgba(10,122,69,0.04) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(200,76,0,0.04) 0%, transparent 50%);
+  pointer-events:none; z-index:0;
+}
+
+/* ═══ LAYOUT ═══ */
+.shell { position:relative; z-index:1; max-width:1500px; margin:0 auto; padding:0 32px 80px; }
+
+/* ═══ TOP BAR ═══ */
+.topbar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0 36px; min-height:84px;
+  background: var(--gloss-green);
+  box-shadow: 0 6px 28px rgba(5,77,44,0.4), inset 0 1px 0 rgba(255,255,255,0.18);
+  position:sticky; top:0; z-index:200;
+}
+.brand-row { display:flex; align-items:center; gap:14px; }
+.brand-flag { display:flex; gap:5px; align-items:center; }
+.flag-stripe { width:7px; height:44px; border-radius:3px; }
+.flag-stripe.g { background: rgba(255,255,255,0.95); box-shadow: 0 0 6px rgba(255,255,255,0.4); }
+.flag-stripe.w { background: rgba(255,255,255,0.5); }
+.flag-stripe.o { background: var(--orange-lt); box-shadow: 0 0 10px rgba(232,101,32,0.7); }
+.brand-main {
+  font-family: var(--serif); font-size: 28px; font-weight: 900;
+  color: #fff; letter-spacing: 0.2px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+.brand-sub {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.6); letter-spacing: 3.5px;
+  text-transform: uppercase; margin-top: 3px;
+}
+.topbar-r { display:flex; align-items:center; gap:10px; }
+.period-badge {
+  font-family: var(--mono); font-size: 14px; font-weight: 700;
+  color: #ffe8d0; background: rgba(232,101,32,0.22);
+  border: 2px solid rgba(232,101,32,0.5); padding: 9px 20px; letter-spacing: 1px;
+}
+.tb-btn {
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; padding: 11px 22px;
+  border: 2px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.1); cursor:pointer; transition:all 0.2s;
+}
+.tb-btn:hover { background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5); }
+.tb-btn.primary { background:var(--gloss-orange); border-color:transparent; color:#fff; box-shadow:0 3px 14px rgba(200,76,0,0.4); }
+.tb-btn.primary:hover { box-shadow:0 5px 20px rgba(200,76,0,0.6); }
+
+/* ═══ PROPERTY TABS ═══ */
+.prop-tabs {
+  display:flex; gap:4px; padding:24px 0 0;
+  border-bottom:3px solid rgba(10,122,69,0.2);
+}
+.ptab {
+  font-family: var(--mono); font-size: 14px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 15px 30px; color: var(--txt-3); cursor:pointer;
+  border-bottom: 3px solid transparent; position:relative; top:3px;
+  transition: all 0.2s; border-radius: 7px 7px 0 0;
+}
+.ptab:hover { color: var(--green); background: var(--green-mid); }
+.ptab.active { color:#fff; border-bottom-color: var(--green); background: var(--gloss-green); box-shadow: 0 -3px 14px rgba(10,122,69,0.18); }
+.ptab .unit-count { font-size:12px; margin-left:8px; opacity:0.75; }
+.ptab.intel-tab.active { background: var(--gloss-intel); border-bottom-color: var(--orange-lt); }
+.ptab.intel-tab:hover { background: rgba(5,40,20,0.08); color: var(--green-dk); }
+
+/* ═══ KPI CARDS ═══ */
+.kpi-row { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin:26px 0; }
+.kpi {
+  background: var(--gloss-card); border: 2px solid var(--border);
+  border-radius: 12px; padding: 24px 26px; position:relative; overflow:hidden;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.kpi:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.12); }
+.kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; border-radius:12px 12px 0 0; }
+.kpi.green::before  { background: var(--gloss-green); }
+.kpi.red::before    { background: linear-gradient(90deg,#8b1515,#c0392b); }
+.kpi.amber::before  { background: linear-gradient(90deg,#7a3000,#c84c00); }
+.kpi.gold::before   { background: var(--gloss-orange); }
+.kpi.blue::before   { background: linear-gradient(90deg,#1e3a8a,#2563eb); }
+.kpi-label { font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--dim); margin-bottom:10px; }
+.kpi-value { font-family:var(--mono); font-size:34px; font-weight:700; line-height:1; color:var(--txt); }
+.kpi.green .kpi-value { color:var(--green); }
+.kpi.red .kpi-value   { color:var(--red); }
+.kpi.amber .kpi-value { color:var(--amber); }
+.kpi.gold .kpi-value  { color:var(--orange); }
+.kpi-sub { font-family:var(--mono); font-size:12px; font-weight:600; color:var(--dim); margin-top:7px; }
+
+/* Benchmark bar inside KPI */
+.kpi-bench { margin-top:10px; }
+.bench-bar-wrap { height:6px; background:rgba(0,0,0,0.1); border-radius:3px; margin-top:5px; overflow:hidden; }
+.bench-bar { height:100%; border-radius:3px; transition:width 0.6s ease; }
+.bench-bar.good { background:var(--gloss-green); }
+.bench-bar.warn { background:linear-gradient(90deg,var(--amber),#e86520); }
+.bench-bar.bad  { background:linear-gradient(90deg,var(--red),#e05555); }
+.bench-label { font-family:var(--mono); font-size:10px; font-weight:700; color:var(--dim); display:flex; justify-content:space-between; }
+
+/* ═══ FILTER BAR ═══ */
+.filter-bar {
+  display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;
+  padding:14px 20px; background:var(--card); border:2px solid var(--border);
+  border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+.filter-label { font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:2px; color:var(--dim); text-transform:uppercase; }
+.fbtn {
+  font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.5px;
+  padding:8px 20px; border:2px solid var(--border); background:var(--off-white);
+  color:var(--txt-2); cursor:pointer; transition:all 0.18s; border-radius:6px;
+}
+.fbtn:hover { border-color:var(--green-lt); color:var(--green); background:var(--green-bg); }
+.fbtn.active { background:var(--green); border-color:var(--green-dk); color:#fff; box-shadow:0 2px 10px rgba(10,122,69,0.3); }
+.fbtn.f-late.active   { background:var(--red); border-color:#8b1515; color:#fff; }
+.fbtn.f-paid.active   { background:var(--paid-g); border-color:var(--green-dk); color:#fff; }
+.fbtn.f-partial.active{ background:var(--amber); border-color:#7a3000; color:#fff; }
+.ml-auto { margin-left:auto; }
+
+/* ═══ TABLE ═══ */
+.table-wrap { overflow-x:auto; border:2px solid var(--border); border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.08); background:var(--card); }
+table { width:100%; border-collapse:collapse; min-width:1100px; }
+thead tr { background:var(--gloss-green); }
+th { font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.9); padding:18px 18px; text-align:left; white-space:nowrap; }
+tbody tr { border-bottom:1px solid rgba(0,0,0,0.07); transition:background 0.13s; }
+tbody tr:nth-child(even) { background:#fafcf8; }
+tbody tr:hover { background:var(--green-bg) !important; }
+tbody tr.late    { background:#fff4f4 !important; }
+tbody tr.late:hover { background:#fce8e8 !important; }
+tbody tr.partial { background:#fffbf0 !important; }
+tbody tr.partial:hover { background:#fef5d8 !important; }
+td { padding:17px 18px; font-size:16px; }
+
+/* ═══ BADGES ═══ */
+.badge { display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; font-weight:800; padding:6px 15px; text-transform:uppercase; border-radius:20px; letter-spacing:0.5px; }
+.badge::before { content:''; width:7px; height:7px; border-radius:50%; background:currentColor; }
+.badge-paid    { background:var(--paid-bg);  color:var(--paid-g); border:2px solid var(--paid-bd); }
+.badge-late    { background:var(--red-bg);   color:var(--red);    border:2px solid var(--red-bd); }
+.badge-partial { background:var(--amber-bg); color:var(--amber);  border:2px solid var(--amber-bd); }
+.badge-vacant  { background:#f3f4f6; color:#4b5563; border:2px solid rgba(75,85,99,0.2); }
+
+/* ═══ CELL TYPES ═══ */
+.unit-num     { font-family:var(--mono); font-size:15px; font-weight:700; color:var(--txt-3); }
+.tenant-name  { font-weight:800; color:var(--txt); font-size:17px; }
+.unit-type    { font-family:var(--mono); font-size:13px; font-weight:700; color:var(--txt-3); background:var(--cream); padding:4px 12px; border-radius:5px; }
+.rent-amt     { font-family:var(--mono); font-size:17px; font-weight:800; color:var(--txt); }
+.balance-due  { font-family:var(--mono); font-size:17px; font-weight:800; color:var(--red); }
+.balance-zero { font-family:var(--mono); font-size:15px; color:var(--dim); }
+.date-cell    { font-family:var(--mono); font-size:14px; font-weight:600; color:var(--txt-3); }
+.phone-cell   { font-family:var(--mono); font-size:14px; font-weight:600; color:var(--txt-2); }
+.paid-date    { font-family:var(--mono); font-size:14px; font-weight:700; color:var(--paid-g); }
+.paid-date.overdue { color:var(--red); }
+
+/* ═══ ACTION BUTTONS ═══ */
+.actions { display:flex; gap:6px; }
+.act-btn {
+  font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:0.3px;
+  text-transform:uppercase; padding:8px 14px; border:2px solid var(--border-2);
+  background:var(--off-white); color:var(--txt-3); cursor:pointer;
+  transition:all 0.18s; white-space:nowrap; border-radius:6px;
+}
+.act-btn:hover  { border-color:var(--green); color:var(--green); background:var(--green-bg); }
+.act-btn.notice { border-color:var(--red-bd); color:var(--red); background:var(--red-bg); font-weight:800; }
+.act-btn.notice:hover { background:#f8d7d7; border-color:var(--red); }
+.act-btn.lease:hover  { border-color:rgba(30,58,138,0.4); color:#1e3a8a; background:#eff6ff; }
+.act-btn.portal:hover { border-color:rgba(200,76,0,0.35); color:var(--orange); background:var(--orange-bg); }
+
+/* ═══ PROPERTY HEADER ═══ */
+.prop-header { display:flex; justify-content:space-between; align-items:flex-start; padding:32px 0 20px; }
+.prop-title { font-family:var(--serif); font-size:42px; font-weight:900; color:var(--green-dk); }
+.prop-address { font-family:var(--mono); font-size:14px; font-weight:600; color:var(--dim); margin-top:5px; letter-spacing:0.5px; }
+.prop-meta { text-align:right; }
+.prop-zip { font-family:var(--mono); font-size:36px; font-weight:800; color:var(--orange); }
+.prop-zip-lbl { font-family:var(--mono); font-size:12px; font-weight:700; color:var(--dim); letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
+
+/* ═══ SECTIONS ═══ */
+.prop-section { display:none; }
+.prop-section.active { display:block; }
+
+/* ═══ TOTALS ROW ═══ */
+.totals-row { display:flex; justify-content:flex-end; border-top:3px solid var(--border); background:var(--cream); border-radius:0 0 12px 12px; }
+.total-cell { font-family:var(--mono); padding:20px 28px; border-left:2px solid var(--border); text-align:right; }
+.total-cell .tc-label { font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--dim); margin-bottom:5px; }
+.total-cell .tc-val { color:var(--txt); font-weight:800; font-size:24px; }
+.total-cell.tc-red   .tc-val { color:var(--red); }
+.total-cell.tc-green .tc-val { color:var(--paid-g); }
+
+/* ═══════════════════════════════════
+   INTEL PANEL
+   ═══════════════════════════════════ */
+.intel-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:24px 0; }
+.intel-card {
+  background:var(--gloss-card); border:2px solid var(--border);
+  border-radius:12px; overflow:hidden;
+  box-shadow:0 4px 16px rgba(0,0,0,0.07);
+}
+.intel-card-head {
+  padding:16px 22px; font-family:var(--mono); font-size:11px; font-weight:800;
+  letter-spacing:2px; text-transform:uppercase; color:#fff;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.intel-card-head.green-head { background:var(--gloss-green); }
+.intel-card-head.orange-head{ background:var(--gloss-orange); }
+.intel-card-head.dark-head  { background:var(--gloss-intel); }
+.intel-card-body { padding:18px 22px; }
+
+/* Benchmark gauges */
+.bench-row { display:flex; align-items:center; gap:12px; margin:10px 0; }
+.bench-name { font-family:var(--sans); font-size:14px; font-weight:700; color:var(--txt-2); min-width:130px; }
+.bench-track { flex:1; height:14px; background:rgba(0,0,0,0.08); border-radius:7px; overflow:hidden; }
+.bench-fill { height:100%; border-radius:7px; transition:width 1s ease; }
+.bench-fill.national { background:linear-gradient(90deg,#6b7280,#9ca3af); }
+.bench-fill.state    { background:linear-gradient(90deg,#1e40af,#3b82f6); }
+.bench-fill.target   { background:var(--gloss-green); }
+.bench-fill.dave     { background:var(--gloss-orange); }
+.bench-fill.dave-low { background:linear-gradient(90deg,var(--red),#e05555); }
+.bench-pct { font-family:var(--mono); font-size:14px; font-weight:800; min-width:48px; text-align:right; }
+.bench-pct.good { color:var(--paid-g); }
+.bench-pct.warn { color:var(--amber); }
+.bench-pct.bad  { color:var(--red); }
+.bench-section-title { font-family:var(--mono); font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--dim); margin-bottom:12px; padding-bottom:7px; border-bottom:2px solid var(--border); }
+
+/* Policy links */
+.policy-link {
+  display:flex; align-items:flex-start; gap:12px; padding:13px 0;
+  border-bottom:1px solid var(--border); text-decoration:none; transition:background 0.15s;
+}
+.policy-link:last-child { border-bottom:none; }
+.policy-link:hover .pl-title { color:var(--green); text-decoration:underline; }
+.pl-icon { font-size:22px; flex-shrink:0; margin-top:1px; }
+.pl-body { flex:1; }
+.pl-title { font-family:var(--sans); font-size:15px; font-weight:800; color:var(--txt); display:block; }
+.pl-desc  { font-family:var(--mono); font-size:11px; font-weight:600; color:var(--dim); margin-top:2px; letter-spacing:0.3px; }
+.pl-tag   { font-family:var(--mono); font-size:10px; font-weight:800; padding:2px 9px; border-radius:3px; margin-top:5px; display:inline-block; }
+.pl-tag.critical { background:var(--red-bg); color:var(--red); border:1px solid var(--red-bd); }
+.pl-tag.caution  { background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-bd); }
+.pl-tag.info     { background:var(--green-bg); color:var(--green); border:1px solid var(--paid-bd); }
+
+/* Alert boxes */
+.alert-box { border-radius:8px; padding:14px 18px; margin:10px 0; border-left:5px solid; }
+.alert-box.red-alert    { background:var(--red-bg); border-color:var(--red); }
+.alert-box.amber-alert  { background:var(--amber-bg); border-color:var(--amber); }
+.alert-box.green-alert  { background:var(--green-bg); border-color:var(--green); }
+.alert-box-title { font-family:var(--mono); font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; }
+.alert-box.red-alert .alert-box-title   { color:var(--red); }
+.alert-box.amber-alert .alert-box-title { color:var(--amber); }
+.alert-box.green-alert .alert-box-title { color:var(--green); }
+.alert-box p { font-size:14px; font-weight:600; color:var(--txt-2); line-height:1.6; }
+
+/* Listings */
+.listing-card {
+  display:flex; align-items:center; gap:14px; padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.listing-card:last-child { border-bottom:none; }
+.listing-price { font-family:var(--mono); font-size:18px; font-weight:800; color:var(--orange); min-width:90px; }
+.listing-info { flex:1; }
+.listing-addr { font-size:15px; font-weight:800; color:var(--txt); }
+.listing-meta { font-family:var(--mono); font-size:12px; font-weight:600; color:var(--dim); margin-top:2px; }
+.listing-tag { font-family:var(--mono); font-size:10px; font-weight:800; padding:3px 9px; border-radius:3px; }
+.listing-tag.above { background:var(--red-bg); color:var(--red); border:1px solid var(--red-bd); }
+.listing-tag.below { background:var(--green-bg); color:var(--green); border:1px solid var(--paid-bd); }
+.listing-tag.market{ background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-bd); }
+
+/* ═══ MODALS ═══ */
+.modal-overlay {
+  position:fixed; inset:0; background:rgba(5,30,15,0.8); backdrop-filter:blur(5px);
+  z-index:1000; display:none; align-items:flex-start; justify-content:center;
+  padding:40px 20px; overflow-y:auto;
+}
+.modal-overlay.open { display:flex; }
+.modal { background:var(--card); border:2px solid var(--border-2); border-radius:14px; max-width:820px; width:100%; box-shadow:0 28px 70px rgba(0,0,0,0.35); overflow:hidden; }
+.modal-top { display:flex; justify-content:space-between; align-items:center; padding:24px 34px; background:var(--gloss-green); }
+.modal-title { font-family:var(--serif); font-size:24px; font-weight:900; color:#fff; }
+.modal-sub { font-family:var(--mono); font-size:12px; font-weight:600; color:rgba(255,255,255,0.6); letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
+.modal-close { font-size:24px; color:rgba(255,255,255,0.7); cursor:pointer; background:none; border:none; padding:4px 8px; transition:color 0.2s; line-height:1; font-weight:300; }
+.modal-close:hover { color:#fff; }
+.modal-body { padding:30px 34px; max-height:70vh; overflow-y:auto; }
+.modal-actions { padding:20px 34px; border-top:2px solid var(--border); display:flex; gap:12px; justify-content:flex-end; background:var(--off-white); }
+.modal-btn { font-family:var(--mono); font-size:13px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:13px 26px; border:2px solid var(--border-2); background:var(--off-white); color:var(--txt-2); cursor:pointer; transition:all 0.2s; border-radius:7px; }
+.modal-btn:hover { border-color:var(--green); color:var(--green); }
+.modal-btn.primary { background:var(--gloss-green); border-color:transparent; color:#fff; box-shadow:0 3px 12px rgba(10,122,69,0.35); }
+.modal-btn.primary:hover { box-shadow:0 5px 18px rgba(10,122,69,0.5); }
+.modal-btn.danger  { background:var(--red-bg); border-color:var(--red-bd); color:var(--red); }
+
+/* ═══ NOTICE LETTER ═══ */
+.notice-letter { background:#fff; color:#111; padding:54px 58px; font-family:'Georgia',serif; font-size:14px; line-height:1.95; max-width:720px; margin:0 auto; border:1px solid #ccc; }
+.nl-header { text-align:center; margin-bottom:38px; border-bottom:3px solid #111; padding-bottom:18px; }
+.nl-title { font-size:22px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; }
+.nl-subtitle { font-size:15px; font-weight:bold; margin-top:6px; }
+.nl-section { margin:18px 0; }
+.nl-bold { font-weight:bold; } .nl-underline { text-decoration:underline; }
+.nl-indent { padding-left:28px; margin:10px 0; }
+.nl-signature { margin-top:46px; }
+.nl-sig-line { border-top:1px solid #111; width:290px; margin-top:46px; padding-top:7px; font-size:13px; }
+.nl-footer { margin-top:38px; font-size:12px; color:#666; border-top:1px solid #ccc; padding-top:14px; text-align:center; }
+
+/* ═══ LEASE & PORTAL ═══ */
+.lease-doc { background:var(--card-2); border:2px solid var(--border); border-radius:10px; padding:30px; }
+.ld-header { text-align:center; margin-bottom:28px; padding-bottom:24px; border-bottom:2px solid var(--border); }
+.ld-title { font-family:var(--serif); font-size:28px; font-weight:900; color:var(--green-dk); }
+.ld-sub { font-family:var(--mono); font-size:12px; font-weight:700; color:var(--dim); letter-spacing:2px; margin-top:7px; text-transform:uppercase; }
+.ld-section { margin:22px 0; }
+.ld-section-title { font-family:var(--mono); font-size:12px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--orange); border-bottom:2px solid var(--orange-bg); padding-bottom:8px; margin-bottom:13px; }
+.ld-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:16px; }
+.ld-row .ldr-label { color:var(--dim); font-weight:600; }
+.ld-row .ldr-val { color:var(--txt); font-family:var(--mono); font-size:15px; font-weight:700; }
+.ld-clause { font-size:15px; color:var(--txt-2); line-height:1.85; margin:12px 0; }
+.ld-clause strong { color:var(--txt); }
+.portal-card { background:var(--gloss-card); border:2px solid var(--border); border-radius:10px; padding:22px 26px; margin-bottom:14px; }
+.pc-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.pc-title { font-family:var(--mono); font-size:12px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--orange); }
+.pc-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--border); font-size:16px; }
+.pc-row:last-child { border-bottom:none; }
+.pc-row .prl { color:var(--dim); font-weight:600; }
+.pc-row .prv { color:var(--txt); font-family:var(--mono); font-size:15px; font-weight:700; }
+
+@media print {
+  body > *:not(.modal-overlay) { display:none !important; }
+  .modal-overlay { display:flex !important; background:white !important; padding:0 !important; }
+  .modal { border:none !important; max-width:100% !important; box-shadow:none !important; }
+  .modal-top, .modal-actions { display:none !important; }
+}
+@media (max-width:900px) {
+  .kpi-row { grid-template-columns:repeat(2,1fr); }
+  .intel-grid { grid-template-columns:1fr; }
+  .shell { padding:0 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand-row"><div class="brand-flag"><div class="flag-stripe g"></div><div class="flag-stripe w"></div><div class="flag-stripe o"></div></div><div class="brand">
+    <div class="brand-main">Dave Cowan Properties</div>
+    <div class="brand-sub">West Region · Rent Roll Dashboard</div>
+  </div></div>
+  <div class="topbar-r">
+    <div class="period-badge">February 2026</div>
+    <button class="tb-btn" onclick="window.print()">⎙ Print Roll</button>
+    <button class="tb-btn" onclick="document.getElementById('bank-upload-input').click()" style="background:rgba(232,101,32,0.18);border-color:rgba(232,101,32,0.45);color:#ffcc99;">🏦 Upload Bank CSV</button>
+    <input type="file" id="bank-upload-input" accept=".csv" style="display:none" onchange="handleBankCSV(event)">
+    <button class="tb-btn primary" onclick="exportCSV()">↓ Export CSV</button>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- PROPERTY TABS -->
+  <div class="prop-tabs">
+    <div class="ptab active" onclick="showProp('ruby')">Ruby <span class="unit-count">24 units</span></div>
+    <div class="ptab" onclick="showProp('sf')">SF <span class="unit-count">8 units</span></div>
+    <div class="ptab" onclick="showProp('sfhv')">SF-HV-10 <span class="unit-count">10 units</span></div>
+    <div class="ptab" onclick="showProp('all')">All Properties <span class="unit-count">42 units</span></div>
+    <div class="ptab intel-tab" onclick="showProp('intel')">📊 Market Intel <span class="unit-count">+ Politics</span></div>
+  </div>
+
+  <!-- ===========================
+       RUBY — 24 UNITS — 94609
+       =========================== -->
+  <div class="prop-section active" id="sec-ruby">
+    <div class="prop-header">
+      <div>
+        <div class="prop-title">Ruby</div>
+        <div class="prop-address">Oakland, CA · ZIP 94609 · 24 Units</div>
+      </div>
+      <div class="prop-meta">
+        <div class="prop-zip">94609</div>
+        <div class="prop-zip-lbl">Oakland · Temescal</div>
+      </div>
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-row" id="kpi-ruby"></div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <span class="filter-label">Show:</span>
+      <button class="fbtn active" onclick="filterTable('ruby','all',this)">All</button>
+      <button class="fbtn f-paid" onclick="filterTable('ruby','paid',this)">Paid</button>
+      <button class="fbtn f-late" onclick="filterTable('ruby','late',this)">Late</button>
+      <button class="fbtn f-partial" onclick="filterTable('ruby','partial',this)">Partial</button>
+      <button class="fbtn ml-auto" onclick="filterTable('ruby','notice',this)">⚠ Notice Eligible</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="tbl-ruby">
+        <thead>
+          <tr>
+            <th>Unit</th><th>Tenant</th><th>Type</th><th>Rent</th>
+            <th>Status</th><th>Paid Date</th><th>Balance</th>
+            <th>Move-In</th><th>Phone</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-ruby"></tbody>
+      </table>
+    </div>
+    <div class="totals-row" id="totals-ruby"></div>
+  </div>
+
+  <!-- ===========================
+       SF — 8 UNITS — 94103
+       =========================== -->
+  <div class="prop-section" id="sec-sf">
+    <div class="prop-header">
+      <div>
+        <div class="prop-title">SF</div>
+        <div class="prop-address">San Francisco, CA · ZIP 94103 · 8 Units</div>
+      </div>
+      <div class="prop-meta">
+        <div class="prop-zip">94103</div>
+        <div class="prop-zip-lbl">San Francisco · SoMa</div>
+      </div>
+    </div>
+    <div class="kpi-row" id="kpi-sf"></div>
+    <div class="filter-bar">
+      <span class="filter-label">Show:</span>
+      <button class="fbtn active" onclick="filterTable('sf','all',this)">All</button>
+      <button class="fbtn f-paid" onclick="filterTable('sf','paid',this)">Paid</button>
+      <button class="fbtn f-late" onclick="filterTable('sf','late',this)">Late</button>
+      <button class="fbtn f-partial" onclick="filterTable('sf','partial',this)">Partial</button>
+      <button class="fbtn ml-auto" onclick="filterTable('sf','notice',this)">⚠ Notice Eligible</button>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-sf">
+        <thead><tr><th>Unit</th><th>Tenant</th><th>Type</th><th>Rent</th><th>Status</th><th>Paid Date</th><th>Balance</th><th>Move-In</th><th>Phone</th><th>Actions</th></tr></thead>
+        <tbody id="tbody-sf"></tbody>
+      </table>
+    </div>
+    <div class="totals-row" id="totals-sf"></div>
+  </div>
+
+  <!-- ===========================
+       SF-HV-10 — 10 UNITS — 94103
+       =========================== -->
+  <div class="prop-section" id="sec-sfhv">
+    <div class="prop-header">
+      <div>
+        <div class="prop-title">SF-HV-10</div>
+        <div class="prop-address">San Francisco, CA · ZIP 94103 · 10 Units</div>
+      </div>
+      <div class="prop-meta">
+        <div class="prop-zip">94103</div>
+        <div class="prop-zip-lbl">San Francisco · SoMa / Hayes Valley</div>
+      </div>
+    </div>
+    <div class="kpi-row" id="kpi-sfhv"></div>
+    <div class="filter-bar">
+      <span class="filter-label">Show:</span>
+      <button class="fbtn active" onclick="filterTable('sfhv','all',this)">All</button>
+      <button class="fbtn f-paid" onclick="filterTable('sfhv','paid',this)">Paid</button>
+      <button class="fbtn f-late" onclick="filterTable('sfhv','late',this)">Late</button>
+      <button class="fbtn f-partial" onclick="filterTable('sfhv','partial',this)">Partial</button>
+      <button class="fbtn ml-auto" onclick="filterTable('sfhv','notice',this)">⚠ Notice Eligible</button>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-sfhv">
+        <thead><tr><th>Unit</th><th>Tenant</th><th>Type</th><th>Rent</th><th>Status</th><th>Paid Date</th><th>Balance</th><th>Move-In</th><th>Phone</th><th>Actions</th></tr></thead>
+        <tbody id="tbody-sfhv"></tbody>
+      </table>
+    </div>
+    <div class="totals-row" id="totals-sfhv"></div>
+  </div>
+
+  <!-- ===========================
+       ALL PROPERTIES
+       =========================== -->
+  <div class="prop-section" id="sec-all">
+    <div class="prop-header">
+      <div>
+        <div class="prop-title">All Properties</div>
+        <div class="prop-address">Dave Cowan Properties — West Region · 42 Total Units</div>
+      </div>
+      <div class="prop-meta">
+        <div class="prop-zip" id="all-collected-val">—</div>
+        <div class="prop-zip-lbl">Total Collected Feb 2026</div>
+      </div>
+    </div>
+    <div class="kpi-row" id="kpi-all"></div>
+    <div class="filter-bar">
+      <span class="filter-label">Show:</span>
+      <button class="fbtn active" onclick="filterTable('all','all',this)">All 42 Units</button>
+      <button class="fbtn f-late" onclick="filterTable('all','late',this)">Late / Partial</button>
+      <button class="fbtn ml-auto" onclick="filterTable('all','notice',this)">⚠ Notice Eligible</button>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-all">
+        <thead><tr><th>Property</th><th>Unit</th><th>Tenant</th><th>Type</th><th>Rent</th><th>Status</th><th>Balance</th><th>Move-In</th><th>Phone</th><th>Actions</th></tr></thead>
+        <tbody id="tbody-all"></tbody>
+      </table>
+    </div>
+    <div class="totals-row" id="totals-all"></div>
+  </div>
+
+</div><!-- end shell -->
+
+<!-- ===================== NOTICE MODAL ===================== -->
+
+  <!-- ===========================
+       INTEL PANEL
+       =========================== -->
+  <div class="prop-section" id="sec-intel">
+    <div class="prop-header">
+      <div>
+        <div class="prop-title">Market Intel</div>
+        <div class="prop-address">Collection Benchmarks · Local Regulations · Listings Comps · City Hall Links</div>
+      </div>
+      <div class="prop-meta">
+        <div class="prop-zip" style="font-size:20px;color:var(--green);">Feb 2026</div>
+        <div class="prop-zip-lbl">Live Intelligence</div>
+      </div>
+    </div>
+
+    <!-- BENCHMARK WIDGET -->
+    <div class="alert-box amber-alert" style="margin-bottom:20px;">
+      <div class="alert-box-title">⚠ Ruby &amp; SF Below California Average</div>
+      <p>National multifamily on-time rate is <strong>82.1%</strong>. California/West averages <strong>89–92%</strong>. Ruby is at <strong>71%</strong> and SF at <strong>75%</strong>. Activating notices and retest outreach cadence could recover $4,000+ this month.</p>
+    </div>
+
+    <div class="intel-grid">
+
+      <!-- CARD 1: COLLECTION BENCHMARKS -->
+      <div class="intel-card">
+        <div class="intel-card-head green-head">
+          <span>📈 Collection Benchmarks</span>
+          <span style="font-size:10px;opacity:0.7;">Chandan/RentRedi 2025</span>
+        </div>
+        <div class="intel-card-body">
+          <div class="bench-section-title">On-Time Collection Rate vs. Benchmarks</div>
+
+          <div class="bench-row">
+            <span class="bench-name">National Avg</span>
+            <div class="bench-track"><div class="bench-fill national" style="width:82.1%"></div></div>
+            <span class="bench-pct warn">82.1%</span>
+          </div>
+          <div class="bench-row">
+            <span class="bench-name">CA / West</span>
+            <div class="bench-track"><div class="bench-fill state" style="width:90%"></div></div>
+            <span class="bench-pct good">~90%</span>
+          </div>
+          <div class="bench-row">
+            <span class="bench-name">Pro Mgmt Target</span>
+            <div class="bench-track"><div class="bench-fill target" style="width:96%"></div></div>
+            <span class="bench-pct good">96%+</span>
+          </div>
+          <div class="bench-row">
+            <span class="bench-name" style="color:var(--orange);font-weight:800;">Ruby (Now)</span>
+            <div class="bench-track"><div class="bench-fill dave-low" style="width:71%"></div></div>
+            <span class="bench-pct bad">71%</span>
+          </div>
+          <div class="bench-row">
+            <span class="bench-name" style="color:var(--orange);font-weight:800;">SF (Now)</span>
+            <div class="bench-track"><div class="bench-fill dave-low" style="width:75%"></div></div>
+            <span class="bench-pct bad">75%</span>
+          </div>
+          <div class="bench-row">
+            <span class="bench-name" style="color:var(--orange);font-weight:800;">SF-HV-10 (Now)</span>
+            <div class="bench-track"><div class="bench-fill dave" style="width:87%"></div></div>
+            <span class="bench-pct warn">87%</span>
+          </div>
+
+          <div style="margin-top:18px;">
+            <div class="bench-section-title">Industry Notes</div>
+            <div class="alert-box green-alert">
+              <div class="alert-box-title">Full Collection Rate</div>
+              <p>National <em>full</em> payment rate (including late arrivals) is <strong>93.3%</strong>. Pursue 3-day notices + auto-pay enrollment to close the gap.</p>
+            </div>
+            <div class="alert-box amber-alert" style="margin-top:10px;">
+              <div class="alert-box-title">Late Payment Trend</div>
+              <p>Late payments nationally hit <strong>11.7%</strong> in June 2025 — a 25-month rising trend. West/CA still outperforms. Enroll tenants in autopay now.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: LOCAL REGULATIONS -->
+      <div class="intel-card">
+        <div class="intel-card-head dark-head">
+          <span>⚖️ Regulations &amp; City Hall</span>
+          <span style="font-size:10px;opacity:0.6;">SF · Oakland · CA</span>
+        </div>
+        <div class="intel-card-body">
+
+          <div class="alert-box red-alert">
+            <div class="alert-box-title">🔴 SF Rent Cap: 1.4% through Feb 28, 2026</div>
+            <p>San Francisco Rent Board effective March 1, 2025. Pre-1979 buildings only. Must obtain rent increase license before any increase.</p>
+          </div>
+          <div class="alert-box amber-alert" style="margin:10px 0;">
+            <div class="alert-box-title">🟡 Oakland RAP Cap: ~2.7%</div>
+            <p>Oakland Rent Adjustment Program. Buildings pre-1983. CPI-tied. Must file with RAP before any increase on covered units (94609).</p>
+          </div>
+          <div class="alert-box green-alert" style="margin:10px 0;">
+            <div class="alert-box-title">🟢 AB 1482 Statewide: 5% + CPI, max 10%</div>
+            <p>Applies to buildings built before Jan 1, 2005, not covered by stricter local ordinance. Newer SF/Oakland units may fall here.</p>
+          </div>
+
+          <div class="bench-section-title" style="margin-top:18px;">Key Links — Click to Open</div>
+
+          <a href="https://sfrb.org" target="_blank" class="policy-link">
+            <span class="pl-icon">🏛️</span>
+            <div class="pl-body">
+              <span class="pl-title">SF Rent Board — sfrb.org</span>
+              <span class="pl-desc">Annual increase notices · Rent increase license · Tenant petitions</span>
+              <span class="pl-tag critical">SF LANDLORD REQUIRED</span>
+            </div>
+          </a>
+          <a href="https://www.oaklandca.gov/departments/rent-adjustment-program" target="_blank" class="policy-link">
+            <span class="pl-icon">🏙️</span>
+            <div class="pl-body">
+              <span class="pl-title">Oakland Rent Adjustment Program</span>
+              <span class="pl-desc">RAP petition filing · Allowable increase calculator · Exemptions</span>
+              <span class="pl-tag critical">RUBY (94609) REQUIRED</span>
+            </div>
+          </a>
+          <a href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=201920200AB1482" target="_blank" class="policy-link">
+            <span class="pl-icon">📜</span>
+            <div class="pl-body">
+              <span class="pl-title">AB 1482 — Tenant Protection Act</span>
+              <span class="pl-desc">Full text · Exemptions · Just-cause eviction rules</span>
+              <span class="pl-tag caution">REVIEW ANNUALLY</span>
+            </div>
+          </a>
+          <a href="https://courts.ca.gov/self-help/landlord-tenant" target="_blank" class="policy-link">
+            <span class="pl-icon">⚖️</span>
+            <div class="pl-body">
+              <span class="pl-title">CA Courts — Unlawful Detainer (Eviction)</span>
+              <span class="pl-desc">Forms · Filing steps · Service requirements after 3-day notice</span>
+              <span class="pl-tag caution">AFTER NOTICE EXPIRES</span>
+            </div>
+          </a>
+          <a href="https://www.sfcityattorney.org/tenant-landlord/" target="_blank" class="policy-link">
+            <span class="pl-icon">🔒</span>
+            <div class="pl-body">
+              <span class="pl-title">SF City Attorney — Tenant/Landlord</span>
+              <span class="pl-desc">Ellis Act updates · Relocation payments · Ellis notice timelines</span>
+              <span class="pl-tag info">GOOD TO KNOW</span>
+            </div>
+          </a>
+          <a href="https://www.sf.gov/housing-resources" target="_blank" class="policy-link">
+            <span class="pl-icon">🌁</span>
+            <div class="pl-body">
+              <span class="pl-title">SF.gov — Housing Resources Hub</span>
+              <span class="pl-desc">One-stop for SF housing policy updates, tenant assistance programs</span>
+              <span class="pl-tag info">REFERENCE</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- CARD 3: MARKET COMPS -->
+      <div class="intel-card">
+        <div class="intel-card-head orange-head">
+          <span>🏘️ Market Comps &amp; Listings</span>
+          <span style="font-size:10px;opacity:0.7;">Feb 2026 · Est. Zillow/Zumper</span>
+        </div>
+        <div class="intel-card-body">
+          <div class="bench-section-title">Oakland 94609 — Current Market Rents</div>
+
+          <div class="listing-card">
+            <div class="listing-price">$1,650</div>
+            <div class="listing-info">
+              <div class="listing-addr">Studio / Efficiency — avg</div>
+              <div class="listing-meta">Ruby Studios listed at $1,650–1,695 · At market</div>
+            </div>
+            <span class="listing-tag market">AT MKT</span>
+          </div>
+          <div class="listing-card">
+            <div class="listing-price">$1,975</div>
+            <div class="listing-info">
+              <div class="listing-addr">1BR — avg market</div>
+              <div class="listing-meta">Your 1BRs: $1,825–$1,975 · Slightly below market</div>
+            </div>
+            <span class="listing-tag below">↑ UPSIDE</span>
+          </div>
+          <div class="listing-card">
+            <div class="listing-price">$2,650</div>
+            <div class="listing-info">
+              <div class="listing-addr">2BR — avg market</div>
+              <div class="listing-meta">Your 2BRs: $2,350–$2,650 · Some below market</div>
+            </div>
+            <span class="listing-tag below">↑ UPSIDE</span>
+          </div>
+
+          <div class="bench-section-title" style="margin-top:18px;">SF 94103 (SoMa) — Current Market Rents</div>
+          <div class="listing-card">
+            <div class="listing-price">$2,200</div>
+            <div class="listing-info">
+              <div class="listing-addr">Studio — avg market</div>
+              <div class="listing-meta">Your studios: $2,100–$2,150 · Slightly under</div>
+            </div>
+            <span class="listing-tag below">↑ UPSIDE</span>
+          </div>
+          <div class="listing-card">
+            <div class="listing-price">$2,900</div>
+            <div class="listing-info">
+              <div class="listing-addr">1BR — avg market</div>
+              <div class="listing-meta">Your 1BRs: $2,695–$2,875 · Competitive</div>
+            </div>
+            <span class="listing-tag market">AT MKT</span>
+          </div>
+          <div class="listing-card">
+            <div class="listing-price">$3,600</div>
+            <div class="listing-info">
+              <div class="listing-addr">2BR — avg market</div>
+              <div class="listing-meta">Your 2BRs: $3,200–$3,500 · Below market</div>
+            </div>
+            <span class="listing-tag below">↑ UPSIDE</span>
+          </div>
+
+          <div class="alert-box green-alert" style="margin-top:14px;">
+            <div class="alert-box-title">💡 Rent Increase Strategy</div>
+            <p>SF cap is only <strong>1.4%</strong> on rent-controlled units. On turnover (vacant units), you can reset to full market rate. Oakland: file RAP before any increase. Priority units for turnover tracking: Denis Leary 104, Jay Leno 111, Jimmy Tingle 123.</p>
+          </div>
+
+          <div class="bench-section-title" style="margin-top:14px;">Useful Listing Resources</div>
+          <a href="https://www.zillow.com/oakland-ca/rentals/" target="_blank" class="policy-link">
+            <span class="pl-icon">🔍</span>
+            <div class="pl-body"><span class="pl-title">Zillow Rentals — Oakland 94609</span><span class="pl-desc">Live comps for Ruby neighborhood</span></div>
+          </a>
+          <a href="https://www.zumper.com/apartments-for-rent/san-francisco-ca/soma" target="_blank" class="policy-link">
+            <span class="pl-icon">🔍</span>
+            <div class="pl-body"><span class="pl-title">Zumper — SF SoMa / 94103</span><span class="pl-desc">Live comps for SF properties</span></div>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- end intel-grid -->
+  </div><!-- end sec-intel -->
+
+<div class="modal-overlay" id="modal-notice">
+  <div class="modal">
+    <div class="modal-top">
+      <div>
+        <div class="modal-title">3-Day Notice to Pay Rent or Quit</div>
+        <div class="modal-sub">California Civil Code § 1161 · Unlawful Detainer Prerequisite</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('notice')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="notice-letter" id="notice-content"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeModal('notice')">Cancel</button>
+      <button class="modal-btn primary" onclick="window.print()">⎙ Print Notice</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LEASE MODAL ===================== -->
+<div class="modal-overlay" id="modal-lease">
+  <div class="modal">
+    <div class="modal-top">
+      <div>
+        <div class="modal-title">Lease Agreement</div>
+        <div class="modal-sub" id="lease-modal-sub">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('lease')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="lease-doc" id="lease-content"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeModal('lease')">Close</button>
+      <button class="modal-btn primary" onclick="window.print()">⎙ Print Lease</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PORTAL MODAL ===================== -->
+<div class="modal-overlay" id="modal-portal">
+  <div class="modal">
+    <div class="modal-top">
+      <div>
+        <div class="modal-title">Tenant Portal</div>
+        <div class="modal-sub" id="portal-modal-sub">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('portal')">✕</button>
+    </div>
+    <div class="modal-body" id="portal-content"></div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeModal('portal')">Close</button>
+      <button class="modal-btn primary">✉ Send Portal Invite</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA — All three properties
+// ============================================================
+const PROPERTIES = {
+  ruby: {
+    name: 'Ruby', city: 'Oakland', zip: '94609', address: '2847 Ruby Street, Oakland, CA 94609',
+    units: [
+      { unit:'101', tenant:'Bill Burr',        type:'Studio', rent:1695, status:'late',    paidDate:null,       paidAmt:0,    moveIn:'2022-03-15', phone:'(617) 294-5521' },
+      { unit:'102', tenant:'Amy Poehler',       type:'2BR',    rent:2495, status:'paid',    paidDate:'Feb 3',    paidAmt:2495, moveIn:'2021-07-01', phone:'(617) 381-0044' },
+      { unit:'103', tenant:'Steven Wright',     type:'1BR',    rent:1950, status:'paid',    paidDate:'Feb 1',    paidAmt:1950, moveIn:'2023-01-10', phone:'(617) 555-3312' },
+      { unit:'104', tenant:'Denis Leary',       type:'2BR',    rent:2550, status:'late',    paidDate:null,       paidAmt:0,    moveIn:'2020-09-22', phone:'(617) 749-0081' },
+      { unit:'105', tenant:'Rachel Dratch',     type:'1BR',    rent:1895, status:'paid',    paidDate:'Feb 2',    paidAmt:1895, moveIn:'2022-11-15', phone:'(617) 443-2270' },
+      { unit:'106', tenant:'Matt Damon',        type:'2BR',    rent:2650, status:'paid',    paidDate:'Feb 1',    paidAmt:2650, moveIn:'2021-05-01', phone:'(617) 338-9951' },
+      { unit:'107', tenant:'Conan O\'Brien',    type:'1BR',    rent:1975, status:'paid',    paidDate:'Feb 4',    paidAmt:1975, moveIn:'2023-08-01', phone:'(617) 527-6640' },
+      { unit:'108', tenant:'Mindy Kaling',      type:'1BR',    rent:1925, status:'partial', paidDate:'Feb 5',    paidAmt:1000, moveIn:'2022-06-01', phone:'(617) 494-8823' },
+      { unit:'109', tenant:'BJ Novak',          type:'Studio', rent:1650, status:'paid',    paidDate:'Feb 2',    paidAmt:1650, moveIn:'2023-03-15', phone:'(617) 244-1190' },
+      { unit:'110', tenant:'John Krasinski',    type:'2BR',    rent:2500, status:'paid',    paidDate:'Feb 3',    paidAmt:2500, moveIn:'2021-12-01', phone:'(617) 558-7742' },
+      { unit:'111', tenant:'Jay Leno',          type:'1BR',    rent:1850, status:'late',    paidDate:null,       paidAmt:0,    moveIn:'2019-04-15', phone:'(617) 321-4456' },
+      { unit:'112', tenant:'Dane Cook',         type:'2BR',    rent:2450, status:'paid',    paidDate:'Feb 2',    paidAmt:2450, moveIn:'2022-10-01', phone:'(617) 782-3307' },
+      { unit:'113', tenant:'Steve Carell',      type:'1BR',    rent:1975, status:'paid',    paidDate:'Feb 5',    paidAmt:1975, moveIn:'2023-05-01', phone:'(617) 263-8812' },
+      { unit:'114', tenant:'Uma Thurman',       type:'2BR',    rent:2595, status:'paid',    paidDate:'Feb 1',    paidAmt:2595, moveIn:'2020-02-14', phone:'(617) 491-0055' },
+      { unit:'115', tenant:'Gary Gulman',       type:'1BR',    rent:1900, status:'paid',    paidDate:'Feb 3',    paidAmt:1900, moveIn:'2024-01-15', phone:'(617) 531-6620' },
+      { unit:'116', tenant:'Mike Birbiglia',    type:'Studio', rent:1695, status:'late',    paidDate:null,       paidAmt:0,    moveIn:'2023-09-01', phone:'(617) 872-4431' },
+      { unit:'117', tenant:'Lenny Clarke',      type:'2BR',    rent:2475, status:'paid',    paidDate:'Feb 4',    paidAmt:2475, moveIn:'2021-03-01', phone:'(617) 268-0093' },
+      { unit:'118', tenant:'Tony V',            type:'1BR',    rent:1825, status:'paid',    paidDate:'Feb 2',    paidAmt:1825, moveIn:'2022-07-15', phone:'(617) 445-7765' },
+      { unit:'119', tenant:'Chris Evans',       type:'2BR',    rent:2550, status:'paid',    paidDate:'Feb 1',    paidAmt:2550, moveIn:'2020-11-01', phone:'(617) 319-2281' },
+      { unit:'120', tenant:'Donnie Wahlberg',   type:'1BR',    rent:1875, status:'paid',    paidDate:'Feb 3',    paidAmt:1875, moveIn:'2021-08-15', phone:'(617) 265-4400' },
+      { unit:'121', tenant:'Mark Wahlberg',     type:'2BR',    rent:2425, status:'partial', paidDate:'Feb 7',    paidAmt:1500, moveIn:'2022-01-01', phone:'(617) 288-6613' },
+      { unit:'122', tenant:'Paula Poundstone',  type:'Studio', rent:1650, status:'paid',    paidDate:'Feb 2',    paidAmt:1650, moveIn:'2023-06-15', phone:'(617) 643-0028' },
+      { unit:'123', tenant:'Jimmy Tingle',      type:'1BR',    rent:1900, status:'late',    paidDate:null,       paidAmt:0,    moveIn:'2024-04-01', phone:'(617) 776-5590' },
+      { unit:'124', tenant:'Nick DiPaolo',      type:'2BR',    rent:2350, status:'paid',    paidDate:'Feb 4',    paidAmt:2350, moveIn:'2022-05-01', phone:'(617) 623-8847' },
+    ]
+  },
+  sf: {
+    name: 'SF', city: 'San Francisco', zip: '94103', address: '145 Folsom Street, San Francisco, CA 94103',
+    units: [
+      { unit:'201', tenant:'Ben Affleck',       type:'1BR',    rent:2750, status:'paid',    paidDate:'Feb 1',    paidAmt:2750, moveIn:'2021-06-01', phone:'(617) 338-4422' },
+      { unit:'202', tenant:'James Spader',      type:'2BR',    rent:3450, status:'late',    paidDate:null,       paidAmt:0,    moveIn:'2020-04-15', phone:'(617) 964-3311' },
+      { unit:'203', tenant:'Eliza Coupe',       type:'1BR',    rent:2695, status:'paid',    paidDate:'Feb 3',    paidAmt:2695, moveIn:'2023-02-01', phone:'(603) 481-0076' },
+      { unit:'204', tenant:'Mike McDonald',     type:'Studio', rent:2150, status:'paid',    paidDate:'Feb 2',    paidAmt:2150, moveIn:'2022-09-15', phone:'(617) 354-8890' },
+      { unit:'205', tenant:'Bobby Farrelly',    type:'2BR',    rent:3250, status:'paid',    paidDate:'Feb 4',    paidAmt:3250, moveIn:'2021-10-01', phone:'(401) 729-0054' },
+      { unit:'206', tenant:'Paula Cole',        type:'Studio', rent:2100, status:'late',    paidDate:null,       paidAmt:0,    moveIn:'2023-11-01', phone:'(978) 546-2288' },
+      { unit:'207', tenant:'Robert Kelly',      type:'2BR',    rent:3200, status:'paid',    paidDate:'Feb 2',    paidAmt:3200, moveIn:'2022-04-01', phone:'(617) 423-5591' },
+      { unit:'208', tenant:'Elizabeth Banks',   type:'1BR',    rent:2750, status:'paid',    paidDate:'Feb 5',    paidAmt:2750, moveIn:'2024-01-01', phone:'(413) 555-0073' },
+    ]
+  },
+  sfhv: {
+    name: 'SF-HV-10', city: 'San Francisco', zip: '94103', address: '420 Hayes Street, San Francisco, CA 94103',
+    units: [
+      { unit:'301', tenant:'Peter Farrelly',    type:'2BR',    rent:3500, status:'paid',    paidDate:'Feb 1',    paidAmt:3500, moveIn:'2021-07-15', phone:'(401) 729-0055' },
+      { unit:'302', tenant:'Geena Davis',       type:'1BR',    rent:2900, status:'late',    paidDate:null,       paidAmt:0,    moveIn:'2019-11-01', phone:'(508) 759-3340' },
+      { unit:'303', tenant:'Leonard Nimoy',     type:'2BR',    rent:3400, status:'paid',    paidDate:'Feb 3',    paidAmt:3400, moveIn:'2020-06-01', phone:'(617) 247-0061' },
+      { unit:'304', tenant:'Michael Chiklis',   type:'1BR',    rent:2875, status:'paid',    paidDate:'Feb 2',    paidAmt:2875, moveIn:'2022-03-15', phone:'(978) 453-8812' },
+      { unit:'305', tenant:'Olympia Dukakis',   type:'Studio', rent:2200, status:'paid',    paidDate:'Feb 4',    paidAmt:2200, moveIn:'2021-01-01', phone:'(978) 452-4470' },
+      { unit:'306', tenant:'Louis C.K.',        type:'2BR',    rent:3350, status:'partial', paidDate:'Feb 9',    paidAmt:2000, moveIn:'2023-05-01', phone:'(617) 964-2200' },
+      { unit:'307', tenant:'Colin Quinn',       type:'1BR',    rent:2800, status:'paid',    paidDate:'Feb 3',    paidAmt:2800, moveIn:'2022-08-15', phone:'(617) 523-9981' },
+      { unit:'308', tenant:'Kevin Meaney',      type:'2BR',    rent:3300, status:'paid',    paidDate:'Feb 2',    paidAmt:3300, moveIn:'2021-09-01', phone:'(617) 783-6640' },
+      { unit:'309', tenant:'Anthony Clark',     type:'1BR',    rent:2825, status:'paid',    paidDate:'Feb 5',    paidAmt:2825, moveIn:'2023-10-15', phone:'(617) 327-4453' },
+      { unit:'310', tenant:'Rhea Perlman',      type:'Studio', rent:2200, status:'paid',    paidDate:'Feb 1',    paidAmt:2200, moveIn:'2024-02-01', phone:'(617) 491-7710' },
+    ]
+  }
+};
+
+const OWNER = 'Dave Cowan Properties — West Region';
+const MANAGER = 'Dave Cowan';
+const MANAGER_ADDR = '1 Market Plaza, Suite 300, San Francisco, CA 94105';
+const MANAGER_PHONE = '(415) 555-0100';
+
+// ============================================================
+// RENDER ENGINE
+// ============================================================
+function fmt$(n){ return '$' + n.toLocaleString(); }
+function badgeHtml(s){
+  const map = { paid:'badge-paid', late:'badge-late', partial:'badge-partial', vacant:'badge-vacant' };
+  const lbl = { paid:'Paid', late:'Late', partial:'Partial', vacant:'Vacant' };
+  return `<span class="badge ${map[s]||'badge-vacant'}">${lbl[s]||s}</span>`;
+}
+function actionBtns(u, propKey, propName){
+  const isLate = u.status === 'late' || u.status === 'partial';
+  const noticeBtn = isLate
+    ? `<button class="act-btn notice" onclick="openNotice('${propKey}','${u.unit}')">⚠ Notice</button>`
+    : '';
+  return `<div class="actions">
+    <button class="act-btn lease" onclick="openLease('${propKey}','${u.unit}')">📄 Lease</button>
+    <button class="act-btn portal" onclick="openPortal('${propKey}','${u.unit}')">👤 Portal</button>
+    ${noticeBtn}
+  </div>`;
+}
+
+function renderTable(propKey){
+  const prop = PROPERTIES[propKey];
+  const tbody = document.getElementById('tbody-' + propKey);
+  let html = '';
+  prop.units.forEach(u => {
+    const bal = u.rent - u.paidAmt;
+    const balCell = bal > 0
+      ? `<span class="balance-due">${fmt$(bal)}</span>`
+      : `<span class="balance-zero">—</span>`;
+    const paidCell = u.paidDate
+      ? `<span class="paid-date">${u.paidDate}</span>`
+      : `<span class="paid-date overdue">Unpaid</span>`;
+    html += `<tr class="${u.status}" data-status="${u.status}" data-prop="${propKey}">
+      <td class="unit-num">${u.unit}</td>
+      <td class="tenant-name">${u.tenant}</td>
+      <td><span class="unit-type">${u.type}</span></td>
+      <td class="rent-amt">${fmt$(u.rent)}</td>
+      <td>${badgeHtml(u.status)}</td>
+      <td>${paidCell}</td>
+      <td>${balCell}</td>
+      <td class="date-cell">${u.moveIn}</td>
+      <td class="phone-cell">${u.phone}</td>
+      <td>${actionBtns(u, propKey, prop.name)}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function renderAllTable(){
+  const tbody = document.getElementById('tbody-all');
+  let html = '';
+  ['ruby','sf','sfhv'].forEach(pk => {
+    const prop = PROPERTIES[pk];
+    prop.units.forEach(u => {
+      const bal = u.rent - u.paidAmt;
+      const balCell = bal > 0 ? `<span class="balance-due">${fmt$(bal)}</span>` : `<span class="balance-zero">—</span>`;
+      const paidCell = u.paidDate ? `<span class="paid-date">${u.paidDate}</span>` : `<span class="paid-date overdue">Unpaid</span>`;
+      html += `<tr class="${u.status}" data-status="${u.status}" data-prop="${pk}">
+        <td class="unit-num" style="color:var(--gold);font-weight:600;">${prop.name}</td>
+        <td class="unit-num">${u.unit}</td>
+        <td class="tenant-name">${u.tenant}</td>
+        <td><span class="unit-type">${u.type}</span></td>
+        <td class="rent-amt">${fmt$(u.rent)}</td>
+        <td>${badgeHtml(u.status)}</td>
+        <td>${balCell}</td>
+        <td class="date-cell">${u.moveIn}</td>
+        <td class="phone-cell">${u.phone}</td>
+        <td>${actionBtns(u, pk, prop.name)}</td>
+      </tr>`;
+    });
+  });
+  tbody.innerHTML = html;
+}
+
+function calcKPIs(units){
+  const total = units.length;
+  const paid = units.filter(u=>u.status==='paid').length;
+  const late = units.filter(u=>u.status==='late').length;
+  const partial = units.filter(u=>u.status==='partial').length;
+  const totalRent = units.reduce((s,u)=>s+u.rent,0);
+  const collected = units.reduce((s,u)=>s+u.paidAmt,0);
+  const outstanding = totalRent - collected;
+  const rate = Math.round(collected/totalRent*100);
+  return { total, paid, late, partial, totalRent, collected, outstanding, rate };
+}
+
+function renderKPIs(containerId, units){
+  const k = calcKPIs(units);
+  const el = document.getElementById(containerId);
+  el.innerHTML = `
+    <div class="kpi gold"><div class="kpi-label">Total Roll</div><div class="kpi-value">${fmt$(k.totalRent)}</div><div class="kpi-sub">${k.total} units</div></div>
+    <div class="kpi green"><div class="kpi-label">Collected</div><div class="kpi-value">${fmt$(k.collected)}</div><div class="kpi-sub">${k.paid} paid · ${k.rate}% rate</div></div>
+    <div class="kpi red"><div class="kpi-label">Outstanding</div><div class="kpi-value">${fmt$(k.outstanding)}</div><div class="kpi-sub">${k.late} late · ${k.partial} partial</div></div>
+    <div class="kpi blue"><div class="kpi-label">Occupancy</div><div class="kpi-value">${k.total}</div><div class="kpi-sub">of ${k.total} units occupied</div></div>
+    <div class="kpi amber"><div class="kpi-label">Past Due Units</div><div class="kpi-value">${k.late + k.partial}</div><div class="kpi-sub">${k.late} late · ${k.partial} partial</div></div>`;
+}
+
+function renderTotals(containerId, units){
+  const k = calcKPIs(units);
+  const el = document.getElementById(containerId);
+  el.innerHTML = `
+    <div class="total-cell"><div class="tc-label">Total Roll</div><div class="tc-val">${fmt$(k.totalRent)}</div></div>
+    <div class="total-cell tc-green"><div class="tc-label">Collected</div><div class="tc-val">${fmt$(k.collected)}</div></div>
+    <div class="total-cell tc-red"><div class="tc-label">Outstanding</div><div class="tc-val">${fmt$(k.outstanding)}</div></div>
+    <div class="total-cell"><div class="tc-label">Collection Rate</div><div class="tc-val">${k.rate}%</div></div>`;
+}
+
+// ============================================================
+// FILTER
+// ============================================================
+function filterTable(propKey, filter, btn){
+  const parent = btn.closest('.filter-bar');
+  parent.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  let tbody;
+  if(propKey === 'all'){
+    tbody = document.getElementById('tbody-all');
+  } else {
+    tbody = document.getElementById('tbody-' + propKey);
+  }
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach(row => {
+    const s = row.dataset.status;
+    if(filter === 'all') row.style.display = '';
+    else if(filter === 'notice') row.style.display = (s==='late'||s==='partial') ? '' : 'none';
+    else row.style.display = (s === filter) ? '' : 'none';
+  });
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showProp(key){
+  document.querySelectorAll('.prop-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  const sec = document.getElementById('sec-' + key);
+  if(sec) sec.classList.add('active');
+  if(event && event.currentTarget) event.currentTarget.classList.add('active');
+}
+
+// ============================================================
+// NOTICE MODAL — CA 3-Day Notice to Pay or Quit
+// ============================================================
+function openNotice(propKey, unitNum){
+  const prop = PROPERTIES[propKey];
+  const u = prop.units.find(x => x.unit === unitNum);
+  if(!u) return;
+  const bal = u.rent - u.paidAmt;
+  const today = new Date('2026-02-18');
+  const deadline = new Date(today);
+  deadline.setDate(deadline.getDate() + 3);
+  const fmtDate = d => d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+  document.getElementById('notice-content').innerHTML = `
+  <div class="nl-header">
+    <div class="nl-title">THREE-DAY NOTICE TO PAY RENT OR QUIT</div>
+    <div class="nl-subtitle">Pursuant to California Code of Civil Procedure § 1161(2)</div>
+  </div>
+  <div class="nl-section">
+    <strong>Date:</strong> ${fmtDate(today)}
+  </div>
+  <div class="nl-section">
+    <strong>TO:</strong> ${u.tenant}<br>
+    <strong>AND ALL OTHER OCCUPANTS IN POSSESSION OF:</strong><br>
+    <div class="nl-indent">
+      Unit ${u.unit}, ${prop.address}<br>
+      (the "Premises")
+    </div>
+  </div>
+  <div class="nl-section">
+    <p>PLEASE TAKE NOTICE that the rent on the above-described premises occupied by you is now past due. The total amount of rent due and unpaid is as follows:</p>
+    <div class="nl-indent" style="margin-top:12px;">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tr style="border-bottom:1px solid #ddd;"><td style="padding:6px 0;"><strong>Monthly Rent Amount:</strong></td><td style="text-align:right;">${fmt$(u.rent)}</td></tr>
+        <tr style="border-bottom:1px solid #ddd;"><td style="padding:6px 0;">Amount Received:</td><td style="text-align:right;">${fmt$(u.paidAmt)}</td></tr>
+        <tr><td style="padding:8px 0;"><strong>TOTAL AMOUNT NOW DUE AND OWING:</strong></td><td style="text-align:right;font-size:16px;font-weight:bold;">${fmt$(bal)}</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="nl-section">
+    <p>Within <span class="nl-bold nl-underline">THREE (3) DAYS</span> after service of this notice, you are hereby required to do one of the following:</p>
+    <div class="nl-indent">
+      <p><strong>(1)</strong> Pay the total amount of <strong>${fmt$(bal)}</strong> in past due rent to the property manager at the address listed below; <strong>OR</strong></p>
+      <p style="margin-top:8px;"><strong>(2)</strong> Vacate and surrender possession of the above-described premises.</p>
+    </div>
+  </div>
+  <div class="nl-section">
+    <p>This notice expires on: <span class="nl-bold">${fmtDate(deadline)}</span></p>
+    <p style="margin-top:8px;">If you fail to pay the rent in full OR vacate the premises within the three-day period, legal proceedings will be instituted against you to recover possession of the premises, to declare the forfeiture of your rental agreement or lease, and to recover rents, damages, attorney's fees, and court costs.</p>
+  </div>
+  <div class="nl-section">
+    <p><strong>Rent Payment Instructions:</strong><br>
+    Payment must be made in certified funds, cashier's check, or money order made payable to:<br>
+    <div class="nl-indent"><strong>${OWNER}</strong><br>
+    ${MANAGER_ADDR}<br>
+    Phone: ${MANAGER_PHONE}</div></p>
+  </div>
+  <div class="nl-section" style="background:#f9f9f9;border:1px solid #ddd;padding:12px;margin-top:16px;font-size:12px;color:#555;">
+    <strong>NOTICE TO TENANT:</strong> If you have already paid the rent due under this notice, please disregard this notice. If you believe you have received this notice in error, contact the property manager immediately. California law provides various tenant protections; you may wish to consult with an attorney or contact a tenant legal assistance organization.
+  </div>
+  <div class="nl-signature">
+    <p><strong>Issued by:</strong></p>
+    <div class="nl-sig-line">${MANAGER}<br>${OWNER}</div>
+    <div class="nl-sig-line" style="margin-top:20px;">Date Served<br>&nbsp;</div>
+    <div class="nl-sig-line" style="margin-top:20px;">Method of Service<br>&nbsp;</div>
+  </div>
+  <div class="nl-footer">
+    This notice is served pursuant to California Code of Civil Procedure § 1162. Service may be made by: (1) personal delivery; (2) leaving a copy with a person of suitable age and mailing a copy; or (3) posting on the premises and mailing a copy. This is a legal document. Property managers should retain proof of service.
+  </div>`;
+
+  document.getElementById('modal-notice').classList.add('open');
+}
+
+// ============================================================
+// LEASE MODAL
+// ============================================================
+function openLease(propKey, unitNum){
+  const prop = PROPERTIES[propKey];
+  const u = prop.units.find(x => x.unit === unitNum);
+  if(!u) return;
+  document.getElementById('lease-modal-sub').textContent = `Unit ${u.unit} · ${u.tenant} · ${prop.name}`;
+  const leaseEnd = new Date(u.moveIn);
+  leaseEnd.setFullYear(leaseEnd.getFullYear() + 1);
+  const fmtD = d => new Date(d).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+  document.getElementById('lease-content').innerHTML = `
+  <div class="ld-header">
+    <div class="ld-title">Residential Lease Agreement</div>
+    <div class="ld-sub">State of California · ${OWNER}</div>
+  </div>
+  <div class="ld-section">
+    <div class="ld-section-title">Parties & Premises</div>
+    <div class="ld-row"><span class="ldr-label">Landlord</span><span class="ldr-val">${OWNER}</span></div>
+    <div class="ld-row"><span class="ldr-label">Tenant</span><span class="ldr-val">${u.tenant}</span></div>
+    <div class="ld-row"><span class="ldr-label">Premises</span><span class="ldr-val">Unit ${u.unit}, ${prop.address}</span></div>
+    <div class="ld-row"><span class="ldr-label">Unit Type</span><span class="ldr-val">${u.type}</span></div>
+  </div>
+  <div class="ld-section">
+    <div class="ld-section-title">Term & Rent</div>
+    <div class="ld-row"><span class="ldr-label">Lease Commencement</span><span class="ldr-val">${fmtD(u.moveIn)}</span></div>
+    <div class="ld-row"><span class="ldr-label">Monthly Rent</span><span class="ldr-val">${fmt$(u.rent)}</span></div>
+    <div class="ld-row"><span class="ldr-label">Due Date</span><span class="ldr-val">1st of each month</span></div>
+    <div class="ld-row"><span class="ldr-label">Late Fee</span><span class="ldr-val">$100 after 5-day grace period (Cal. Civ. Code § 1671)</span></div>
+    <div class="ld-row"><span class="ldr-label">Security Deposit</span><span class="ldr-val">${fmt$(u.rent * 2)} (2 months · Cal. Civ. Code § 1950.5)</span></div>
+    <div class="ld-row"><span class="ldr-label">Accepted Payment</span><span class="ldr-val">Check, ACH, or certified funds</span></div>
+  </div>
+  <div class="ld-section">
+    <div class="ld-section-title">Key California Provisions</div>
+    <div class="ld-clause"><strong>Habitable Premises (Cal. Civ. Code § 1941):</strong> Landlord shall maintain the premises in a habitable condition throughout the tenancy.</div>
+    <div class="ld-clause"><strong>Entry Notice (Cal. Civ. Code § 1954):</strong> Landlord shall provide 24 hours written notice prior to entry, except in emergency.</div>
+    <div class="ld-clause"><strong>AB 1482 — Rent Cap:</strong> Annual rent increases limited to 5% + local CPI, or 10%, whichever is lower (if applicable to this unit).</div>
+    <div class="ld-clause"><strong>Smoke-Free Property:</strong> No smoking of any substance is permitted on the premises or within 25 feet of building entrances per local ordinance.</div>
+    <div class="ld-clause"><strong>Lead-Based Paint Disclosure:</strong> Attached as required by 42 U.S.C. § 4852d.</div>
+  </div>
+  <div class="ld-section">
+    <div class="ld-section-title">Signatures</div>
+    <div class="ld-row"><span class="ldr-label">Tenant Signature</span><span class="ldr-val" style="font-style:italic;">${u.tenant}</span></div>
+    <div class="ld-row"><span class="ldr-label">Date Signed</span><span class="ldr-val">${fmtD(u.moveIn)}</span></div>
+    <div class="ld-row"><span class="ldr-label">Landlord / Agent</span><span class="ldr-val">${MANAGER} · ${OWNER}</span></div>
+  </div>`;
+
+  document.getElementById('modal-lease').classList.add('open');
+}
+
+// ============================================================
+// PORTAL MODAL
+// ============================================================
+function openPortal(propKey, unitNum){
+  const prop = PROPERTIES[propKey];
+  const u = prop.units.find(x => x.unit === unitNum);
+  if(!u) return;
+  document.getElementById('portal-modal-sub').textContent = `${u.tenant} · Unit ${u.unit} · ${prop.name}`;
+  const bal = u.rent - u.paidAmt;
+
+  document.getElementById('portal-content').innerHTML = `
+  <div style="padding:20px 28px;">
+    <div class="portal-card">
+      <div class="pc-head"><div class="pc-title">Tenant Account</div><span class="badge ${u.status==='paid'?'badge-paid':u.status==='late'?'badge-late':'badge-partial'}">${u.status}</span></div>
+      <div class="pc-row"><span class="prl">Full Name</span><span class="prv">${u.tenant}</span></div>
+      <div class="pc-row"><span class="prl">Unit</span><span class="prv">${u.unit} — ${prop.name} · ${prop.city}</span></div>
+      <div class="pc-row"><span class="prl">Phone</span><span class="prv">${u.phone}</span></div>
+      <div class="pc-row"><span class="prl">Move-In Date</span><span class="prv">${u.moveIn}</span></div>
+      <div class="pc-row"><span class="prl">Unit Type</span><span class="prv">${u.type}</span></div>
+    </div>
+    <div class="portal-card">
+      <div class="pc-head"><div class="pc-title">February 2026 — Ledger</div></div>
+      <div class="pc-row"><span class="prl">Monthly Rent</span><span class="prv">${fmt$(u.rent)}</span></div>
+      <div class="pc-row"><span class="prl">Amount Paid</span><span class="prv" style="color:var(--green)">${fmt$(u.paidAmt)}</span></div>
+      <div class="pc-row"><span class="prl">Payment Date</span><span class="prv">${u.paidDate || '— Not paid'}</span></div>
+      <div class="pc-row"><span class="prl">Balance Due</span><span class="prv" style="color:${bal>0?'var(--red)':'var(--green)'}">${bal > 0 ? fmt$(bal) : 'Paid in Full'}</span></div>
+    </div>
+    <div class="portal-card">
+      <div class="pc-head"><div class="pc-title">Portal Access</div></div>
+      <div class="pc-row"><span class="prl">Portal Status</span><span class="prv" style="color:var(--amber)">Invite Pending</span></div>
+      <div class="pc-row"><span class="prl">Online Payments</span><span class="prv">Not enrolled</span></div>
+      <div class="pc-row"><span class="prl">Maintenance Requests</span><span class="prv">0 open</span></div>
+      <div class="pc-row"><span class="prl">Documents on File</span><span class="prv">Lease, Addenda</span></div>
+    </div>
+  </div>`;
+
+  document.getElementById('modal-portal').classList.add('open');
+}
+
+function closeModal(id){ document.getElementById('modal-' + id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); }));
+
+// ============================================================
+// EXPORT CSV
+// ============================================================
+function exportCSV(){
+  let csv = 'Property,Unit,Tenant,Type,Rent,Status,Paid,Balance,Move-In,Phone\n';
+  ['ruby','sf','sfhv'].forEach(pk => {
+    PROPERTIES[pk].units.forEach(u => {
+      const bal = u.rent - u.paidAmt;
+      csv += `"${PROPERTIES[pk].name}","${u.unit}","${u.tenant}","${u.type}",${u.rent},"${u.status}",${u.paidAmt},${bal},"${u.moveIn}","${u.phone}"\n`;
+    });
+  });
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'DaveCowan_RentRoll_Feb2026.csv'; a.click();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+['ruby','sf','sfhv'].forEach(pk => {
+  renderTable(pk);
+  renderKPIs('kpi-' + pk, PROPERTIES[pk].units);
+  renderTotals('totals-' + pk, PROPERTIES[pk].units);
+});
+renderAllTable();
+const allUnits = [...PROPERTIES.ruby.units, ...PROPERTIES.sf.units, ...PROPERTIES.sfhv.units];
+renderKPIs('kpi-all', allUnits);
+renderTotals('totals-all', allUnits);
+const allCollected = allUnits.reduce((s,u)=>s+u.paidAmt,0);
+document.getElementById('all-collected-val').textContent = '$' + allCollected.toLocaleString();
+
+// ============================================================
+// BANK CSV IMPORT — AUTO-DETECT FORMAT + FUZZY MATCH TENANTS
+// ============================================================
+
+let pendingMatches = [];
+
+function handleBankDrop(e){
+  const file = e.dataTransfer.files[0];
+  if(file) processBankFile(file);
+}
+
+function handleBankCSV(e){
+  const file = e.target.files[0];
+  if(file){
+    document.getElementById('modal-bank-upload').classList.add('open');
+    processBankFile(file);
+  }
+}
+
+function processBankFile(file){
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const csv = e.target.result;
+    const rows = parseCSV(csv);
+    if(!rows || rows.length < 2){ 
+      alert('Could not parse CSV. Make sure it has columns for date, amount, and description.'); 
+      return; 
+    }
+    
+    // Auto-detect columns
+    const headers = rows[0].map(h => h.toLowerCase().trim());
+    let dateCol = -1, amtCol = -1, descCol = -1;
+    
+    // Date column detection
+    ['date','transaction date','posted date','trans date','posting date'].forEach(k => {
+      if(dateCol < 0) dateCol = headers.findIndex(h => h.includes(k.split(' ')[0]) && (k.split(' ').length === 1 || h.includes(k.split(' ')[1])));
+    });
+    if(dateCol < 0) dateCol = headers.findIndex(h => h.includes('date'));
+    
+    // Amount column — look for credit/deposit first, then amount
+    ['credit','deposit','amount','debit'].forEach(k => {
+      if(amtCol < 0){
+        const idx = headers.findIndex(h => h.includes(k));
+        if(idx >= 0){
+          // Check if this column has positive numbers (credits)
+          const sample = rows.slice(1,5).map(r => parseFloat((r[idx]||'').replace(/[$,]/g,'')));
+          if(sample.some(v => v > 0)) amtCol = idx;
+        }
+      }
+    });
+    if(amtCol < 0) amtCol = headers.findIndex(h => h.includes('amount'));
+    
+    // Description column
+    ['description','memo','name','payee','narrative','details'].forEach(k => {
+      if(descCol < 0) descCol = headers.findIndex(h => h.includes(k));
+    });
+    if(descCol < 0) descCol = headers.findIndex(h => h.includes('desc') || h.includes('memo'));
+    
+    if(amtCol < 0){ 
+      alert('Could not find an amount column. Columns found: ' + headers.join(', ')); 
+      return; 
+    }
+    
+    // Build all units list
+    const allUnits = [
+      ...PROPERTIES.ruby.units.map(u => ({...u, propKey:'ruby', propName:PROPERTIES.ruby.name})),
+      ...PROPERTIES.sf.units.map(u => ({...u, propKey:'sf', propName:PROPERTIES.sf.name})),
+      ...PROPERTIES.sfhv.units.map(u => ({...u, propKey:'sfhv', propName:PROPERTIES.sfhv.name}))
+    ];
+    
+    // Parse transactions
+    const transactions = [];
+    for(let i = 1; i < rows.length; i++){
+      const row = rows[i];
+      if(!row || row.every(c => !c.trim())) continue;
+      const rawAmt = amtCol >= 0 ? (row[amtCol]||'').replace(/[$,\s]/g,'') : '0';
+      const amt = parseFloat(rawAmt);
+      if(isNaN(amt) || amt <= 0) continue; // skip debits / non-numeric
+      const date = dateCol >= 0 ? (row[dateCol]||'').trim() : '';
+      const desc = descCol >= 0 ? (row[descCol]||'').trim() : row.join(' ');
+      transactions.push({ date, amt, desc, matched: false });
+    }
+    
+    // Fuzzy match: exact amount match → then check tenant name in description
+    pendingMatches = [];
+    const unmatched = [];
+    
+    transactions.forEach(tx => {
+      // Find units where amount matches rent exactly or within $50 (partial)
+      const candidates = allUnits.filter(u => {
+        const balance = u.rent - u.paidAmt;
+        return (Math.abs(tx.amt - u.rent) < 5) || // exact rent
+               (Math.abs(tx.amt - balance) < 5 && balance > 0) || // exact balance
+               (tx.amt >= u.rent * 0.3 && tx.amt <= u.rent); // partial (30-100%)
+      });
+      
+      if(candidates.length === 0){ unmatched.push(tx); return; }
+      
+      // Score by name match in description
+      let best = null, bestScore = -1;
+      candidates.forEach(u => {
+        let score = 0;
+        const descLower = tx.desc.toLowerCase();
+        const nameParts = u.tenant.toLowerCase().split(' ');
+        nameParts.forEach(p => { if(p.length > 2 && descLower.includes(p)) score += 2; });
+        if(descLower.includes(u.unit.toLowerCase())) score += 3;
+        // Amount match quality
+        if(Math.abs(tx.amt - u.rent) < 5) score += 2;
+        else if(Math.abs(tx.amt - (u.rent - u.paidAmt)) < 5) score += 1;
+        if(score > bestScore){ best = u; bestScore = score; }
+      });
+      
+      if(best){
+        const isPartial = tx.amt < best.rent - 1;
+        const newStatus = isPartial ? 'partial' : 'paid';
+        const newPaid = isPartial ? tx.amt : best.rent;
+        pendingMatches.push({
+          tx, unit: best, newStatus, newPaid, bestScore,
+          confidence: bestScore >= 4 ? 'HIGH' : bestScore >= 2 ? 'MED' : 'LOW'
+        });
+      } else {
+        unmatched.push(tx);
+      }
+    });
+    
+    renderImportResults(file.name, pendingMatches, unmatched);
+  };
+  reader.readAsText(file);
+}
+
+function parseCSV(text){
+  const rows = [];
+  const lines = text.replace(/\r/g,'').split('\n');
+  lines.forEach(line => {
+    if(!line.trim()) return;
+    const cols = [];
+    let cur = '', inQ = false;
+    for(let i = 0; i < line.length; i++){
+      const c = line[i];
+      if(c === '"'){ inQ = !inQ; }
+      else if(c === ',' && !inQ){ cols.push(cur.trim()); cur = ''; }
+      else cur += c;
+    }
+    cols.push(cur.trim());
+    rows.push(cols);
+  });
+  return rows;
+}
+
+function renderImportResults(filename, matches, unmatched){
+  document.getElementById('bank-dropzone').style.display = 'none';
+  document.getElementById('bank-import-results').style.display = 'block';
+  document.getElementById('bank-import-filename').textContent = filename;
+  
+  // Summary cards
+  const totalMatched = matches.reduce((s,m) => s + m.tx.amt, 0);
+  const summaryEl = document.getElementById('bank-import-summary');
+  summaryEl.innerHTML = `
+    <div style="background:var(--paid-bg);border:2px solid var(--paid-bd);border-radius:8px;padding:14px 16px;text-align:center;">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:6px;">Matched Deposits</div>
+      <div style="font-family:var(--mono);font-size:26px;font-weight:800;color:var(--paid-g);">${matches.length}</div>
+      <div style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--paid-g);">$${totalMatched.toLocaleString()}</div>
+    </div>
+    <div style="background:var(--red-bg);border:2px solid var(--red-bd);border-radius:8px;padding:14px 16px;text-align:center;">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:6px;">Unmatched</div>
+      <div style="font-family:var(--mono);font-size:26px;font-weight:800;color:var(--red);">${unmatched.length}</div>
+      <div style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--dim);">Review manually</div>
+    </div>
+    <div style="background:var(--amber-bg);border:2px solid var(--amber-bd);border-radius:8px;padding:14px 16px;text-align:center;">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:6px;">Total Scanned</div>
+      <div style="font-family:var(--mono);font-size:26px;font-weight:800;color:var(--amber);">${matches.length + unmatched.length}</div>
+      <div style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--dim);">transactions</div>
+    </div>
+  `;
+  
+  // Matched rows
+  const matchEl = document.getElementById('bank-import-matches');
+  if(matches.length === 0){
+    matchEl.innerHTML = '<div style="padding:16px 20px;font-size:14px;font-weight:600;color:var(--dim);">No matches found. Try a different date range or check that amounts match rent.</div>';
+  } else {
+    matchEl.innerHTML = matches.map((m,i) => `
+      <div style="display:grid;grid-template-columns:auto 1fr auto auto auto;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);background:${i%2?'#fafcf8':'#fff'};">
+        <input type="checkbox" checked id="match-cb-${i}" style="width:18px;height:18px;accent-color:var(--green);cursor:pointer;">
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--txt);">${m.unit.tenant} <span style="font-size:12px;color:var(--dim);font-family:var(--mono);">${m.unit.propName} · ${m.unit.unit}</span></div>
+          <div style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--dim);margin-top:2px;">${m.tx.date} · ${m.tx.desc.substring(0,50)}</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:16px;font-weight:800;color:var(--paid-g);">$${m.tx.amt.toLocaleString()}</div>
+        <span style="font-family:var(--mono);font-size:11px;font-weight:800;padding:4px 10px;border-radius:12px;
+          ${m.newStatus==='paid'?'background:var(--paid-bg);color:var(--paid-g);border:1.5px solid var(--paid-bd);':'background:var(--amber-bg);color:var(--amber);border:1.5px solid var(--amber-bd);'}">
+          ${m.newStatus.toUpperCase()}
+        </span>
+        <span style="font-family:var(--mono);font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;
+          ${m.confidence==='HIGH'?'background:#e4f7ee;color:#0a7a45;':m.confidence==='MED'?'background:var(--amber-bg);color:var(--amber);':'background:var(--red-bg);color:var(--red);'}">
+          ${m.confidence}
+        </span>
+      </div>
+    `).join('');
+  }
+  
+  // Unmatched rows
+  const unmatchEl = document.getElementById('bank-import-unmatched');
+  if(unmatched.length === 0){
+    unmatchEl.innerHTML = '<div style="padding:16px 20px;font-size:14px;font-weight:600;color:var(--paid-g);">✓ All transactions matched!</div>';
+  } else {
+    unmatchEl.innerHTML = unmatched.map((tx,i) => `
+      <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);background:${i%2?'#fefaf8':'#fff8f6'};">
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--dim);">${tx.date} · ${tx.desc.substring(0,60)}</div>
+          <div style="font-size:12px;font-weight:600;color:var(--dim);">Could be: non-rent deposit, fee, or tenant not in system</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:15px;font-weight:800;color:var(--red);">$${tx.amt.toLocaleString()}</div>
+      </div>
+    `).join('');
+  }
+  
+  if(matches.length > 0){
+    document.getElementById('bank-apply-btn').style.display = 'block';
+  }
+}
+
+function applyBankImport(){
+  const allUnits = [
+    ...PROPERTIES.ruby.units,
+    ...PROPERTIES.sf.units,
+    ...PROPERTIES.sfhv.units
+  ];
+  
+  let applied = 0;
+  pendingMatches.forEach((m, i) => {
+    const cb = document.getElementById('match-cb-' + i);
+    if(!cb || !cb.checked) return;
+    
+    // Find the unit across all properties and update
+    ['ruby','sf','sfhv'].forEach(pk => {
+      const unit = PROPERTIES[pk].units.find(u => u.unit === m.unit.unit && u.tenant === m.unit.tenant);
+      if(unit){
+        unit.paidAmt = m.newPaid;
+        unit.status = m.newStatus;
+        unit.paidDate = m.tx.date || 'Imported';
+        applied++;
+      }
+    });
+  });
+  
+  // Re-render all tables and KPIs
+  ['ruby','sf','sfhv'].forEach(pk => {
+    renderTable(pk);
+    renderKPIs('kpi-' + pk, PROPERTIES[pk].units);
+    renderTotals('totals-' + pk, PROPERTIES[pk].units);
+  });
+  renderAllTable();
+  const allUnits2 = [...PROPERTIES.ruby.units, ...PROPERTIES.sf.units, ...PROPERTIES.sfhv.units];
+  renderKPIs('kpi-all', allUnits2);
+  renderTotals('totals-all', allUnits2);
+  const allCollected = allUnits2.reduce((s,u) => s + u.paidAmt, 0);
+  document.getElementById('all-collected-val').textContent = '$' + allCollected.toLocaleString();
+  
+  document.getElementById('modal-bank-upload').classList.remove('open');
+  
+  // Reset for next upload
+  document.getElementById('bank-dropzone').style.display = 'block';
+  document.getElementById('bank-import-results').style.display = 'none';
+  document.getElementById('bank-apply-btn').style.display = 'none';
+  document.getElementById('bank-upload-input').value = '';
+  pendingMatches = [];
+  
+  alert('✓ Applied ' + applied + ' payment updates to the rent roll!');
+}
+
+</script>
+
+<!-- ===================== BANK CSV UPLOAD MODAL ===================== -->
+<div class="modal-overlay" id="modal-bank-upload">
+  <div class="modal" style="max-width:720px;">
+    <div class="modal-top" style="background:linear-gradient(135deg,#c84c00,#8a3000);">
+      <div>
+        <div class="modal-title">🏦 Bank Deposit Import</div>
+        <div class="modal-sub">Match deposits to tenants · Update payment status</div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('modal-bank-upload').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- HOW TO EXPORT -->
+      <div style="background:var(--green-bg);border:2px solid var(--paid-bd);border-radius:8px;padding:16px 20px;margin-bottom:20px;">
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:10px;">How to Export From Your Bank</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:14px;font-weight:600;color:var(--txt-2);">
+          <div>🏦 <strong>Chase:</strong> Accounts → Download → CSV</div>
+          <div>🏦 <strong>BofA:</strong> Activity → Export → CSV</div>
+          <div>🏦 <strong>Wells Fargo:</strong> Statements → Download Activity</div>
+          <div>🏦 <strong>Bluevine:</strong> Transactions → Export CSV</div>
+          <div>🏦 <strong>Zelle:</strong> Check your bank's Zelle history export</div>
+          <div>🏦 <strong>Venmo/PayPal:</strong> Statements → Download CSV</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:10px;font-weight:600;">
+          ⚡ The importer looks for: amount, date, and memo/description columns. Standard bank CSV formats are auto-detected.
+        </div>
+      </div>
+
+      <!-- RESULTS TABLE -->
+      <div id="bank-import-results" style="display:none;">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--txt-3);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border);">
+          Import Results — <span id="bank-import-filename" style="color:var(--orange);"></span>
+        </div>
+        <div id="bank-import-summary" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;"></div>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Matched Deposits</div>
+        <div id="bank-import-matches" style="border:2px solid var(--border);border-radius:8px;overflow:hidden;"></div>
+        <div style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin:16px 0 10px;">Unmatched Transactions</div>
+        <div id="bank-import-unmatched" style="border:2px solid var(--border);border-radius:8px;overflow:hidden;"></div>
+        <div style="background:var(--amber-bg);border:2px solid var(--amber-bd);border-radius:8px;padding:14px 18px;margin-top:16px;">
+          <div style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:6px;">⚠ Review Before Applying</div>
+          <div style="font-size:14px;font-weight:600;color:var(--txt-2);">Check matched results above. Partial amounts will mark units as PARTIAL. Click <strong>Apply to Rent Roll</strong> to update all matched tenants.</div>
+        </div>
+      </div>
+
+      <!-- DRAG DROP ZONE (shown before upload) -->
+      <div id="bank-dropzone" style="border:3px dashed var(--border-2);border-radius:12px;padding:48px 32px;text-align:center;cursor:pointer;transition:all 0.2s;" 
+           onclick="document.getElementById('bank-upload-input').click()"
+           ondragover="event.preventDefault();this.style.borderColor='var(--green)';this.style.background='var(--green-bg)';"
+           ondragleave="this.style.borderColor='var(--border-2)';this.style.background='transparent';"
+           ondrop="event.preventDefault();this.style.borderColor='var(--border-2)';this.style.background='transparent';handleBankDrop(event);">
+        <div style="font-size:48px;margin-bottom:14px;">🏦</div>
+        <div style="font-family:var(--mono);font-size:16px;font-weight:800;color:var(--txt);margin-bottom:8px;">Drop Bank CSV Here</div>
+        <div style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--dim);">or click to browse · Chase, BofA, Wells, Bluevine, PayPal supported</div>
+      </div>
+
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="document.getElementById('modal-bank-upload').classList.remove('open')">Cancel</button>
+      <button class="modal-btn" id="bank-apply-btn" style="display:none" onclick="applyBankImport()">✓ Apply to Rent Roll</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

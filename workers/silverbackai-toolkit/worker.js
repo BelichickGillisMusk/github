@@ -1,4 +1,5 @@
 // worker.js - Silverback AI Toolkit
+// Deployment: 2026-05-07 - PUSH DEPLOY ITERATE DOMINATE
 var worker_default = {
   async fetch(request) {
     const url = new URL(request.url);
@@ -9,11 +10,11 @@ var worker_default = {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Silverback AI Toolkit — ready-to-use AI tools for legal professionals, property managers, and businesses. Deploy in minutes.">
-    <meta name="keywords" content="AI toolkit, AI tools, legal AI, property management AI, business AI tools, Silverback AI">
+    <meta name="description" content="Silverback AI Toolkit — ready-to-use AI tools for legal professionals and businesses. Deploy in minutes.">
+    <meta name="keywords" content="AI toolkit, AI tools, legal AI, business AI tools, Silverback AI">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Silverback AI Toolkit — AI Tools Ready to Deploy">
-    <meta property="og:description" content="Pre-built AI tools for legal, property management, web, and custom business workflows.">
+    <meta property="og:description" content="Pre-built AI tools for legal, web, and custom business workflows.">
     <meta name="theme-color" content="#0a0a0f">
     <title>Silverback AI Toolkit — AI Tools Ready to Deploy</title>
 
@@ -528,7 +529,7 @@ var worker_default = {
             </p>
             <div class="hero-search">
                 <span class="search-icon">&#x1F50D;</span>
-                <input type="text" placeholder="Search tools... (e.g. legal, property, content)" id="searchInput">
+                <input type="text" placeholder="Search tools... (e.g. legal, content, automation)" id="searchInput">
             </div>
         </div>
     </section>
@@ -537,7 +538,6 @@ var worker_default = {
         <div class="filter-bar" id="filterBar">
             <button class="filter-btn active" data-category="all">All Tools</button>
             <button class="filter-btn" data-category="legal">Legal</button>
-            <button class="filter-btn" data-category="property">Property</button>
             <button class="filter-btn" data-category="web">Web</button>
             <button class="filter-btn" data-category="automation">Automation</button>
             <button class="filter-btn" data-category="data">Data</button>
@@ -575,54 +575,6 @@ var worker_default = {
                         <div class="tool-tags">
                             <span class="tool-tag">Legal</span>
                             <span class="tool-tag">Research</span>
-                        </div>
-                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="property">
-                    <div class="tool-header">
-                        <div class="tool-icon">&#x1F3E2;</div>
-                        <div class="tool-status status-live"><span class="status-dot"></span> Live</div>
-                    </div>
-                    <h3>Tenant Communication Bot</h3>
-                    <p>Automated tenant messaging for maintenance requests, lease renewals, and announcements. Handles routine inquiries 24/7 so you don&#39;t have to.</p>
-                    <div class="tool-footer">
-                        <div class="tool-tags">
-                            <span class="tool-tag">Property</span>
-                            <span class="tool-tag">Comms</span>
-                        </div>
-                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="property">
-                    <div class="tool-header">
-                        <div class="tool-icon">&#x1F4CB;</div>
-                        <div class="tool-status status-live"><span class="status-dot"></span> Live</div>
-                    </div>
-                    <h3>Lease Analyzer</h3>
-                    <p>Upload any lease agreement and get instant analysis of terms, rent escalation clauses, liability issues, and renewal conditions. Compare across your portfolio.</p>
-                    <div class="tool-footer">
-                        <div class="tool-tags">
-                            <span class="tool-tag">Property</span>
-                            <span class="tool-tag">Documents</span>
-                        </div>
-                        <a href="#request" class="tool-action">Learn More &#x2192;</a>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="property">
-                    <div class="tool-header">
-                        <div class="tool-icon">&#x1F527;</div>
-                        <div class="tool-status status-beta"><span class="status-dot"></span> Beta</div>
-                    </div>
-                    <h3>Maintenance Router</h3>
-                    <p>AI triages incoming maintenance requests by urgency, assigns to the right vendor, and tracks resolution. Reduces response time and keeps tenants happy.</p>
-                    <div class="tool-footer">
-                        <div class="tool-tags">
-                            <span class="tool-tag">Property</span>
-                            <span class="tool-tag">Ops</span>
                         </div>
                         <a href="#request" class="tool-action">Learn More &#x2192;</a>
                     </div>

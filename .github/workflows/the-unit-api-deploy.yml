@@ -1,0 +1,44 @@
+name: Deploy the-unit/api to Cloud Run
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "the-unit/api/**"
+      - "the-unit/scripts/deploy-gcp.sh"
+      - ".github/workflows/the-unit-api-deploy.yml"
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: temporal-frame-494501-p5
+  REGION: us-central1
+  SERVICE: gumption-api
+  SA_NAME: gumption-api
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_DEPLOY_SA }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Deploy
+        run: bash the-unit/scripts/deploy-gcp.sh
+        env:
+          PROJECT_ID: ${{ env.PROJECT_ID }}
+          REGION: ${{ env.REGION }}
+          SERVICE: ${{ env.SERVICE }}
+          SA_NAME: ${{ env.SA_NAME }}

@@ -1,0 +1,15 @@
+name = "portfolio-showcase"
+main = "worker.js"
+compatibility_date = "2026-03-01"
+account_id = "bafa242dd95d3fdce72540d20accd0a2"
+
+# Bundle rent-roll.html as a string import.
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
+
+# Custom domain — wrangler auto-creates the DNS record + SSL on deploy.
+routes = [
+  { pattern = "showcase.silverbackai.agency", custom_domain = true }
+]

@@ -1,0 +1,79 @@
+name: 📧 Send Test Intake Email
+
+# ONE-TAP TEST: validates that the email fallback works end-to-end.
+# Use this after setting up Resend (or MailChannels) to confirm the form
+# submission → email pipeline is working.
+#
+# GitHub mobile app → Actions → "📧 Send Test Intake Email" → Run workflow
+# → pick which site to test → tap green button.
+# Within ~30 seconds the site's fallbackEmail address should receive a
+# test email titled "[TEST] Intake from chigbulaws".
+
+on:
+  workflow_dispatch:
+    inputs:
+      site:
+        description: "Which site to test"
+        required: true
+        default: "chigbulaws"
+        type: choice
+        options:
+          - chigbulaws
+          - mobilecarbsmoketest
+          - cleantruckcheck-roseville
+          - cleantruckcheck-fairfield
+          - cleantruckcheck-stockton
+          - cleantruckcheck-hayward
+          - cleantruckcheck-lodi
+          - carbteststockton
+      area:
+        description: "Practice area (law sites only)"
+        required: false
+        default: "general"
+        type: choice
+        options:
+          - general
+          - family
+          - immigration
+          - personal-injury
+          - bankruptcy
+          - business
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send test intake to live worker
+        run: |
+          SITE="${{ github.event.inputs.site }}"
+          AREA="${{ github.event.inputs.area }}"
+          URL="https://${SITE}.silverbackai.workers.dev/api/intake"
+          echo "POSTing to $URL"
+          PAYLOAD=$(cat <<EOF
+          {
+            "kind": "intake",
+            "site": "$SITE",
+            "area": "$AREA",
+            "client_name": "GitHub Actions Test",
+            "client_phone": "555-0100",
+            "client_email": "noreply@github.com",
+            "summary": "This is a test intake from the GitHub Actions test-email workflow. If you got this email, your fallback pipeline works correctly. Triggered at $(date -u +%FT%TZ).",
+            "matter_type": "test",
+            "urgency": "Just exploring",
+            "test": true
+          }
+          EOF
+          )
+          response=$(curl -sS -w "\n%{http_code}" -X POST "$URL" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD")
+          body=$(echo "$response" | head -n -1)
+          code=$(echo "$response" | tail -n 1)
+          echo "Response: $code"
+          echo "Body: $body"
+          if [ "$code" != "200" ]; then
+            echo "::error::Test failed with HTTP $code"
+            exit 1
+          fi
+          echo "## ✅ Test sent" >> $GITHUB_STEP_SUMMARY
+          echo "Check the inbox for $SITE's fallbackEmail. Should arrive within 30 seconds." >> $GITHUB_STEP_SUMMARY

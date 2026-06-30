@@ -1,0 +1,260 @@
+HUB CRM AUTOMATION - COLD EMAIL V3 OUTLINE
+Status: Final
+Owner: NorCal Carb Mobile
+Last updated: 2026-05-13
+
+PURPOSE
+-------
+Create a simple, compliant cold email sequence for fleet, trucking, repair,
+construction, tow, delivery, and logistics leads that need California Clean
+Truck Check / CARB heavy-duty emissions testing.
+
+The sequence should move a lead from NEW to CONTACTED in the CRM, create a
+clear next follow-up date, and make it easy for Bryan to call or email the
+highest-intent operators first.
+
+
+PRIMARY OFFER
+-------------
+NorCal Carb Mobile provides CARB-certified mobile Clean Truck Check testing at
+the customer's yard. The core value proposition:
+
+- No driving trucks to a station.
+- Less vehicle downtime.
+- On-site OBD, OVI, and smoke opacity testing.
+- Fleet-friendly scheduling and compliance tracking.
+- Pricing anchor: OBD $75/vehicle, OVI $85/vehicle, smoke opacity $85/vehicle.
+- Fleet discount: 10% off for 5+ vehicles.
+
+
+TARGET LEADS
+------------
+Use this sequence for businesses in the CRM with one or more of these traits:
+
+- Heavy-duty trucks, diesel vehicles, buses, tow trucks, delivery vehicles, or
+  yard vehicles likely over 14,000 lbs GVWR.
+- Operations in Sacramento, Stockton, Roseville, Elk Grove, Modesto, East Bay,
+  Vallejo, or nearby Northern California service areas.
+- Categories such as trucking company, fleet management, diesel repair shop,
+  construction company, tow yard, logistics company, waste management,
+  landscaping company, school bus service, or delivery service.
+- Tier 1 and Tier 2 leads first. Tier 3 leads can remain phone-first or
+  low-frequency email only.
+
+
+COMPLIANCE AND TONE RULES
+-------------------------
+- Keep emails plain text.
+- Do not imply a prior relationship if there is none.
+- Do not overstate penalties; use concrete compliance language sparingly.
+- Include Bryan's name, business name, phone, and website.
+- Make the ask small: reply, call, or book a 15-minute test window.
+- Avoid scare tactics. The compliance deadline is a reason to act, not the only
+  reason to respond.
+- Use a secondary sending domain and authenticated SMTP.
+- Stop emailing immediately when a lead replies, opts out, books, or is marked
+  LOST.
+
+
+PERSONALIZATION TOKENS
+----------------------
+Required:
+- {business_name}
+- {contact_name}
+- {area}
+- {our_business}
+- {owner_name}
+- {phone}
+- {website}
+
+Optional:
+- {category_hook}
+- {obd_price}
+- {ovi_price}
+- {smoke_opacity_price}
+- {fleet_discount}
+
+Fallback rules:
+- If contact name is unknown, use "there".
+- If service area is unknown, use "your area".
+- If category hook is unknown, omit the hook rather than forcing a generic line.
+
+
+SEQUENCE CADENCE
+----------------
+Touch 1: Day 0 - initial value proposition
+Touch 2: Day 2 or 3 - short bump with availability
+Touch 3: Day 7 - final note with pricing and compliance reminder
+
+CRM status updates:
+- Before sending Touch 1: lead status should be NEW.
+- After sending any touch: status becomes CONTACTED.
+- If reply received: status becomes RESPONDED.
+- If testing booked: status becomes SCHEDULED.
+- If no reply after Touch 3: keep CONTACTED and schedule a manual follow-up in
+  30 days, or mark LOST if the lead is clearly not a fit.
+
+
+FINAL EMAIL COPY
+----------------
+
+TOUCH 1 - INITIAL OUTREACH
+
+Subject: Quick question about {business_name}
+
+Hey {contact_name},
+
+Do you handle fleet smog and CARB Clean Truck Check testing in-house, or do you
+send vehicles out?
+
+{category_hook}
+
+I run {our_business}. We're CARB-certified mobile testers, and we come on-site
+so trucks do not have to leave the yard. We handle OBD, OVI, and smoke
+opacity testing for Northern California fleets.
+
+If that would help {business_name}, I can check availability in the {area} area
+this week.
+
+{owner_name}
+{our_business}
+{phone}
+{website}
+
+
+TOUCH 2 - SHORT BUMP
+
+Subject: Re: Quick question about {business_name}
+
+Hey {contact_name},
+
+Bumping this up once. I am in the {area} area this week and have room for a few
+mobile CARB test stops.
+
+Most fleets use us to avoid sending trucks across town for a short compliance
+test. We come to the yard, test on-site, and help keep the paperwork organized.
+
+Worth a quick call?
+
+{owner_name}
+{phone}
+
+
+TOUCH 3 - FINAL NOTE
+
+Subject: Re: Quick question about {business_name}
+
+Hey {contact_name},
+
+Last note from me on this.
+
+If mobile Clean Truck Check testing ever makes sense for {business_name}, we
+can help with on-site OBD, OVI, and smoke opacity testing. Current pricing is
+${obd_price}/vehicle for OBD and ${ovi_price}/vehicle for OVI, with
+{fleet_discount}% off for fleets of 5+ vehicles.
+
+California testing is already active and the cadence increases again in 2027,
+so it is worth getting a simple process in place before the schedule gets
+heavier.
+
+If you want to compare options, give me a ring.
+
+{owner_name}
+{our_business}
+{phone}
+
+
+CATEGORY HOOKS
+--------------
+trucking company:
+Clean Truck Check applies to heavy-duty trucks over 14,000 lbs GVWR, and a lot
+of operators are still building a repeatable testing process.
+
+fleet management:
+Managing compliance across multiple vehicles is mostly a scheduling problem. We
+take the testing trip off your team's plate.
+
+diesel repair shop:
+Some shops refer mobile testing after repair work so customers can handle the
+test without tying up a bay or sending the vehicle elsewhere.
+
+construction company:
+Construction fleets lose money when trucks sit. We test at the yard so vehicles
+can stay closer to the job schedule.
+
+tow yard:
+Many tow operators have heavy-duty vehicles that fall into Clean Truck Check.
+Mobile testing keeps those trucks available for calls.
+
+logistics company:
+Warehouse and logistics fleets usually care most about uptime. On-site testing
+keeps the compliance stop from turning into a dispatch problem.
+
+waste management:
+Refuse and hauling fleets are high-usage vehicles, so keeping testing on a
+calendar matters. We can come to the yard.
+
+delivery service:
+If any delivery vehicles are over the heavy-duty threshold, they may need Clean
+Truck Check testing. We help confirm and test on-site.
+
+school bus service:
+Routes are time-sensitive, so mobile testing is usually easier than moving
+vehicles to a station.
+
+property management:
+If maintenance or hauling vehicles cross the heavy-duty threshold, testing can
+be handled on-site instead of interrupting property work.
+
+
+CRM AUTOMATION REQUIREMENTS
+---------------------------
+1. Email preview should show:
+   - business name
+   - tier / score
+   - selected subject
+   - final rendered body
+   - missing email warning when applicable
+
+2. Send logic should:
+   - skip leads without email addresses
+   - skip touches already sent
+   - require prior touch before sending the next sequence email
+   - log place_id, business_name, email_to, sequence_num, subject, sent_date,
+     and status
+
+3. CRM follow-up logic should:
+   - increment contact_count when a touch is sent
+   - set last_contact to today's date
+   - schedule next_followup from the cadence
+   - avoid follow-ups for PAID or LOST records
+
+4. Manual work queue should prioritize:
+   - overdue follow-ups
+   - Tier 1 leads
+   - leads with phone and website
+   - leads with fleet or compliance category hooks
+
+
+QUALITY CHECKLIST
+-----------------
+- Every email has one clear ask.
+- No email is longer than necessary.
+- Pricing appears only in Touch 3.
+- The first email sells convenience, not fear.
+- The final email references compliance without sounding like a threat.
+- All template tokens have safe fallbacks.
+- The CRM can recover if an email address is added after import.
+- The sequence can be previewed before any real send.
+
+
+FINAL IMPLEMENTATION NOTES
+--------------------------
+- The current Python sender already supports a 3-touch sequence, category hooks,
+  preview mode, send logging, and sequence-order enforcement.
+- V3 copy should replace the current template copy when the team is ready to
+  ship this version.
+- The CRM tracker should remain the source of truth for lead status and
+  follow-up scheduling.
+- Real sending should stay disabled until SMTP credentials, sending domain
+  authentication, and unsubscribe handling are confirmed.

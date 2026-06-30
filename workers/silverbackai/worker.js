@@ -1,4 +1,5 @@
 // worker.js - Silverback AI Homepage
+// Deployment: 2026-05-07 - PUSH DEPLOY ITERATE DOMINATE
 //
 // Routes:
 //   GET  /robots.txt     -> robots file
@@ -1364,6 +1365,15 @@ function renderHomepage() {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Silverback AI",
+        "description": "AI consulting and pre-built solutions for businesses. Legal AI, property management tools, web builders, and custom AI integration.",
+        "url": "https://silverbackai.com",
+        "sameAs": [],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "hello@silverbackai.com",
+            "contactType": "sales"
+        },
+        "knowsAbout": ["Artificial Intelligence", "AI Consulting", "AI Integration", "Legal Technology", "Property Management Software", "Agentic AI Systems"]
         "description": "Custom AI tools for small business. We build the thing that fixes what keeps you up at night.",
         "url": "https://silverbackai.agency",
         "sameAs": [],

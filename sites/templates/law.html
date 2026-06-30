@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="{{BACKGROUND}}">
+<title>{{FIRM_NAME}} — {{TAGLINE}}</title>
+<meta name="description" content="{{META_DESCRIPTION}}">
+<meta name="keywords" content="{{KEYWORDS}}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="geo.region" content="US-CA">
+<meta name="geo.placename" content="{{CITY}}">
+<link rel="canonical" href="https://{{DOMAIN}}/">
+<meta property="og:title" content="{{FIRM_NAME}}">
+<meta property="og:description" content="{{META_DESCRIPTION}}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://{{DOMAIN}}/">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root {
+    --primary: {{PRIMARY}};
+    --primary-dark: {{PRIMARY_DARK}};
+    --accent: {{ACCENT}};
+    --bg: {{BACKGROUND}};
+    --text: {{TEXT}};
+    --muted: {{MUTED}};
+    --max-w: 760px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: Georgia, "Times New Roman", serif; line-height: 1.6; -webkit-font-smoothing: antialiased; padding-bottom: 100px; }
+  h1, h2, h3, .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+
+  /* Top nav */
+  nav.top {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--primary-dark);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav.top .brand { color: var(--accent); font-weight: 800; font-size: 18px; text-decoration: none; font-family: -apple-system, sans-serif; letter-spacing: 0.5px; }
+  nav.top button.menu-btn { background: none; border: none; color: var(--text); font-size: 26px; cursor: pointer; padding: 4px 8px; }
+  nav.top .menu-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--primary-dark);
+    border-bottom: 2px solid var(--accent);
+    padding: 12px 0;
+  }
+  nav.top .menu-panel.open { display: block; }
+  nav.top .menu-panel a {
+    display: block;
+    padding: 14px 24px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: -apple-system, sans-serif;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  nav.top .menu-panel a:hover { background: rgba(255,255,255,0.05); color: var(--accent); }
+
+  /* Hero */
+  .hero { padding: 60px 24px 40px; max-width: var(--max-w); margin: 0 auto; text-align: center; }
+  .hero .eyebrow { color: var(--accent); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; font-family: -apple-system, sans-serif; }
+  .hero h1 { font-size: 38px; line-height: 1.2; margin-bottom: 18px; font-weight: 700; color: var(--text); }
+  .hero p.lede { font-size: 19px; color: var(--muted); margin-bottom: 32px; }
+  .hero .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-block;
+    padding: 16px 28px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: -apple-system, sans-serif;
+    font-size: 16px;
+    border: 2px solid var(--accent);
+    cursor: pointer;
+  }
+  .btn.primary { background: var(--accent); color: var(--primary-dark); }
+  .btn.outline { background: transparent; color: var(--accent); }
+  .btn.block { display: block; width: 100%; text-align: center; }
+
+  section { padding: 50px 24px; max-width: var(--max-w); margin: 0 auto; }
+  section h2 { font-size: 28px; margin-bottom: 18px; color: var(--accent); }
+  section p { color: var(--muted); margin-bottom: 14px; font-size: 17px; }
+
+  /* Practice areas */
+  .practice-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 22px; }
+  @media (min-width: 600px) { .practice-grid { grid-template-columns: 1fr 1fr; } }
+  .practice-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 4px solid var(--accent);
+    padding: 22px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.15s ease, transform 0.15s ease;
+    display: block;
+  }
+  .practice-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+  .practice-card h3 { font-size: 19px; margin-bottom: 6px; color: var(--accent); font-family: -apple-system, sans-serif; }
+  .practice-card p { color: var(--muted); font-size: 14px; margin: 0; }
+  .practice-card .cta { display: block; margin-top: 10px; color: var(--accent); font-size: 13px; font-weight: 600; font-family: -apple-system, sans-serif; }
+
+  /* About */
+  .about { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 30px 24px; margin-top: 18px; }
+  .about p { font-style: italic; }
+
+  /* Contact card */
+  .contact-card {
+    background: var(--primary);
+    color: var(--primary-dark);
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+    margin: 40px auto;
+    max-width: var(--max-w);
+  }
+  .contact-card h2 { color: var(--primary-dark); margin-bottom: 12px; font-size: 24px; }
+  .contact-card .info { font-family: -apple-system, sans-serif; font-size: 17px; margin: 8px 0; }
+  .contact-card a { color: var(--primary-dark); text-decoration: underline; font-weight: 700; }
+
+  /* FAQ */
+  details { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 16px 18px; margin-bottom: 10px; cursor: pointer; }
+  details summary { font-weight: 600; color: var(--text); list-style: none; font-family: -apple-system, sans-serif; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: " +"; color: var(--accent); float: right; }
+  details[open] summary::after { content: " –"; }
+  details p { margin-top: 10px; color: var(--muted); font-size: 15px; font-style: normal; }
+
+  /* Footer */
+  footer {
+    background: var(--primary-dark);
+    border-top: 2px solid var(--accent);
+    padding: 30px 24px 20px;
+    margin-top: 60px;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    font-family: -apple-system, sans-serif;
+  }
+  footer .firm { color: var(--accent); font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+  footer .disclaimer { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+  /* Sticky bottom CTA */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--accent);
+    color: var(--primary-dark);
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: -apple-system, sans-serif;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.3);
+    z-index: 40;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+
+  /* Chatbot */
+  #obi-fab { position: fixed; bottom: 90px; right: 18px; width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: var(--primary-dark); border: none; font-size: 28px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); cursor: pointer; z-index: 60; }
+  #obi-panel { position: fixed; bottom: 160px; right: 18px; width: min(340px, calc(100vw - 36px)); max-height: 60vh; background: var(--primary-dark); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 61; display: none; flex-direction: column; overflow: hidden; }
+  #obi-panel.open { display: flex; }
+  #obi-panel header { background: var(--accent); color: var(--primary-dark); padding: 14px 16px; display: flex; align-items: center; gap: 10px; font-weight: 800; font-family: -apple-system, sans-serif; }
+  #obi-panel .close { margin-left: auto; background: none; border: none; color: var(--primary-dark); font-size: 22px; cursor: pointer; }
+  #obi-log { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; font-family: -apple-system, sans-serif; }
+  #obi-log .msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; line-height: 1.4; }
+  #obi-log .msg.bot { background: rgba(255,255,255,0.08); color: var(--text); align-self: flex-start; }
+  #obi-log .msg.you { background: var(--accent); color: var(--primary-dark); align-self: flex-end; font-weight: 600; }
+  #obi-form { display: flex; gap: 6px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+  #obi-form input { flex: 1; background: rgba(0,0,0,0.3); color: var(--text); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 10px 12px; font-size: 14px; font-family: inherit; }
+  #obi-form button { background: var(--accent); color: var(--primary-dark); border: none; border-radius: 10px; padding: 0 14px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="/" class="brand">{{FIRM_NAME}}</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+  <div class="menu-panel" id="menuPanel">
+    <a href="#about">About</a>
+    {{NAV_PRACTICE_LINKS}}
+    <a href="#reviews-top">Reviews</a>
+    <a href="/blog/">Blog</a>
+    <a href="#contact">Contact &amp; Directions</a>
+    <a href="{{DIRECTIONS_URL}}" target="_blank" rel="noopener">🧭 Get Directions</a>
+    <a href="tel:{{PHONE_RAW}}">📞 {{PHONE}}</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">{{EYEBROW}}</div>
+  <h1>{{HEADLINE}}</h1>
+  <p class="lede">{{SUBHEADLINE}}</p>
+  <div class="cta-row">
+    <a href="#contact-form" class="btn primary">Tell Us About Your Case</a>
+    <a href="tel:{{PHONE_RAW}}" class="btn outline">Call {{PHONE}}</a>
+  </div>
+  <div style="margin-top:18px;font-size:13px;color:var(--muted);font-family:-apple-system,sans-serif;">
+    ⚖️ {{ATTORNEY_NAME}} · State Bar of California #{{BAR_NUMBER}} · <a href="https://apps.calbar.ca.gov/attorney/Licensee/Detail/{{BAR_NUMBER}}" target="_blank" rel="noopener" style="color:var(--accent);">verify</a>
+  </div>
+  {{AWARDS_HTML}}
+</header>
+
+<section id="about">
+  <h2>About {{ATTORNEY_NAME}}</h2>
+  <div class="about">
+    {{ABOUT_HTML}}
+  </div>
+</section>
+
+<section id="reviews-top">
+  <h2>What clients say about {{ATTORNEY_NAME}}</h2>
+  {{AVG_RATING_HTML}}
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:18px;">
+    {{REVIEWS_HTML}}
+  </div>
+  <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+    <a class="btn outline" href="{{GOOGLE_REVIEWS_URL}}" target="_blank" rel="noopener">★ Read all on Google</a>
+    <a class="btn outline" href="{{GOOGLE_REVIEW_WRITE_URL}}" target="_blank" rel="noopener">Leave a review</a>
+  </div>
+</section>
+
+<section id="contact-form">
+  <h2>Tell us about your case</h2>
+  <p>The fastest way to get help. Tell us briefly what's going on — we'll review and reach out to set up a consultation. Personal injury consultations are free; other matters carry a modest consultation fee that's credited toward your case if you retain us.</p>
+  <form class="intake-form quick-contact" data-area="general" style="background:rgba(255,255,255,0.04);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px;margin-top:20px;">
+    <label>Your name<input name="client_name" required></label>
+    <label>Phone<input name="client_phone" type="tel" required></label>
+    <label>Email<input name="client_email" type="email" required></label>
+    <label>What kind of legal matter?<select name="matter_type" required><option value="">— select —</option><option>Bankruptcy</option><option>Immigration</option><option>Family law</option><option>Personal injury</option><option>Wills / Estate planning</option><option>Other / Not sure</option></select></label>
+    <label>Briefly describe your situation<textarea name="summary" rows="4" required></textarea></label>
+    <label>How urgent is this?<select name="urgency" required><option>Just exploring</option><option>Within a month</option><option>Within a week</option><option>Emergency — today</option></select></label>
+    <button type="submit" class="btn primary block">Send to Mr. Chigbu</button>
+    <div class="ok" hidden style="color:#7BE7A2;">✓ Received. We'll be in touch shortly.</div>
+  </form>
+</section>
+
+<section id="practice">
+  <h2>Practice Areas</h2>
+  <p>Want to give us more detail up front? Each practice area below has a longer intake form. Filling it out helps Mr. Chigbu give you a real assessment faster — and the deeper you go, the more useful the consultation will be.</p>
+  <div class="practice-grid">
+    {{PRACTICE_CARDS_HTML}}
+  </div>
+</section>
+
+<section id="knowledge-base">
+  <h2>Ask a question — instant answers</h2>
+  <p>Type any legal question below. The answers come straight from Clifford's years of practice.</p>
+  {{KNOWLEDGE_BASE_HTML}}
+</section>
+
+<section id="service-areas">
+  <h2>Proudly serving the greater Sacramento area</h2>
+  <p>Clifford serves clients in Elk Grove and across the surrounding communities.</p>
+  {{SERVICE_AREAS_HTML}}
+</section>
+
+<section id="faq">
+  <h2>Common questions</h2>
+  {{FAQ_HTML}}
+</section>
+
+<div class="contact-card" id="contact">
+  <h2>Talk to {{ATTORNEY_NAME}}</h2>
+  <p class="info">📞 <a href="tel:{{PHONE_RAW}}">{{PHONE}}</a></p>
+  <p class="info">✉️ <a href="mailto:{{EMAIL}}">{{EMAIL}}</a></p>
+  <p class="info">📍 {{ADDRESS_HTML}}</p>
+  <p class="info" style="font-size:14px;opacity:0.85;">{{HOURS}}</p>
+  <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+    <a class="btn primary" href="{{DIRECTIONS_URL}}" target="_blank" rel="noopener" style="background:var(--primary-dark);color:var(--accent);border-color:var(--primary-dark);">🧭 Get Directions</a>
+    <a class="btn primary" href="/contact.vcf" download style="background:var(--primary-dark);color:var(--accent);border-color:var(--primary-dark);">📇 Add to Contacts</a>
+    <a class="btn primary" href="{{GOOGLE_BUSINESS_URL}}" target="_blank" rel="noopener" style="background:var(--primary-dark);color:var(--accent);border-color:var(--primary-dark);">View on Google</a>
+  </div>
+</div>
+
+<footer>
+  <div class="firm">{{FIRM_NAME}}</div>
+  <div>{{ATTORNEY_NAME}} · {{BAR_ADMISSIONS}} · Cal. Bar #{{BAR_NUMBER}}</div>
+  <div>📞 {{PHONE}} · ✉️ {{EMAIL}}</div>
+  <div><a href="/blog/" style="color:var(--accent)">Blog</a> · <a href="/privacy/" style="color:var(--accent)">Privacy</a> · <a href="/terms/" style="color:var(--accent)">Terms</a> · <a href="/sitemap.xml" style="color:var(--muted)">Sitemap</a></div>
+  <div class="disclaimer">{{DISCLAIMER}}</div>
+</footer>
+
+<a class="sticky-cta" href="tel:{{PHONE_RAW}}">📞 Talk to {{ATTORNEY_NAME}} · {{PHONE}}</a>
+
+<!-- Chatbot -->
+<button id="obi-fab" aria-label="Chat with {{CHAT_NAME}}">{{CHAT_AVATAR}}</button>
+<div id="obi-panel" role="dialog" aria-label="Chat">
+  <header>
+    <span>{{CHAT_AVATAR}}</span>
+    <span>{{CHAT_NAME}}</span>
+    <button class="close" id="obi-close" aria-label="Close">×</button>
+  </header>
+  <div id="obi-log"></div>
+  <form id="obi-form">
+    <input id="obi-input" placeholder="Ask a quick question…" autocomplete="off" required>
+    <button type="submit">→</button>
+  </form>
+</div>
+
+<script>
+  // Hamburger
+  const menuBtn = document.getElementById('menuBtn');
+  const menuPanel = document.getElementById('menuPanel');
+  menuBtn.addEventListener('click', () => menuPanel.classList.toggle('open'));
+  menuPanel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menuPanel.classList.remove('open')));
+
+  // Intake forms
+  document.querySelectorAll('form.intake-form').forEach(form => {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this).entries());
+      data.site = "{{ID}}";
+      data.area = this.dataset.area;
+      data.timestamp = new Date().toISOString();
+      try {
+        await fetch('/api/intake', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+      } catch (err) {}
+      const ok = this.querySelector('.ok');
+      if (ok) ok.hidden = false;
+      this.reset();
+    });
+  });
+
+  // Chatbot
+  const fab = document.getElementById('obi-fab');
+  const panel = document.getElementById('obi-panel');
+  const log = document.getElementById('obi-log');
+  const form = document.getElementById('obi-form');
+  const input = document.getElementById('obi-input');
+  const closeBtn = document.getElementById('obi-close');
+  const sessionId = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  let opened = false;
+  function addMsg(text, who) {
+    const el = document.createElement('div');
+    el.className = 'msg ' + who;
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+  fab.addEventListener('click', () => {
+    panel.classList.add('open');
+    if (!opened) { addMsg("{{CHAT_GREETING}}", 'bot'); opened = true; }
+    input.focus();
+  });
+  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    addMsg(text, 'you');
+    input.value = '';
+    try {
+      const res = await fetch('/api/chat', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ site: "{{ID}}", sessionId, message: text, timestamp: new Date().toISOString() }) });
+      const data = await res.json().catch(()=>({}));
+      addMsg(data.reply || "I'll have {{ATTORNEY_NAME}} reach out. Leave your phone or call {{PHONE}}.", 'bot');
+    } catch (err) {
+      addMsg("Couldn't reach the server. Please call {{PHONE}}.", 'bot');
+    }
+  });
+</script>
+
+<script type="application/ld+json">{{LEGAL_SERVICE_JSONLD}}</script>
+<script type="application/ld+json">{{FAQ_JSONLD}}</script>
+<script type="application/ld+json">{{QA_PAGE_JSONLD}}</script>
+{{ANALYTICS_HTML}}
+</body>
+</html>
